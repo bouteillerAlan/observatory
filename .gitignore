@@ -17,7 +17,17 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.idea
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+Supprimerait .idea/.gitignore
+Supprimerait .idea/inspectionProfiles/
+Supprimerait .idea/markdown-navigator-enh.xml
+Supprimerait .idea/markdown-navigator.xml
+Supprimerait .idea/misc.xml
+Supprimerait .idea/modules.xml
+Supprimerait .idea/observatory.iml
+Supprimerait .idea/vcs.xml
