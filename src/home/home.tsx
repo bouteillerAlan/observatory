@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './home.scss';
 
+const _API_URL = process.env.REACT_APP_API_URL;
+
 const Home: React.FunctionComponent = () => {
   const [apiKey, setApiKey] = useState('');
   const [apiKeyError, setApiKeyError] = useState({message: '', status: false});
@@ -32,12 +34,29 @@ const Home: React.FunctionComponent = () => {
    * @return {void} return nothing, change state for error handler
    */
   function checkGdpr(value: boolean) {
-    console.log('check value', value);
     if (!value) {
       setGdprError({message: 'obligatoire', status: true});
     } else {
       setGdprError({message: '', status: false});
     }
+  }
+
+  /**
+   * validate the api key whit the gw2 api
+   * @param {string} _apiKey the api key you want to test
+   * @return {void} return nothing, set state value
+   */
+  function checkAccount(_apiKey: any) {
+    fetch(`${_API_URL}account?access_token=${_apiKey}`, {
+      method: 'GET',
+      mode: 'cors',
+    }).then((res: any) => {
+      if (res.status && res.status === 200) {
+        setApiKeyError({message: '', status: false});
+      } else {
+        setApiKeyError({message: 'Api key check failed', status: true});
+      }
+    });
   }
 
   /**
@@ -66,17 +85,18 @@ const Home: React.FunctionComponent = () => {
   }
 
   /**
-   * @return {void} void
+   * check the form data and
+   * allow to redirect to the next page or not
+   * @return {void} return nothing, redirect to the next page
    */
   function submitForm() {
-    // test data form
     checkApiKey(apiKey);
     checkGdpr(gdpr);
-    // todo check api key directly whit the gw2 api
-    if (!apiKeyError && !gdprError) {
+    checkAccount(apiKey);
+    if (!apiKeyError.status && !gdprError.status) {
       localStorage.setItem('key', apiKey);
       localStorage.setItem('lang', lang);
-      // todo and push to the next page
+      // todo push to the next page
     }
   }
 
@@ -87,31 +107,37 @@ const Home: React.FunctionComponent = () => {
   return (
     <section className="home">
       <div className="container row">
-        <div className="input-field col s12">
-          <input type="text" name="apiKey" id="apiKey" value={apiKey} onChange={(e) => handleForm(e.target)}/>
-          <label htmlFor="apiKey">API Key</label>
-        </div>
-        <div className="input-field col s12">
-          <select name="lang" id="lang" value={lang} onChange={(e) => handleForm(e.target)}>
-            <option value="fr">Français</option>
-            <option value="eng">English</option>
-          </select>
-          <label htmlFor="lang">Language</label>
-        </div>
-        <div className="input-field col s12">
-          <p>
-            <label>
-              <input type="checkbox" name="gdpr" id="gdpr" checked={gdpr} onChange={(e) => handleForm(e.target)}/>
-              <span>J'aceppte d'enregistrer les données fournis dans le cookie.</span>
-            </label>
-          </p>
-        </div>
-        <div className="input-field col s12">
-          <button className="btn waves-effect waves-light" disabled={disabled} onClick={() => submitForm()}>Submit</button>
-        </div>
         <div className="col s12">
-          <p>{apiKeyError.message}</p>
-          <p>{gdprError.message}</p>
+          <h1>Welcome to observatory</h1>
+        </div>
+        {/* form */}
+        <div className="col s12">
+          <div className="input-field col s12">
+            <input type="text" name="apiKey" id="apiKey" value={apiKey} onChange={(e) => handleForm(e.target)}/>
+            <label htmlFor="apiKey">API Key</label>
+          </div>
+          <div className="input-field col s12">
+            <select name="lang" id="lang" value={lang} onChange={(e) => handleForm(e.target)}>
+              <option value="fr">Français</option>
+              <option value="eng">English</option>
+            </select>
+            <label htmlFor="lang">Language</label>
+          </div>
+          <div className="input-field col s12">
+            <p>
+              <label>
+                <input type="checkbox" name="gdpr" id="gdpr" checked={gdpr} onChange={(e) => handleForm(e.target)}/>
+                <span>J'aceppte d'enregistrer les données fournis dans le cookie.</span>
+              </label>
+            </p>
+          </div>
+          <div className="input-field col s12">
+            <button className="btn waves-effect waves-light" disabled={disabled} onClick={() => submitForm()}>Submit</button>
+          </div>
+          <div className="col s12">
+            {apiKeyError.status && <div className="errorCard"><p>{apiKeyError.message}</p></div>}
+            {gdprError.status && <div className="errorCard"><p>{gdprError.message}</p></div>}
+          </div>
         </div>
       </div>
     </section>
