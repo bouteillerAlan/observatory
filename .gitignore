@@ -31,3 +31,4 @@ Supprimerait .idea/misc.xml
 Supprimerait .idea/modules.xml
 Supprimerait .idea/observatory.iml
 Supprimerait .idea/vcs.xml
+/.env.development
