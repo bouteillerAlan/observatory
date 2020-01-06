@@ -1,0 +1,15 @@
+.errorCard {
+  width: 100px;
+  height: fit-content;
+  padding: 2px;
+  margin: 2px;
+  border-radius: 3px;
+  background-color: red;
+  color: white;
+  p {
+    text-align: center;
+    word-break: break-word;
+    margin: 0;
+    padding: 0;
+  }
+}
