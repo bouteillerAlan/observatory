@@ -1,9 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import history from '../server/history';
+import loadHash from 'lodash';
 
 const Map: React.FunctionComponent = () => {
+  // NS = non sort
   const [characters, setCharacters] = useState([]);
-  const [saisons, setSaisons] = useState([]);
+  const [seasonsNS, setSeasonsNS] = useState([]);
+  const [storiesNS, setStoriesNS] = useState([]);
+  const [questsNS, setQuestsNS] = useState([]);
+  const [seasons, setSeasons] = useState([]);
   const [stories, setStories] = useState([]);
   const [quests, setQuests] = useState([]);
 
@@ -37,13 +42,13 @@ const Map: React.FunctionComponent = () => {
   }
 
   /**
-   * get all saisons
+   * get all seasons
    * @return {void} set state
    */
-  function getSaisons() {
+  function getSeasons() {
     fetch(`${_API_URL}stories/seasons?ids=all&lang=${_lang}`).then(async (res: any) => {
       const data = await res.json();
-      setSaisons(data);
+      setSeasonsNS(data);
     });
   }
 
@@ -54,7 +59,7 @@ const Map: React.FunctionComponent = () => {
   function getStories() {
     fetch(`${_API_URL}/stories?ids=all&lang=${_lang}`).then(async (res: any) => {
       const data = await res.json();
-      setStories(data);
+      setStoriesNS(data);
     });
   }
 
@@ -65,16 +70,78 @@ const Map: React.FunctionComponent = () => {
   function getQuests() {
     fetch(`${_API_URL}/quests?ids=all&lang=${_lang}`).then(async (res: any) => {
       const data = await res.json();
-      setQuests(data);
+      setQuestsNS(data);
     });
+  }
+
+  /**
+   * get all quests done for the character
+   * @param {any} character the character
+   * @return {void} return the result.json
+   */
+  function getDoneQuests(character: any) {
+    fetch(`${_API_URL}/characters/${character}/quests?access_token=${_apiKey}&lang=${_lang}`).then(async (res: any) => {
+      return res.json();
+    });
+  }
+
+  /**
+   * get all back stories for the character
+   * @param {any} character the character
+   * @return {void} return the result.json
+   */
+  function getBackStories(character: any) {
+    fetch(`${_API_URL}/characters/${character}/backstory?access_token=${_apiKey}`).then(async (res: any) => {
+      return res.json();
+    });
+  }
+
+  /**
+   * get all infos for the character
+   * @param {any} character the character
+   * @return {void} return the result.json
+   */
+  function getInfoCharacter(character: any) {
+    fetch(`${_API_URL}/characters/${character}/core?access_token=${_apiKey}&lang=${_lang}`).then(async (res: any) => {
+      return res.json();
+    });
+  }
+
+  /**
+   * ddddddddd
+   * @return {void} return nothing
+   */
+  async function shortData() {
+    // get all data
+    getCharacters();
+    getQuests();
+    getSeasons();
+    getStories();
+    // sort seasons
+    const seasons = seasonsNS.sort(function(a: any, b: any) {
+      return a['order']-b['order'];
+    });
+    // sort stories
+    const stories = loadHash.orderBy(storiesNS, ['season', 'order']);
+    // sort quests, for the moment 'level' is the best way for sort this thing
+    const quests = loadHash.orderBy(questsNS, ['story', 'level']);
+    // map the data for each character
+    const questsDone: any = {};
+    const backStories: any = {};
+    const characterId: any = {};
+    for (let i = 0; i<characters.length; i++) {
+      console.log('ping');
+      questsDone[characters[i]] = await getDoneQuests(characters[i]);
+      backStories[characters[i]] = await getBackStories(characters[i]);
+      characterId[characters[i]] = await getInfoCharacter(characters[i]);
+    }
+    console.log({seasons, stories, quests, characters, questsDone, backStories, characterId});
+    // return {seasons, stories, quests, characters, questsDone, backStories, characterId};
   }
 
   useEffect(() => {
     checkApiKey();
-    getCharacters();
-    getQuests();
-    getSaisons();
-    getStories();
+    shortData();
   }, []);
 
   return (
