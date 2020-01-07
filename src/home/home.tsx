@@ -97,7 +97,9 @@ const Home: React.FunctionComponent = () => {
     if (!apiKeyError.status && !gdprError.status) {
       localStorage.setItem('key', apiKey);
       localStorage.setItem('lang', lang);
-      history.push('/map');
+      setTimeout(() => {
+        history.push('/map');
+      }, 1000);
     }
   }
 
