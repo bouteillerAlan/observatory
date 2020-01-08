@@ -1,3 +1,10 @@
 .screen {
-  table {width: max-content}
+  overflow: auto;
+  table {
+    width: max-content;
+    th, td {
+      border-left: solid rgba(0, 0, 0, 0.20) 1px;
+      text-align: center;
+    }
+  }
 }

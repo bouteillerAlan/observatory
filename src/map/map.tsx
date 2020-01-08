@@ -122,8 +122,28 @@ const Map: React.FunctionComponent = () => {
     // get all data
     const charactersList = await getCharacters();
     const quests = await getQuests();
-    const seasons = await getSeasons();
-    const stories = await getStories();
+    const seasonsNS = await getSeasons();
+    const storiesNS = await getStories();
+
+    // sort the seasons
+    const seasons = seasonsNS.sort((a: any, b: any) => {
+      return a['order']-b['order'];
+    });
+
+    // sort the stories
+    const storiesNSB: any[] = [];
+    seasons.map((season: any) => {
+      season.stories.map((story: any) => {
+        storiesNS.map((storyNS: any) => {
+          if (storyNS.id === story) {
+            storiesNSB.push(storyNS);
+          }
+        });
+      });
+    });
+    const stories = storiesNSB.sort((a: any, b: any) => {
+      return a['level']-b['level'];
+    });
 
     let charactersData: {} = {};
     // set data for each characters
@@ -160,7 +180,13 @@ const Map: React.FunctionComponent = () => {
                   <th>Level</th>
                   <th>Order</th>
                   {dataMap.seasons.map((season: any) => (
-                    <th key={season.id}>{season.name}</th>
+                    <th key={season.id} colSpan={season.stories.length}>{season.name}</th>
+                  ))}
+                </tr>
+                <tr>
+                  <th colSpan={5}> </th>
+                  {dataMap.stories.map((story: any) => (
+                    <th key={story.id}>{story.name}</th>
                   ))}
                 </tr>
               </thead>
