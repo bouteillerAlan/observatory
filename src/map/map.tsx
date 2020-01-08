@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import history from '../server/history';
 import backStories from '../data/backStories';
+import './map.scss';
 
 const Map: React.FunctionComponent = () => {
-  const [characters, setCharacters] = useState([]);
-  const [dataMap, setDataMap] = useState([]);
+  const [dataMap, setDataMap] = useState({seasons: [], stories: [], quests: [], charactersData: {questsDone: {}, backStories: {}, characterId: {}}});
 
   const _API_URL = process.env.REACT_APP_API_URL;
   const _apiKey = localStorage.getItem('key');
@@ -96,107 +96,22 @@ const Map: React.FunctionComponent = () => {
   }
 
   /**
-   * map the data in a single iterative object
-   * @param {any} data
-   * @return {any} return the object
+   * map the data for each character
+   * @param {string} characterList
+   * @return {object} return one object to contain the sorted data
    */
-  function map(data: any) {
-    const obj: any = {};
-    // seasons -> stories -> quests -> characters -> questsDone
-    data['seasons'].map((season: any) => {
+  async function dataByCharacter(characterList: string[]) {
+    const questsDone: any = {};
+    const backStories: any = {};
+    const characterId: any = {};
 
-      // create object key
-      obj[season['name']] = {id: season['id'], story: {}};
+    for (let i = 0; i<characterList.length; i++) {
+      questsDone[characterList[i]] = await getDoneQuests(characterList[i]);
+      backStories[characterList[i]] = await getBackStories(characterList[i]);
+      characterId[characterList[i]] = await getInfoCharacter(characterList[i]);
+    }
 
-      data['stories'].map((story: any) => {
-
-        // check if story is in seasons and store it
-        if (story['season'] === season['id']) {
-
-          // if a race is set
-          const storyName = story['races'] ? story['name']+' - '+story['races'] : story['name'];
-
-          obj[season['name']]['story'][storyName] = {id: story['id'], quests: {}, description: story['description']};
-
-          // and continue loop
-          data['quests'].map((quest: any) => {
-
-            // check if quest is in story and store it
-            if (quest['story'] === story['id']) {
-              obj[season['name']]['story'][storyName]['quests'][quest['id']] = {Qname: '', Qid: '', Qlevel: '', status: {}, authorization: {}};
-
-              data['characters'].map((character: any) => {
-
-                // stock name, id and level
-                obj[season['name']]['story'][storyName]['quests'][quest['id']]['Qname'] = quest['name'];
-                obj[season['name']]['story'][storyName]['quests'][quest['id']]['Qid'] = quest['id'];
-                obj[season['name']]['story'][storyName]['quests'][quest['id']]['Qlevel'] = quest['level'];
-
-                // check the race for specific id
-                const raceQuest = [8, 1, 3, 2, 7];
-                if (raceQuest.includes(obj[season['name']]['story'][storyName]['id'])) {
-                  switch (obj[season['name']]['story'][storyName]['id']) {
-                    // asura
-                    case 8:
-                      if (data['characterId'][character]['race'] === 'Asura') {
-                        // check if it's done, if it's the case tag it
-                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
-                      }
-                      break;
-                    // charr
-                    case 1:
-                      if (data['characterId'][character]['race'] === 'Charr') {
-                        // check if it's done, if it's the case tag it
-                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
-                      }
-                      break;
-                    // human
-                    case 3:
-                      if (data['characterId'][character]['race'] === 'Human') {
-                        // check if it's done, if it's the case tag it
-                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
-                      }
-                      break;
-                    // norn
-                    case 2:
-                      if (data['characterId'][character]['race'] === 'Norn') {
-                        // check if it's done, if it's the case tag it
-                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
-                      }
-                      break;
-                    // sylvari
-                    case 7:
-                      if (data['characterId'][character]['race'] === 'Sylvari') {
-                        // check if it's done, if it's the case tag it
-                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
-                      }
-                  }
-                } else {
-                  // check if it's done, if it's the case tag it
-                  obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
-                }
-
-                // check if is authorized
-                // and stock it in obj[season['name']]['story'][storyName]['quests'][quest['id']]['authorization'][character]
-                // by default all quests is authorized
-                let a = true;
-                data['backStories'][character]['backstory'].map((bkId: any) => {
-                  // if backstory exist in bk file
-                  if (backStories[bkId]) {
-                    // if quest id exist in backstory bk file
-                    if (backStories[bkId].includes(quest['id'])) {
-                      a = false;
-                    }
-                  }
-                });
-                obj[season['name']]['story'][storyName]['quests'][quest['id']]['authorization'][character] = a;
-              });
-            }
-          });
-        }
-      });
-    });
-    return obj;
+    return {questsDone, backStories, characterId};
   }
 
   /**
@@ -205,26 +120,18 @@ const Map: React.FunctionComponent = () => {
    */
   async function sortData() {
     // get all data
-    // NS = no sort
-    const characters = await getCharacters();
+    const charactersList = await getCharacters();
     const quests = await getQuests();
     const seasons = await getSeasons();
     const stories = await getStories();
 
-    // rec characters
-    setCharacters(characters);
+    let charactersData: {} = {};
+    // set data for each characters
+    await dataByCharacter(charactersList).then((res: {}) => {
+      charactersData = res;
+    });
 
-    // map the data for each character
-    const questsDone: any = {};
-    const backStories: any = {};
-    const characterId: any = {};
-
-    for (let i = 0; i<characters.length; i++) {
-      questsDone[characters[i]] = await getDoneQuests(characters[i]);
-      backStories[characters[i]] = await getBackStories(characters[i]);
-      characterId[characters[i]] = await getInfoCharacter(characters[i]);
-    }
-    return map({seasons, stories, quests, characters, questsDone, backStories, characterId});
+    return {seasons, stories, quests, charactersData};
   }
 
   useEffect(() => {
@@ -240,12 +147,35 @@ const Map: React.FunctionComponent = () => {
       <div className="container row">
         <div className="col s12">
           <h1>Map</h1>
-          {characters.length === 0 ? 'loading' : ''}
-          <ul>
-            {characters.map((character: string) => (
-              <li key={character}>{character}</li>
-            ))}
-          </ul>
+          {dataMap.quests.length === 0 ? <p>quests loading</p> : ''}
+          {dataMap.seasons.length === 0 ? <p>seasons loading</p> : ''}
+          {dataMap.stories.length === 0 ? <p>stories loading</p> : ''}
+          <div className="row screen">
+            <table>
+              <thead>
+                <tr>
+                  <th>Race</th>
+                  <th>Classe</th>
+                  <th>Name</th>
+                  <th>Level</th>
+                  <th>Order</th>
+                  {dataMap.seasons.map((season: any) => (
+                    <th key={season.id}>{season.name}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(dataMap.charactersData.characterId).map(([key, value]: any) => (
+                  <tr key={key}>
+                    <td>{value.race}</td>
+                    <td>{value.profession}</td>
+                    <td>{key}</td>
+                    <td>{value.level}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
