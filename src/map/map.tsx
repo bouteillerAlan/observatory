@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import history from '../server/history';
-import backStories from '../data/backStories';
+// import backStories from '../data/backStories';
+import loadHash from 'lodash';
 import './map.scss';
 
 const Map: React.FunctionComponent = () => {
@@ -116,12 +117,12 @@ const Map: React.FunctionComponent = () => {
 
   /**
    * allow to create an object to contain all data for the app
-   * @return {void} return nothing
+   * @return {object} return the clean object
    */
   async function sortData() {
     // get all data
     const charactersList = await getCharacters();
-    const quests = await getQuests();
+    const questsNS = await getQuests();
     const seasonsNS = await getSeasons();
     const storiesNS = await getStories();
 
@@ -131,22 +132,37 @@ const Map: React.FunctionComponent = () => {
     });
 
     // sort the stories
-    const storiesNSB: any[] = [];
-    seasons.map((season: any) => {
-      season.stories.map((story: any) => {
-        storiesNS.map((storyNS: any) => {
-          if (storyNS.id === story) {
-            storiesNSB.push(storyNS);
-          }
-        });
-      });
-    });
+    // group the stories by the season
+    const storiesNSB = loadHash.orderBy(storiesNS, ['season', 'order']);
     const stories = storiesNSB.sort((a: any, b: any) => {
       return a['level']-b['level'];
     });
 
-    let charactersData: {} = {};
+    // sort the quests
+    // for the moment 'level' is the best way for short this thing
+    const quests = loadHash.orderBy(questsNS, ['story', 'level']);
+
+    // map data
+    const dataMap: any = {};
+    seasons.map((season: any) => {
+      // create the season object
+      dataMap[season.id] = {order: season.order, name: season.name, storiesId: season.stories, stories: {}};
+      stories.map((story: any) => {
+        // if the story.season match the season stock the story
+        if (story.season === season.id) {
+          dataMap[season.id]['stories'][story.id] = {id: story.id, name: story.name, description: story.description, timeline: story.timeline, level: story.level, races: story.races, order: story.order, chapters: story.chapters, quests: {}};
+          quests.map((quest: any) => {
+            if (story.id === quest['story']) {
+              dataMap[season.id]['stories'][story.id]['quests'][quest.id] = quest;
+            }
+          });
+        }
+      });
+    });
+    console.log(dataMap);
+
     // set data for each characters
+    let charactersData: {} = {};
     await dataByCharacter(charactersList).then((res: {}) => {
       charactersData = res;
     });
