@@ -5,7 +5,7 @@ import loadHash from 'lodash';
 import './map.scss';
 
 const Map: React.FunctionComponent = () => {
-  const [dataMap, setDataMap] = useState({dataMap: {}, charactersData: {questsDone: {}, backStories: {}, characterId: {}}});
+  const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
 
   const _API_URL = process.env.REACT_APP_API_URL;
@@ -186,40 +186,61 @@ const Map: React.FunctionComponent = () => {
         <div className="col s12">
           <h1>Map</h1>
           {loading ? <p>loading</p> : ''}
-          <div className="row screen">
-            <table>
-              <thead>
-                <tr>
-                  <th>Race</th>
-                  <th>Classe</th>
-                  <th>Name</th>
-                  <th>Level</th>
-                  <th>Order</th>
-                  {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                    <th key={seasonKey} colSpan={Object.keys(season.stories).length}>{season.name}</th>
-                  ))}
-                </tr>
-                <tr>
-                  <th colSpan={5}> </th>
-                  {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                    Object.entries(season.stories).map(([storyKey, story]: any) => (
-                      <th key={storyKey}>{story.name}</th>
-                    ))
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(dataMap.charactersData.characterId).map(([key, value]: any) => (
-                  <tr key={key}>
-                    <td>{value.race}</td>
-                    <td>{value.profession}</td>
-                    <td>{key}</td>
-                    <td>{value.level}</td>
+          {dataMap &&
+            <div className="row screen">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Race</th>
+                    <th>Classe</th>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>Order</th>
+                    {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
+                      <th key={seasonKey} colSpan={Object.keys(season.stories).length}>{season.name}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                  <tr>
+                    <th colSpan={5}> </th>
+                    {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
+                      Object.entries(season.stories).map(([storyKey, story]: any) => (
+                        <th key={storyKey+seasonKey}>{story.name}</th>
+                      ))
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(dataMap.charactersData.characterId).map(([key, value]: any) => (
+                    <tr key={key}>
+                      <td>{value.race}</td>
+                      <td>{value.profession}</td>
+                      <td>{key}</td>
+                      <td>{value.level}</td>
+                      <td>order</td>
+                      {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
+                        Object.entries(season.stories).map(([storyKey, story]: any) => (
+                          <td key={storyKey+seasonKey} className="subTable">
+                            <table>
+                              <tbody>
+                                <tr>
+                                  {Object.entries(story.quests).map(([questKey, quest]: any) => (
+                                    <td key={questKey}
+                                      style={dataMap.charactersData.questsDone[key].includes(Number(questKey)) ? {backgroundColor: 'green'} : {backgroundColor: 'red'}}
+                                    >
+                                    </td>
+                                  ))}
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        ))
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          }
         </div>
       </div>
     </section>

@@ -6,5 +6,15 @@
       border-left: solid rgba(0, 0, 0, 0.20) 1px;
       text-align: center;
     }
+    .subTable {
+      padding: 0;
+      table {
+        width: 100%;
+        td {
+          border-left: 0;
+          border-right: solid rgba(0, 0, 0, 0.20) 1px;
+        }
+      }
+    }
   }
 }
