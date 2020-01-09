@@ -204,17 +204,17 @@ const Map: React.FunctionComponent = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>Race</th>
-                    <th>Classe</th>
-                    <th>Name</th>
-                    <th>Level</th>
-                    <th>Order</th>
+                    <th colSpan={5}>Persona</th>
                     {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                       <th key={seasonKey} colSpan={Object.keys(season.stories).length}>{season.name}</th>
                     ))}
                   </tr>
                   <tr>
-                    <th colSpan={5}> </th>
+                    <th>Race</th>
+                    <th>Classe</th>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>Order</th>
                     {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                       Object.entries(season.stories).map(([storyKey, story]: any) => (
                         <th key={storyKey+seasonKey}>{story.name} {story.races && '- '+story.races[0]}</th>
