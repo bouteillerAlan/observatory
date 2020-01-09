@@ -5,7 +5,8 @@ import loadHash from 'lodash';
 import './map.scss';
 
 const Map: React.FunctionComponent = () => {
-  const [dataMap, setDataMap] = useState({seasons: [], stories: [], quests: [], charactersData: {questsDone: {}, backStories: {}, characterId: {}}});
+  const [dataMap, setDataMap] = useState({dataMap: {}, charactersData: {questsDone: {}, backStories: {}, characterId: {}}});
+  const [loading, setLoading] = useState(true);
 
   const _API_URL = process.env.REACT_APP_API_URL;
   const _apiKey = localStorage.getItem('key');
@@ -159,7 +160,7 @@ const Map: React.FunctionComponent = () => {
         }
       });
     });
-    console.log(dataMap);
+    console.log('dataMap', dataMap);
 
     // set data for each characters
     let charactersData: {} = {};
@@ -167,7 +168,7 @@ const Map: React.FunctionComponent = () => {
       charactersData = res;
     });
 
-    return {seasons, stories, quests, charactersData};
+    return {dataMap, charactersData};
   }
 
   useEffect(() => {
@@ -175,6 +176,7 @@ const Map: React.FunctionComponent = () => {
     sortData().then((res: any) => {
       console.log(res);
       setDataMap(res);
+      setLoading(false);
     });
   }, []);
 
@@ -183,9 +185,7 @@ const Map: React.FunctionComponent = () => {
       <div className="container row">
         <div className="col s12">
           <h1>Map</h1>
-          {dataMap.quests.length === 0 ? <p>quests loading</p> : ''}
-          {dataMap.seasons.length === 0 ? <p>seasons loading</p> : ''}
-          {dataMap.stories.length === 0 ? <p>stories loading</p> : ''}
+          {loading ? <p>loading</p> : ''}
           <div className="row screen">
             <table>
               <thead>
@@ -195,14 +195,16 @@ const Map: React.FunctionComponent = () => {
                   <th>Name</th>
                   <th>Level</th>
                   <th>Order</th>
-                  {dataMap.seasons.map((season: any) => (
-                    <th key={season.id} colSpan={season.stories.length}>{season.name}</th>
+                  {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
+                    <th key={seasonKey} colSpan={Object.keys(season.stories).length}>{season.name}</th>
                   ))}
                 </tr>
                 <tr>
                   <th colSpan={5}> </th>
-                  {dataMap.stories.map((story: any) => (
-                    <th key={story.id}>{story.name}</th>
+                  {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
+                    Object.entries(season.stories).map(([storyKey, story]: any) => (
+                      <th key={storyKey}>{story.name}</th>
+                    ))
                   ))}
                 </tr>
               </thead>
