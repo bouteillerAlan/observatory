@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import history from '../server/history';
 // import backStories from '../data/backStories';
+import questsList from '../data/quests';
 import loadHash from 'lodash';
 import './map.scss';
 
@@ -98,6 +99,18 @@ const Map: React.FunctionComponent = () => {
   }
 
   /**
+   * Perform a check and return the value of the guild for an id
+   * @param {array} ids list of id
+   * @return {string | null} the guild or null
+   */
+  function checkGuild(ids: number[]) {
+    const durmand = questsList.durmand.some( (r: any) => ids.indexOf(r) >= 0);
+    const whisper = questsList.whisper.some( (r: any) => ids.indexOf(r) >= 0);
+    const vigil = questsList.vigil.some( (r: any) => ids.indexOf(r) >= 0);
+    return durmand ? 'durmand' : whisper ? 'whisper' : vigil ? 'vigil' : null;
+  }
+
+  /**
    * map the data for each character
    * @param {string} characterList
    * @return {object} return one object to contain the sorted data
@@ -160,7 +173,6 @@ const Map: React.FunctionComponent = () => {
         }
       });
     });
-    console.log('dataMap', dataMap);
 
     // set data for each characters
     let charactersData: {} = {};
@@ -174,7 +186,6 @@ const Map: React.FunctionComponent = () => {
   useEffect(() => {
     checkApiKey();
     sortData().then((res: any) => {
-      console.log(res);
       setDataMap(res);
       setLoading(false);
     });
@@ -182,11 +193,13 @@ const Map: React.FunctionComponent = () => {
 
   return (
     <section className="map">
-      <div className="container row">
+      <div className="row">
         <div className="col s12">
-          <h1>Map</h1>
-          {loading ? <p>loading</p> : ''}
-          {dataMap &&
+          <div className="container">
+            <h1>Map</h1>
+            {loading ? <p>loading</p> : ''}
+          </div>
+          {dataMap && !loading &&
             <div className="row screen">
               <table>
                 <thead>
@@ -204,7 +217,7 @@ const Map: React.FunctionComponent = () => {
                     <th colSpan={5}> </th>
                     {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                       Object.entries(season.stories).map(([storyKey, story]: any) => (
-                        <th key={storyKey+seasonKey}>{story.name}</th>
+                        <th key={storyKey+seasonKey}>{story.name} {story.races && '- '+story.races[0]}</th>
                       ))
                     ))}
                   </tr>
@@ -216,7 +229,7 @@ const Map: React.FunctionComponent = () => {
                       <td>{value.profession}</td>
                       <td>{key}</td>
                       <td>{value.level}</td>
-                      <td>order</td>
+                      <td>{checkGuild(dataMap.charactersData.questsDone[key])}</td>
                       {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                         Object.entries(season.stories).map(([storyKey, story]: any) => (
                           <td key={storyKey+seasonKey} className="subTable">
