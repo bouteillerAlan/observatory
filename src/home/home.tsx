@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import history from '../server/history';
 import './home.scss';
 
 const _API_URL = process.env.REACT_APP_API_URL;
@@ -96,7 +97,9 @@ const Home: React.FunctionComponent = () => {
     if (!apiKeyError.status && !gdprError.status) {
       localStorage.setItem('key', apiKey);
       localStorage.setItem('lang', lang);
-      // todo push to the next page
+      setTimeout(() => {
+        history.push('/map');
+      }, 1000);
     }
   }
 
