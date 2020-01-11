@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import history from '../server/history';
+import Nav from '../nav/nav';
 // import backStories from '../data/backStories';
 import questsList from '../data/quests';
 import loadHash from 'lodash';
@@ -193,10 +194,10 @@ const Map: React.FunctionComponent = () => {
 
   return (
     <section className="map">
+      <Nav active={"map"} />
       <div className="row">
         <div className="col s12">
           <div className="container">
-            <h1>Map</h1>
             {loading ? <p>loading</p> : ''}
           </div>
           {dataMap && !loading &&
@@ -238,7 +239,7 @@ const Map: React.FunctionComponent = () => {
                                 <tr>
                                   {Object.entries(story.quests).map(([questKey, quest]: any) => (
                                     <td key={questKey}
-                                      style={dataMap.charactersData.questsDone[key].includes(Number(questKey)) ? {backgroundColor: 'green'} : {backgroundColor: 'red'}}
+                                      className={dataMap.charactersData.questsDone[key].includes(Number(questKey)) ? 'bg-green' : 'bg-red'}
                                     >
                                     </td>
                                   ))}
