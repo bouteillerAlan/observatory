@@ -194,11 +194,10 @@ const Map: React.FunctionComponent = () => {
 
   return (
     <section className="map">
-      <Nav/>
+      <Nav active={"map"} />
       <div className="row">
         <div className="col s12">
           <div className="container">
-            <h1>Map</h1>
             {loading ? <p>loading</p> : ''}
           </div>
           {dataMap && !loading &&

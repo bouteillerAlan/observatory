@@ -5,7 +5,7 @@ import history from '../server/history';
 const Card: React.FunctionComponent = () => {
   return (
     <section>
-      <Nav/>
+      <Nav active={"card"} />
       <h1>This is Card component</h1>
     </section>
   )
