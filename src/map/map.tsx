@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import history from '../server/history';
+import Nav from '../nav/nav';
 // import backStories from '../data/backStories';
 import questsList from '../data/quests';
 import loadHash from 'lodash';
@@ -193,6 +194,7 @@ const Map: React.FunctionComponent = () => {
 
   return (
     <section className="map">
+      <Nav/>
       <div className="row">
         <div className="col s12">
           <div className="container">
