@@ -18,6 +18,9 @@ const App: React.FunctionComponent = () => {
     const elemsModal = document.querySelectorAll('.modal');
     const optionsModal = {};
     M.Modal.init(elemsModal, optionsModal);
+    const elemsSidenav = document.querySelectorAll('.sidenav');
+    const optionsSidenav = {};
+    M.Sidenav.init(elemsSidenav, optionsSidenav);
   });
 
   return (

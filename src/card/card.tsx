@@ -1,6 +1,5 @@
 import React from 'react';
 import Nav from '../nav/nav';
-import history from '../server/history';
 
 const Card: React.FunctionComponent = () => {
   return (
