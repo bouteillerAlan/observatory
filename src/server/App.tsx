@@ -6,6 +6,7 @@ import Card from '../card/card';
 import Map from '../map/map';
 import M from 'materialize-css';
 import './general.scss';
+import './font.scss';
 
 const App: React.FunctionComponent = () => {
 
