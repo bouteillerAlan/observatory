@@ -1,5 +1,6 @@
 import React from 'react';
 import history from '../server/history';
+import './nav.scss';
 
 type NavProps = {
   active: string

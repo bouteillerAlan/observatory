@@ -1,0 +1,35 @@
+body {
+  background-color: #333;
+  color: #fff;
+  .bg-red {
+    background-color: #c0392b;
+  }
+  .bg-green {
+    background-color: #27ae60;
+  }
+}
+
+/*
+* SCROLLBAR CUSTOM
+ */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #fbd54a;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(243, 156, 18, 0.82);
+}

@@ -239,7 +239,7 @@ const Map: React.FunctionComponent = () => {
                                 <tr>
                                   {Object.entries(story.quests).map(([questKey, quest]: any) => (
                                     <td key={questKey}
-                                      style={dataMap.charactersData.questsDone[key].includes(Number(questKey)) ? {backgroundColor: 'green'} : {backgroundColor: 'red'}}
+                                      className={dataMap.charactersData.questsDone[key].includes(Number(questKey)) ? 'bg-green' : 'bg-red'}
                                     >
                                     </td>
                                   ))}
