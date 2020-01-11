@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Router, Route} from 'react-router';
 import history from './history';
 import Home from '../home/home';
+import Card from '../card/card';
 import Map from '../map/map';
 import M from 'materialize-css';
 
@@ -21,6 +22,7 @@ const App: React.FunctionComponent = () => {
     <Router history={history}>
       <Route exact path={'/'} component={Home} />
       <Route exact path={'/map'} component={Map} />
+      <Route exact path={'/card'} component={Card} />
     </Router>
   );
 };
