@@ -198,7 +198,11 @@ const Map: React.FunctionComponent = () => {
       <div className="row">
         <div className="col s12">
           <div className="container">
-            {loading ? <p>loading</p> : ''}
+            {loading ?
+              <div className="progress">
+                  <div className="indeterminate"></div>
+              </div>
+              : ''}
           </div>
           {dataMap && !loading &&
             <div className="row screen">
