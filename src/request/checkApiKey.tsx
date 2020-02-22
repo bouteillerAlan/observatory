@@ -1,7 +1,7 @@
 import history from '../server/history';
 
 const _API_URL = process.env.REACT_APP_API_URL;
-const _apiKey = localStorage.getItem('key');
+const _apiKey = localStorage.getItem('obsKey');
 
 /**
  * check the api key stock in the localstorage

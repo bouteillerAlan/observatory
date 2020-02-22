@@ -1,14 +1,14 @@
 body {
-  background-color: #333;
+  background-color: #242423;
   color: #fff;
   .bg-red {
-    background-color: #c0392b;
+    background-color: #DB222A;
   }
   .bg-green {
-    background-color: #27ae60;
+    background-color: #16DB65;
   }
   .progress .indeterminate {
-    background-color: #fbd54a;
+    background-color: #F2E94E;
   }
 }
 
@@ -28,7 +28,7 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #fbd54a;
+  background: #F2E94E;
   border-radius: 5px;
 }
 

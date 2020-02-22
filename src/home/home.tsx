@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import history from '../server/history';
 import './home.scss';
 
@@ -6,59 +6,13 @@ const _API_URL = process.env.REACT_APP_API_URL;
 
 const Home: React.FunctionComponent = () => {
   const [apiKey, setApiKey] = useState('');
-  const [apiKeyError, setApiKeyError] = useState({message: '', status: false});
   const [lang, setLang] = useState('fr');
   const [gdpr, setGdpr] = useState(false);
+
   const [gdprError, setGdprError] = useState({message: '', status: false});
+  const [apiKeyError, setApiKeyError] = useState({message: '', status: false});
+
   const [disabled, setDisabled] = useState(false);
-
-  /**
-   * validate an api key
-   * @param {string} value the value you want to validate
-   * @return {void} return nothing, change state for error handler
-   */
-  function checkApiKey(value: string) {
-    if (value === '') {
-      setApiKeyError({message: 'Value must not be null', status: true});
-    } else if (value.match(/[[\]\\&~@^%!:*$€¤£µ_/+°={}`|#²<>]/gm)) {
-      setApiKeyError({message: 'Unauthorized character', status: true});
-    } else if (!value.match(/[A-Z0-9]{8}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{20}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{12}/gm)) {
-      setApiKeyError({message: 'Value is not a api key format', status: true});
-    } else {
-      setApiKeyError({message: '', status: false});
-    }
-  }
-
-  /**
-   * validate the gdpr checkbox
-   * @param {boolean} value the checkbox value you want to validate
-   * @return {void} return nothing, change state for error handler
-   */
-  function checkGdpr(value: boolean) {
-    if (!value) {
-      setGdprError({message: 'obligatoire', status: true});
-    } else {
-      setGdprError({message: '', status: false});
-    }
-  }
-
-  /**
-   * validate the api key whit the gw2 api
-   * @param {string} _apiKey the api key you want to test
-   * @return {void} return nothing, set state value
-   */
-  function checkAccount(_apiKey: any) {
-    fetch(`${_API_URL}account?access_token=${_apiKey}`, {
-      method: 'GET',
-      mode: 'cors',
-    }).then((res: any) => {
-      if (res.status && res.status === 200) {
-        setApiKeyError({message: '', status: false});
-      } else {
-        setApiKeyError({message: 'Api key check failed', status: true});
-      }
-    });
-  }
 
   /**
    * handle the value of "disabled"
@@ -66,6 +20,61 @@ const Home: React.FunctionComponent = () => {
    */
   function disableSubmit() {
     setDisabled(gdprError.status || apiKeyError.status);
+  }
+
+  /**
+   * validate the gdpr checkbox
+   * @param {boolean} value the checkbox value you want to validate
+   * @return {boolean} return true if is ok
+   */
+  async function checkGdpr(value: boolean) {
+    if (!value) {
+      setGdprError({message: 'check obligatoire', status: true});
+      return false;
+    } else {
+      setGdprError({message: '', status: false});
+      return true;
+    }
+  }
+
+  /**
+   * validate the api key whit the gw2 api
+   * @param {string} _apiKey the api key you want to test
+   * @return {boolean} return true if is ok
+   */
+  async function checkAccount(_apiKey: any) {
+    fetch(`${_API_URL}account?access_token=${_apiKey}`, {
+      method: 'GET',
+      mode: 'cors',
+    }).then((res: any) => {
+      if (res.status && res.status === 200) {
+        setApiKeyError({message: '', status: false});
+        return true;
+      } else {
+        setApiKeyError({message: 'Api key check failed', status: true});
+        return false;
+      }
+    });
+  }
+
+  /**
+   * validate an api key
+   * @param {string} value the value you want to validate
+   * @return {boolean} return true if is ok
+   */
+  async function checkApiKey(value: string) {
+    if (value === '') {
+      setApiKeyError({message: 'Value must not be null', status: true});
+      return false;
+    } else if (value.match(/[[\]\\&~@^%!:*$€¤£µ_/+°={}`|#²<>]/gm)) {
+      setApiKeyError({message: 'Unauthorized character', status: true});
+      return false;
+    } else if (!value.match(/[A-Z0-9]{8}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{20}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{12}/gm)) {
+      setApiKeyError({message: 'Value is not a api key format', status: true});
+      return false;
+    } else {
+      return checkAccount(value);
+    }
   }
 
   /**
@@ -90,22 +99,18 @@ const Home: React.FunctionComponent = () => {
    * allow to redirect to the next page or not
    * @return {void} return nothing, redirect to the next page
    */
-  function submitForm() {
-    checkApiKey(apiKey);
-    checkGdpr(gdpr);
-    checkAccount(apiKey);
-    if (!apiKeyError.status && !gdprError.status) {
-      localStorage.setItem('key', apiKey);
-      localStorage.setItem('lang', lang);
-      setTimeout(() => {
-        history.push('/map');
-      }, 1000);
+  async function submitForm() {
+    if (checkApiKey(apiKey) && await checkGdpr(gdpr)) {
+      await localStorage.setItem('obsKey', apiKey);
+      await localStorage.setItem('obsLang', lang);
+      history.push('/map');
     }
   }
 
   useEffect(() => {
+    console.log('#');
     disableSubmit();
-  });
+  }, [gdpr, apiKey, apiKeyError, gdprError]);
 
   return (
     <section className="home">

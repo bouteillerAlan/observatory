@@ -6,7 +6,7 @@ type NavProps = {
   active: string
 }
 
-const Nav: React.FunctionComponent<NavProps> = (props) => {
+const Nav: React.FunctionComponent<NavProps> = (props: NavProps) => {
   return (
     <>
       <nav>
@@ -22,7 +22,7 @@ const Nav: React.FunctionComponent<NavProps> = (props) => {
               <a href="/map"><i className="material-icons right">apps</i>Map</a>
             </li>
             <li onClick={() => {
-              localStorage.removeItem('key');
+              localStorage.removeItem('obsKey');
               history.push('/');
             }}>
               <a href="#reset"><i className="material-icons right">autorenew</i>Reset API Key</a>
@@ -41,7 +41,10 @@ const Nav: React.FunctionComponent<NavProps> = (props) => {
         <li className={props.active === 'map' ? 'active' : ''}>
           <a href="/map"><i className="material-icons right">apps</i>Map</a>
         </li>
-        <li onClick={() => {localStorage.removeItem('key')}}>
+        <li onClick={() => {
+          localStorage.removeItem('obsKey');
+          history.push('/');
+        }}>
           <a href="#reset"><i className="material-icons right">autorenew</i>Reset API Key</a>
         </li>
         <li>
@@ -49,7 +52,7 @@ const Nav: React.FunctionComponent<NavProps> = (props) => {
         </li>
       </ul>
     </>
-  )
-}
+  );
+};
 
 export default Nav;

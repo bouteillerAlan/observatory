@@ -1,8 +1,8 @@
 import loadHash from 'lodash';
 
 const _API_URL = process.env.REACT_APP_API_URL;
-const _apiKey = localStorage.getItem('key');
-const _lang = localStorage.getItem('lang');
+const _apiKey = localStorage.getItem('obsKey');
+const _lang = localStorage.getItem('obsLang');
 
 /**
  * get all characters for one user
