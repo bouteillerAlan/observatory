@@ -29,6 +29,46 @@ const Map: React.FunctionComponent = () => {
     });
   }, []);
 
+  /**
+   * map the html map
+   * @Param {string | number} storyKey the key of the story
+   * @Param {string | number} key the key of character array
+   * @Return {dom} return the map
+   */
+  function dataMapHtml(storyKey: string | number, key: string | number) {
+    return (Object.entries(questsList).map(([qLKey, line]: any) => (
+      qLKey === storyKey &&
+      line.map((col: any) => (
+        <div key={qLKey+col} className='map-item'>
+          {col.map((line: any) => (
+            <div key={qLKey+line}>
+              {line.map((subLine: any) => (
+                <div key={qLKey+subLine} className='map-choice'>
+                  {Array.isArray(subLine) ?
+                    subLine.map((subCol: any) => (
+                      <span key={qLKey+subCol} className='lb-one'>
+                        <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subCol)) ? 'bg-green' : 'bg-red')}
+                          id={subCol}
+                        >
+                        </div>
+                      </span>
+                    )) :
+                    <span className='lb-one'>
+                      <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine)) ? 'bg-green' : 'bg-red')}
+                        id={subLine}
+                      >
+                      </div>
+                    </span>
+                  }
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))
+    )));
+  }
+
   return (
     <section className="map">
       <Nav active={'map'} />
@@ -75,29 +115,7 @@ const Map: React.FunctionComponent = () => {
                           <tbody>
                             <tr>
                               <td>
-                                {Object.entries(questsList).map(([qLKey, line]: any) => (
-                                  qLKey === storyKey &&
-                                  line.map((col: any) => (
-                                    <div key={qLKey} className='map-item'>
-                                      {col.map((line: any) => (
-                                        <div key={qLKey}>
-                                          {line.map((subLine: any) => (
-                                            <div key={qLKey} className='map-choice'>
-                                              {Array.isArray(subLine) ?
-                                                subLine.map((subCol: any) => (
-                                                  <div key={qLKey} className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subCol)) ? 'bg-green' : 'bg-red')}>
-                                                  </div>
-                                                )) :
-                                                <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine)) ? 'bg-green' : 'bg-red')}>
-                                                </div>
-                                              }
-                                            </div>
-                                          ))}
-                                        </div>
-                                      ))}
-                                    </div>
-                                  ))
-                                ))}
+                                {dataMapHtml(storyKey, key)}
                               </td>
                             </tr>
                           </tbody>
