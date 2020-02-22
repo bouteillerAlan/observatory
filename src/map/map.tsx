@@ -36,7 +36,7 @@ const Map: React.FunctionComponent = () => {
         <div className="progress">
           <div className="indeterminate"> </div>
         </div> :
-        ''}
+      ''}
       {dataMap && !loading &&
         <div className="row screen">
           <table>
