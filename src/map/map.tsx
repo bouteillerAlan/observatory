@@ -74,12 +74,31 @@ const Map: React.FunctionComponent = () => {
                         <table>
                           <tbody>
                             <tr>
-                              {Object.entries(story.quests).map(([questKey, quest]: any) => (
-                                <td key={questKey}
-                                  className={dataMap.charactersData.questsDone[key].includes(Number(questKey)) ? 'bg-green' : 'bg-red'}
-                                >
-                                </td>
-                              ))}
+                              <td>
+                                {Object.entries(questsList).map(([qLKey, line]: any) => (
+                                  qLKey === storyKey &&
+                                  line.map((col: any) => (
+                                    <div key={qLKey} className='map-item'>
+                                      {col.map((line: any) => (
+                                        <div key={qLKey}>
+                                          {line.map((subLine: any) => (
+                                            <div key={qLKey} className='map-choice'>
+                                              {Array.isArray(subLine) ?
+                                                subLine.map((subCol: any) => (
+                                                  <div key={qLKey} className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subCol)) ? 'bg-green' : 'bg-red')}>
+                                                  </div>
+                                                )) :
+                                                <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine)) ? 'bg-green' : 'bg-red')}>
+                                                </div>
+                                              }
+                                            </div>
+                                          ))}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  ))
+                                ))}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
