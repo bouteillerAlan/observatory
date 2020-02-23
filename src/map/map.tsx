@@ -168,7 +168,7 @@ const Map: React.FunctionComponent = () => {
                 <th>Name</th>
                 <th>Level</th>
                 <th>Order</th>
-                <th>Custom</th>
+                <th>Histoire du personage</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                   Object.entries(season.stories).map(([storyKey, story]: any) => (
                     !story.races && <th key={storyKey+seasonKey}>{story.name} {story.races && '- '+story.races[0]}</th>
@@ -185,9 +185,10 @@ const Map: React.FunctionComponent = () => {
                   <td>{value.level}</td>
                   <td>{checkGuild(dataMap.charactersData.questsDone[key])}</td>
                   <td className="subTable">
+                    {/* here we generate only the quests for the race of the character in court in a single column */}
                     {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                       Object.entries(season.stories).map(([storyKey, story]: any) => (
-                        story.races &&
+                        (story.races && story.races[0] === value.race) &&
                           <table key={storyKey+seasonKey}>
                             <tbody>
                               <tr>
@@ -201,6 +202,7 @@ const Map: React.FunctionComponent = () => {
                     ))}
                   </td>
 
+                  {/* here we generate the rest of the quests */}
                   {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                     Object.entries(season.stories).map(([storyKey, story]: any) => (
                       !story.races && <td key={storyKey+seasonKey} className="subTable">
