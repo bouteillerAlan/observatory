@@ -24,10 +24,19 @@
             .map-choice {
               display: flex;
               flex-direction: column;
-            }
-            .card {
-              height: 20px;
-              width: 20px;
+              .lb-one {
+                // :after {
+                //   color: red;
+                //   content: '----';
+                //   position: relative;
+                //   left: -13px;
+                // }
+                .card {
+                  height: 20px;
+                  width: 20px;
+                  margin: 5px;
+                }
+              }
             }
           }
         }

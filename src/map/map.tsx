@@ -21,11 +21,86 @@ const Map: React.FunctionComponent = () => {
     return durmand ? 'durmand' : whisper ? 'whisper' : vigil ? 'vigil' : null;
   }
 
+  /**
+   * generate the arrow for the map
+   */
+  function gArrow() {
+    if (document) {
+      const cards = document.getElementsByClassName('card');
+
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        const currentCardId = card.getAttribute('id');
+
+        // get the previous card id
+        let previousCardId: number;
+        let pCard: any;
+        // but before remove useless key in the quest list
+        const uselessKeys = ['2choice', '3choice', '5choice', 'durmand', 'whisper', 'vigil'];
+        uselessKeys.forEach((uselessKey: string) => {
+          delete questsList[uselessKey];
+        });
+        // check if the currentCard exist on some quest list
+        Object.entries(questsList).forEach(([key, value]: any) => {
+          // here i transform the array in string (allow to have [0, [1, 2]] => '0,1,2')
+          // and in array again which gives [0,1,2]
+          const dataArray = value.toString().split(',');
+          // if the current id is includes
+          if (dataArray.includes(currentCardId)) {
+            // the previous card is on -1 position in the array
+            previousCardId = dataArray[dataArray.indexOf(currentCardId)-1];
+            // get the previous card
+            if (previousCardId) {
+              pCard = document.getElementById(previousCardId.toString());
+            }
+
+            // set the coordinate
+            const currentGps = {top: card.getBoundingClientRect().top, left: card.getBoundingClientRect().left};
+            let previousGps: any;
+            if (pCard) {
+              previousGps = {top: pCard.getBoundingClientRect().top, left: pCard.getBoundingClientRect().left};
+            }
+            // create the arrow and give a unique id
+            const arrow = document.createElement('span');
+            arrow.id = 'a'+currentCardId;
+            arrow.style.position = 'absolute';
+            arrow.style.height = '5px';
+            // arrow.style.width = '20px';
+            arrow.style.backgroundColor = 'yellow';
+
+            // const startPoint = [currentGps.top, currentGps.left];
+            // const startPoint = [0, currentGps.left];
+            // const endPoint = previousGps ? [previousGps.top, previousGps.left] : [0, 0];
+            // const rise = endPoint[1]-startPoint[1];
+            // const run = endPoint[0]-startPoint[0];
+            // const slope = rise/run;
+            // const degrees = 0;
+            // // const width = Math.sqrt((rise*rise)+(run*run));
+            const width = '5';
+
+            // arrow.style.top='0';
+            // arrow.style.left='0';
+            arrow.style.width=width+'px';
+            // arrow.style.transform='rotate('+(Math.atan(slope)*degrees)+'deg)';
+            // arrow.style.transformOrigin='0 0';
+
+            card.appendChild(arrow);
+
+            console.log(currentGps);
+            console.log(previousGps);
+          }
+        });
+      }
+
+    }
+  }
+
   useEffect(() => {
     checkApiKey();
     sortData().then((res: any) => {
       setDataMap(res);
       setLoading(false);
+      gArrow();
     });
   }, []);
 
