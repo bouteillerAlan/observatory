@@ -8,6 +8,7 @@ import './map.scss';
 const Map: React.FunctionComponent = () => {
   const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
+  console.log(dataMap)
 
   /**
    * Perform a check and return the value of the guild for an id
@@ -159,7 +160,10 @@ const Map: React.FunctionComponent = () => {
               <tr>
                 <th colSpan={5}>Persona</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                  <th key={seasonKey} colSpan={Object.keys(season.stories).length}>{season.name}</th>
+                  // if the season is equal to '' this is a 'my story' map so colSpan = 3
+                  seasonKey === '215AAA0F-CDAC-4F93-86DA-C155A99B5784' ?
+                    <th key={seasonKey} colSpan={3}>{season.name}</th> :
+                    <th key={seasonKey} colSpan={Object.keys(season.stories).length}>{season.name}</th>
                 ))}
               </tr>
               <tr>
@@ -171,7 +175,7 @@ const Map: React.FunctionComponent = () => {
                 <th>Histoire du personage</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                   Object.entries(season.stories).map(([storyKey, story]: any) => (
-                    !story.races && <th key={storyKey+seasonKey}>{story.name} {story.races && '- '+story.races[0]}</th>
+                    !story.races && <th key={storyKey+seasonKey}>{story.name}</th>
                   ))
                 ))}
               </tr>
