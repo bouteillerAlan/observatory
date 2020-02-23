@@ -100,7 +100,7 @@ const Map: React.FunctionComponent = () => {
     sortData().then((res: any) => {
       setDataMap(res);
       setLoading(false);
-      gArrow();
+      // gArrow();
     });
   }, []);
 
@@ -168,9 +168,10 @@ const Map: React.FunctionComponent = () => {
                 <th>Name</th>
                 <th>Level</th>
                 <th>Order</th>
+                <th>Custom</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                   Object.entries(season.stories).map(([storyKey, story]: any) => (
-                    <th key={storyKey+seasonKey}>{story.name} {story.races && '- '+story.races[0]}</th>
+                    !story.races && <th key={storyKey+seasonKey}>{story.name} {story.races && '- '+story.races[0]}</th>
                   ))
                 ))}
               </tr>
@@ -183,9 +184,26 @@ const Map: React.FunctionComponent = () => {
                   <td>{key}</td>
                   <td>{value.level}</td>
                   <td>{checkGuild(dataMap.charactersData.questsDone[key])}</td>
+                  <td className="subTable">
+                    {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
+                      Object.entries(season.stories).map(([storyKey, story]: any) => (
+                        story.races &&
+                          <table key={storyKey+seasonKey}>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  {dataMapHtml(storyKey, key)}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                      ))
+                    ))}
+                  </td>
+
                   {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                     Object.entries(season.stories).map(([storyKey, story]: any) => (
-                      <td key={storyKey+seasonKey} className="subTable">
+                      !story.races && <td key={storyKey+seasonKey} className="subTable">
                         <table>
                           <tbody>
                             <tr>
@@ -198,6 +216,7 @@ const Map: React.FunctionComponent = () => {
                       </td>
                     ))
                   ))}
+
                 </tr>
               ))}
             </tbody>
