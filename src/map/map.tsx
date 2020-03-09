@@ -23,33 +23,90 @@ const Map: React.FunctionComponent = () => {
 
   /**
    * generate the arrow for the map
-   * @Param {number} id the id you want to check
-   * @Param {boolean} finish the quest is green ?
-   * @Return {any} the amount of the next quest
+   * @Param {HTMLElement} idFrom arrow start
+   * @Param {HTMLElement} idTo arrow end
+   * @Param {HTMLElement} idLine the arrow element (have any type because tslint...)
+   * @Return {void} return nothing update the DOM
    */
-  function gArrow(id: number, finish: boolean) {
-    if (questsList['2choice'].includes(id)) {
-      return 2;
-    } else if (questsList['3choice'].includes(id)) {
-      return (
-        <span>
-          <span className={'a-three ' + (finish ? 'bg-green' : 'bg-red')}></span>
-          <span className={'a-one ' + (finish ? 'bg-green' : 'bg-red')}></span>
-        </span>
-      );
-    } else if (questsList['5choice'].includes(id)) {
-      return 5;
+  function gArrow(idFrom: any, idTo: any, idLine: any) {
+    // console.log('!!!', idFrom, idTo, idLine);
+    if (idFrom !== 0) {
+      const from: HTMLElement | null = document.getElementById(idFrom);
+      const to: HTMLElement | null = document.getElementById(idTo);
+      const line: any | null = document.getElementById(idLine);
+
+      // console.log('###', from, to, line);
+
+      if (from && to && line) {
+        const fT = from.offsetTop + from.offsetHeight/2;
+        const tT = to.offsetTop + to.offsetHeight/2;
+        const fL = from.offsetLeft + from.offsetWidth/2;
+        const tL = to.offsetLeft + to.offsetWidth/2;
+
+        const CA = Math.abs(tT - fT);
+        const CO = Math.abs(tL - fL);
+        const H = Math.sqrt(CA*CA + CO*CO);
+        let ANG = 180 / Math.PI * Math.acos( CA/H );
+
+        let top; let left;
+        if (tT > fT) {
+          top = (tT-fT)/2 + fT;
+        } else {
+          top = (fT-tT)/2 + tT;
+        }
+        if (tL > fL) {
+          left = (tL-fL)/2 + fL;
+        } else {
+          left = (fL-tL)/2 + tL;
+        }
+
+        if (( fT < tT && fL < tL) || ( tT < fT && tL < fL) || (fT > tT && fL > tL) || (tT > fT && tL > fL)) {
+          ANG *= -1;
+        }
+        top-= H/2;
+
+        line.style['-webkit-transform'] = 'rotate('+ ANG +'deg)';
+        line.style['-moz-transform'] = 'rotate('+ ANG +'deg)';
+        line.style['-ms-transform'] = 'rotate('+ ANG +'deg)';
+        line.style['-o-transform'] = 'rotate('+ ANG +'deg)';
+        line.style['-transform'] = 'rotate('+ ANG +'deg)';
+        line.style.top = top+'px';
+        line.style.left = left+'px';
+        line.style.height = H + 'px';
+      }
     }
-    return (<span className={'a-one ' + (finish ? 'bg-green' : 'bg-red')}></span>);
+  }
+
+  /**
+   * lores ipsum
+   */
+  function dataMapArrow() {
+    Object.entries(questsList).forEach(([qLKey, line]: any) => {
+      line.forEach((col: any) => {
+        col.forEach((line: any) => {
+          line.forEach((subLine: any) => {
+            Array.isArray(subLine) ?
+              subLine.forEach((subCol: any) => {
+                gArrow(subCol.pid, subCol.id, 'a' + subCol.pid + subCol.id);
+              }) :
+                gArrow(subLine.pid, subLine.id, 'a' + subLine.pid + subLine.id);
+          });
+        });
+      });
+    });
   }
 
   useEffect(() => {
+    console.log('>>>>>>>> USEEFFECT <<<<<<<<<');
     checkApiKey();
     sortData().then((res: any) => {
       setDataMap(res);
       setLoading(false);
     });
-  }, []);
+    window.addEventListener('load', () => {
+      dataMapArrow();
+    });
+  }, [loading]);
 
   /**
    * map the html map
@@ -61,24 +118,28 @@ const Map: React.FunctionComponent = () => {
     return (Object.entries(questsList).map(([qLKey, line]: any) => (
       qLKey === storyKey &&
       line.map((col: any) => (
-        <div key={qLKey+col} className='map-item'>
+        <div key={qLKey+col.id} className='map-item'>
           {col.map((line: any) => (
-            <div key={qLKey+line}>
+            <div key={qLKey+line.id}>
               {line.map((subLine: any) => (
                 <div key={qLKey+subLine} className='map-choice'>
                   {Array.isArray(subLine) ?
                     subLine.map((subCol: any) => (
-                      <span key={qLKey+subCol} className='lb-one'>
-                        <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subCol)) ? 'bg-green' : 'bg-red')}
-                          id={subCol}
-                        >{gArrow(subCol, dataMap.charactersData.questsDone[key].includes(Number(subCol)))}
+                      <span key={qLKey+subCol.id} className='lb-one'>
+                        <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subCol.id)) ? 'bg-green' : 'bg-red')}
+                          id={subCol.id}
+                        >
+                          <div className="arrow" id={'a'+subCol.pid+subCol.id}> </div>
+                          {gArrow(subCol.pid, subCol.id, 'a'+subCol.pid+subCol.id)}
                         </div>
                       </span>
                     )) :
                     <span className='lb-one'>
-                      <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine)) ? 'bg-green' : 'bg-red')}
-                        id={subLine}
-                      >{gArrow(subLine, dataMap.charactersData.questsDone[key].includes(Number(subLine)))}
+                      <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine.id)) ? 'bg-green' : 'bg-red')}
+                        id={subLine.id}
+                      >
+                        <div className="arrow" id={'a'+subLine.pid+subLine.id}> </div>
+                        {gArrow(subLine.pid, subLine.id, 'a'+subLine.pid+subLine.id)}
                       </div>
                     </span>
                   }

@@ -29,17 +29,10 @@
                   height: 20px;
                   width: 20px;
                   margin: 5px;
-                  .a-one {
-                    position: absolute;
-                    height: 2px;
-                    width: 40px;
-                  }
-                  .a-three {
-                    position: absolute;
-                    left: 8px;
-                    top: -50px;
-                    height: 120px;
-                    width: 2px;
+                  .arrow {
+                    //position:absolute;
+                    width:1px;
+                    background-color: #ff26ed;
                   }
                 }
               }
