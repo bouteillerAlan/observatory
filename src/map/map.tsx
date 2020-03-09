@@ -8,7 +8,6 @@ import './map.scss';
 const Map: React.FunctionComponent = () => {
   const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
-  console.log(dataMap)
 
   /**
    * Perform a check and return the value of the guild for an id
@@ -25,17 +24,23 @@ const Map: React.FunctionComponent = () => {
   /**
    * generate the arrow for the map
    * @Param {number} id the id you want to check
-   * @Return {number} the amount of the next quest
+   * @Param {boolean} finish the quest is green ?
+   * @Return {any} the amount of the next quest
    */
-  function gArrow(id: number) {
+  function gArrow(id: number, finish: boolean) {
     if (questsList['2choice'].includes(id)) {
       return 2;
     } else if (questsList['3choice'].includes(id)) {
-      return 3;
+      return (
+        <span>
+          <span className={'a-three ' + (finish ? 'bg-green' : 'bg-red')}></span>
+          <span className={'a-one ' + (finish ? 'bg-green' : 'bg-red')}></span>
+        </span>
+      );
     } else if (questsList['5choice'].includes(id)) {
       return 5;
     }
-    return 1;
+    return (<span className={'a-one ' + (finish ? 'bg-green' : 'bg-red')}></span>);
   }
 
   useEffect(() => {
@@ -66,14 +71,14 @@ const Map: React.FunctionComponent = () => {
                       <span key={qLKey+subCol} className='lb-one'>
                         <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subCol)) ? 'bg-green' : 'bg-red')}
                           id={subCol}
-                        >{gArrow(subCol)}
+                        >{gArrow(subCol, dataMap.charactersData.questsDone[key].includes(Number(subCol)))}
                         </div>
                       </span>
                     )) :
                     <span className='lb-one'>
                       <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine)) ? 'bg-green' : 'bg-red')}
                         id={subLine}
-                      >{gArrow(subLine)}
+                      >{gArrow(subLine, dataMap.charactersData.questsDone[key].includes(Number(subLine)))}
                       </div>
                     </span>
                   }
