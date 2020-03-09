@@ -26,16 +26,14 @@ const Map: React.FunctionComponent = () => {
    * @Param {HTMLElement} idFrom arrow start
    * @Param {HTMLElement} idTo arrow end
    * @Param {HTMLElement} idLine the arrow element (have any type because tslint...)
+   * @Param {boolean} color if the quest is done or not
    * @Return {void} return nothing update the DOM
    */
-  function gArrow(idFrom: any, idTo: any, idLine: any) {
-    // console.log('!!!', idFrom, idTo, idLine);
+  function gArrow(idFrom: any, idTo: any, idLine: any, color: boolean) {
     if (idFrom !== 0) {
       const from: HTMLElement | null = document.getElementById(idFrom);
       const to: HTMLElement | null = document.getElementById(idTo);
       const line: any | null = document.getElementById(idLine);
-
-      // console.log('###', from, to, line);
 
       if (from && to && line) {
         const fT = from.offsetTop + from.offsetHeight/2;
@@ -65,6 +63,7 @@ const Map: React.FunctionComponent = () => {
         }
         top-= H/2;
 
+        line.classList.add(color ? 'bg-green' : 'bg-red');
         line.style['-webkit-transform'] = 'rotate('+ ANG +'deg)';
         line.style['-moz-transform'] = 'rotate('+ ANG +'deg)';
         line.style['-ms-transform'] = 'rotate('+ ANG +'deg)';
@@ -77,71 +76,49 @@ const Map: React.FunctionComponent = () => {
     }
   }
 
-  /**
-   * lores ipsum
-   */
-  function dataMapArrow() {
-    Object.entries(questsList).forEach(([qLKey, line]: any) => {
-      line.forEach((col: any) => {
-        col.forEach((line: any) => {
-          line.forEach((subLine: any) => {
-            Array.isArray(subLine) ?
-              subLine.forEach((subCol: any) => {
-                gArrow(subCol.pid, subCol.id, 'a' + subCol.pid + subCol.id);
-              }) :
-                gArrow(subLine.pid, subLine.id, 'a' + subLine.pid + subLine.id);
-          });
-        });
-      });
-    });
-  }
-
+  // the loading deps allow to rerender the component with the
+  // data and generate the arrow
   useEffect(() => {
-    console.log('>>>>>>>> USEEFFECT <<<<<<<<<');
     checkApiKey();
     sortData().then((res: any) => {
       setDataMap(res);
       setLoading(false);
-    });
-    window.addEventListener('load', () => {
-      dataMapArrow();
     });
   }, [loading]);
 
   /**
    * map the html map
    * @Param {string | number} storyKey the key of the story
-   * @Param {string | number} key the key of character array
+   * @Param {string} key the key of character array
    * @Return {dom} return the map
    */
-  function dataMapHtml(storyKey: string | number, key: string | number) {
+  function dataMapHtml(storyKey: string | number, key: string) {
+    const name: string = key.replace(/\s/g, '');
     return (Object.entries(questsList).map(([qLKey, line]: any) => (
       qLKey === storyKey &&
       line.map((col: any) => (
-        <div key={qLKey+col.id} className='map-item'>
+        <div key={name+qLKey+col.id} className='map-item'>
           {col.map((line: any) => (
-            <div key={qLKey+line.id}>
+            <div key={name+qLKey+line.id}>
               {line.map((subLine: any) => (
-                <div key={qLKey+subLine} className='map-choice'>
+                <div key={name+qLKey+subLine} className='map-choice'>
                   {Array.isArray(subLine) ?
                     subLine.map((subCol: any) => (
-                      <span key={qLKey+subCol.id} className='lb-one'>
+                      <div key={name+qLKey+subCol.id} className='lb-one'>
                         <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subCol.id)) ? 'bg-green' : 'bg-red')}
-                          id={subCol.id}
-                        >
-                          <div className="arrow" id={'a'+subCol.pid+subCol.id}> </div>
-                          {gArrow(subCol.pid, subCol.id, 'a'+subCol.pid+subCol.id)}
-                        </div>
-                      </span>
-                    )) :
-                    <span className='lb-one'>
-                      <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine.id)) ? 'bg-green' : 'bg-red')}
-                        id={subLine.id}
-                      >
-                        <div className="arrow" id={'a'+subLine.pid+subLine.id}> </div>
-                        {gArrow(subLine.pid, subLine.id, 'a'+subLine.pid+subLine.id)}
+                          id={name+subCol.id}
+                        > </div>
+                        <div className="arrow" id={'a'+name+subCol.pid+subCol.id}> </div>
+                        {gArrow(name+subCol.pid, name+subCol.id, 'a'+name+subCol.pid+subCol.id, dataMap.charactersData.questsDone[key].includes(Number(subCol.id)))}
                       </div>
-                    </span>
+                    )) :
+                    <div className='lb-one'>
+                      <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine.id)) ? 'bg-green' : 'bg-red')}
+                        id={name+subLine.id}
+                      > </div>
+                      <div className="arrow" id={'a'+name+subLine.pid+subLine.id}> </div>
+                      {gArrow(name+subLine.pid, name+subLine.id, 'a'+name+subLine.pid+subLine.id, dataMap.charactersData.questsDone[key].includes(Number(subLine.id)))}
+                    </div>
                   }
                 </div>
               ))}
