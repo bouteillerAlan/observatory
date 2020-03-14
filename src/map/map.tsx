@@ -99,26 +99,26 @@ const Map: React.FunctionComponent = () => {
       line.map((col: any) => (
         <div key={name+qLKey+col.id} className='map-item'>
           {col.map((line: any) => (
-            <div key={name+qLKey+line.id}>
+            <div key={name+qLKey+line.id} className='map-item-screen'>
               {line.map((subLine: any) => (
                 <div key={name+qLKey+subLine} className='map-choice'>
                   {Array.isArray(subLine) ?
                     subLine.map((subCol: any) => (
-                      <div key={name+qLKey+subCol.id} className='lb-one'>
+                      <span key={name+qLKey+subCol.id} className='lb-one'>
                         <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subCol.id)) ? 'bg-green' : 'bg-red')}
                           id={name+subCol.id}
                         > </div>
                         <div className="arrow" id={'a'+name+subCol.pid+subCol.id}> </div>
                         {gArrow(name+subCol.pid, name+subCol.id, 'a'+name+subCol.pid+subCol.id, dataMap.charactersData.questsDone[key].includes(Number(subCol.id)))}
-                      </div>
+                      </span>
                     )) :
-                    <div className='lb-one'>
+                    <span className='lb-one'>
                       <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine.id)) ? 'bg-green' : 'bg-red')}
                         id={name+subLine.id}
                       > </div>
                       <div className="arrow" id={'a'+name+subLine.pid+subLine.id}> </div>
                       {gArrow(name+subLine.pid, name+subLine.id, 'a'+name+subLine.pid+subLine.id, dataMap.charactersData.questsDone[key].includes(Number(subLine.id)))}
-                    </div>
+                    </span>
                   }
                 </div>
               ))}
@@ -177,15 +177,9 @@ const Map: React.FunctionComponent = () => {
                     {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                       Object.entries(season.stories).map(([storyKey, story]: any) => (
                         (story.races && story.races[0] === value.race) &&
-                          <table key={storyKey+seasonKey}>
-                            <tbody>
-                              <tr>
-                                <td>
-                                  {dataMapHtml(storyKey, key)}
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                          <div className="table" key={storyKey+seasonKey}>
+                            {dataMapHtml(storyKey, key)}
+                          </div>
                       ))
                     ))}
                   </td>
@@ -194,15 +188,9 @@ const Map: React.FunctionComponent = () => {
                   {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                     Object.entries(season.stories).map(([storyKey, story]: any) => (
                       !story.races && <td key={storyKey+seasonKey} className="subTable">
-                        <table>
-                          <tbody>
-                            <tr>
-                              <td>
-                                {dataMapHtml(storyKey, key)}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                        <div className="table">
+                          {dataMapHtml(storyKey, key)}
+                        </div>
                       </td>
                     ))
                   ))}

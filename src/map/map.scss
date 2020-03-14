@@ -2,35 +2,30 @@
   overflow: auto;
   table {
     width: max-content;
+    position: relative;
     th, td {
       border-left: solid rgba(0, 0, 0, 0.20) 1px;
       text-align: center;
     }
     .subTable {
       padding: 0;
-      table {
-        display: block;
-        width: 100%;
-        td {
-          border-left: 0;
-          border-right: solid rgba(0, 0, 0, 0.20) 1px;
-          border-radius: 0;
-          display: flex;
-          align-items: center;
-          .map-item {
-            div {
-              display: flex;
-              align-items: center;
-            }
-            .map-choice {
-              display: flex;
-              flex-direction: column;
-              .lb-one {
-                .card {
-                  height: 20px;
-                  width: 20px;
-                  margin: 5px;
-                }
+      .table {
+        display: flex;
+        align-items: center;
+        .map-item {
+          .map-item-screen {
+            display: flex;
+            align-items: center;
+          }
+          .map-choice {
+            display: flex;
+            flex-direction: column;
+            .lb-one {
+              .card {
+                z-index: 2;
+                height: 20px;
+                width: 20px;
+                margin: 5px;
               }
             }
           }
@@ -42,4 +37,6 @@
 
 .arrow {
   width: 1px;
+  position: absolute;
+  z-index: 1;
 }
