@@ -87,6 +87,34 @@ const Map: React.FunctionComponent = () => {
   }, [loading]);
 
   /**
+   * map the arrow
+   * @Param {string} name the current character name
+   * @Param {string} key the current story key
+   * @Param {{id: number, pid: number}} subLine the data for generate arrow
+   * @Return {dom} the arrow
+   */
+  function dataMapArrow(name: string, key: string, subLine: {id: number, pid: number}) {
+    return (
+      <span className='lb-one'>
+        <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine.id)) ? 'bg-green' : 'bg-red')} id={name+subLine.id}> </div>
+        {/* if precedent is array map it */}
+        {Array.isArray(subLine.pid) ?
+          subLine.pid.map((subColPid: any) => (
+            <>
+              <div className="arrow" id={'a'+name+subColPid+subLine.id}> </div>
+              {gArrow(name+subColPid, name+subLine.id, 'a'+name+subColPid+subLine.id, (dataMap.charactersData.questsDone[key].includes(Number(subLine.id))) && dataMap.charactersData.questsDone[key].includes(Number(subColPid)))}
+            </>
+          )) :
+          <>
+            <div className="arrow" id={'a'+name+subLine.pid+subLine.id}> </div>
+            {gArrow(name+subLine.pid, name+subLine.id, 'a'+name+subLine.pid+subLine.id, (dataMap.charactersData.questsDone[key].includes(Number(subLine.id))) && dataMap.charactersData.questsDone[key].includes(Number(subLine.pid)))}
+          </>
+        }
+      </span>
+    );
+  }
+
+  /**
    * map the html map
    * @Param {string | number} storyKey the key of the story
    * @Param {string} key the key of character array
@@ -104,21 +132,9 @@ const Map: React.FunctionComponent = () => {
                 <div key={name+qLKey+subLine} className='map-choice'>
                   {Array.isArray(subLine) ?
                     subLine.map((subCol: any) => (
-                      <span key={name+qLKey+subCol.id} className='lb-one'>
-                        <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subCol.id)) ? 'bg-green' : 'bg-red')}
-                          id={name+subCol.id}
-                        > </div>
-                        <div className="arrow" id={'a'+name+subCol.pid+subCol.id}> </div>
-                        {gArrow(name+subCol.pid, name+subCol.id, 'a'+name+subCol.pid+subCol.id, dataMap.charactersData.questsDone[key].includes(Number(subCol.id)))}
-                      </span>
+                      dataMapArrow(name, key, subCol)
                     )) :
-                    <span className='lb-one'>
-                      <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine.id)) ? 'bg-green' : 'bg-red')}
-                        id={name+subLine.id}
-                      > </div>
-                      <div className="arrow" id={'a'+name+subLine.pid+subLine.id}> </div>
-                      {gArrow(name+subLine.pid, name+subLine.id, 'a'+name+subLine.pid+subLine.id, dataMap.charactersData.questsDone[key].includes(Number(subLine.id)))}
-                    </span>
+                    dataMapArrow(name, key, subLine)
                   }
                 </div>
               ))}
