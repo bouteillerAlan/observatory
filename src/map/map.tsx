@@ -10,6 +10,7 @@ const Map: React.FunctionComponent = () => {
   const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
   const [gen, setGen] = useState(true);
+  const [lang] = useState(localStorage.getItem('obsLang'));
 
   /**
    * Perform a check and return the value of the guild for an id
@@ -20,7 +21,14 @@ const Map: React.FunctionComponent = () => {
     const durmand = questsList.durmand.some( (r: any) => ids.indexOf(r) >= 0);
     const whisper = questsList.whisper.some( (r: any) => ids.indexOf(r) >= 0);
     const vigil = questsList.vigil.some( (r: any) => ids.indexOf(r) >= 0);
-    return durmand ? 'durmand' : whisper ? 'whisper' : vigil ? 'vigil' : null;
+    if (durmand) {
+      return lang === 'fr' ? 'Durmand' : 'Durmand';
+    } else if (whisper) {
+      return lang === 'fr' ? 'Soupir' : 'Whisper';
+    } else if (vigil) {
+      return lang === 'fr' ? 'Veilleur' : 'Vigil';
+    }
+    return null;
   }
 
   /**
@@ -88,11 +96,11 @@ const Map: React.FunctionComponent = () => {
       const elems = document.querySelectorAll('.tooltipped');
       const options = {};
       M.Tooltip.init(elems, options);
+      // FIXME
+      setTimeout(() => {
+        setGen(false);
+      }, 2500);
     });
-    // FIXME
-    setTimeout(() => {
-      setGen(false);
-    }, 2500);
   }, [loading]);
 
   /**
@@ -168,8 +176,9 @@ const Map: React.FunctionComponent = () => {
       <Nav active={'map'} />
       {gen &&
       <div id='warning-message'>
-        Le calcul des trajets peux prendre un certain temps.
-        Merci de patienter.
+        {lang === 'fr' ?
+          'Le calcul des trajets peux prendre un certain temps. Merci de patienter.' :
+          'It may take a while to calculate the routes. Please be patient.'}
       </div>
       }
       {loading ?
@@ -191,12 +200,12 @@ const Map: React.FunctionComponent = () => {
                 ))}
               </tr>
               <tr>
-                <th>Race</th>
-                <th>Classe</th>
-                <th>Name</th>
-                <th>Level</th>
-                <th>Order</th>
-                <th>Histoire du personage</th>
+                <th>{lang === 'fr' ? 'Race' : 'Race'}</th>
+                <th>{lang === 'fr' ? 'Classe' : 'Classe'}</th>
+                <th>{lang === 'fr' ? 'Nom' : 'Name'}</th>
+                <th>{lang === 'fr' ? 'Niveau' : 'Level'}</th>
+                <th>{lang === 'fr' ? 'Ordre' : 'Order'}</th>
+                <th>{lang === 'fr' ? 'Histoire du personage' : 'Character story'}</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
                   season.stories.map((story: any) => (
                     !story.races && <th key={story.id+seasonKey}>{story.name}</th>

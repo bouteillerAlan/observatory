@@ -9,7 +9,7 @@ const _lang = localStorage.getItem('obsLang');
  * @return {any} return result.json
  */
 function getCharacters() {
-  return fetch(`${_API_URL}characters?access_token=${_apiKey}`).then(async (res: any) => {
+  return fetch(`${_API_URL}characters?access_token=${_apiKey}&lang=${_lang}`).then(async (res: any) => {
     return res.json();
   });
 }
@@ -61,7 +61,7 @@ function getDoneQuests(character: any) {
  * @return {any} return result.json
  */
 function getBackStories(character: any) {
-  return fetch(`${_API_URL}/characters/${character}/backstory?access_token=${_apiKey}`).then(async (res: any) => {
+  return fetch(`${_API_URL}/characters/${character}/backstory?access_token=${_apiKey}&lang=${_lang}`).then(async (res: any) => {
     return res.json();
   });
 }
