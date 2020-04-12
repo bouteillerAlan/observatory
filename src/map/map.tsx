@@ -4,10 +4,12 @@ import checkApiKey from '../request/checkApiKey';
 import Nav from '../nav/nav';
 import questsList from '../data/quests';
 import './map.scss';
+import M from 'materialize-css';
 
 const Map: React.FunctionComponent = () => {
   const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
+  const [gen, setGen] = useState(true);
 
   /**
    * Perform a check and return the value of the guild for an id
@@ -21,17 +23,155 @@ const Map: React.FunctionComponent = () => {
     return durmand ? 'durmand' : whisper ? 'whisper' : vigil ? 'vigil' : null;
   }
 
+  /**
+   * generate the arrow for the map
+   * @Param {HTMLElement} idFrom arrow start
+   * @Param {HTMLElement} idTo arrow end
+   * @Param {HTMLElement} idLine the arrow element (have any type because tslint...)
+   * @Param {boolean} color if the quest is done or not
+   * @Return {void} return nothing update the DOM
+   */
+  function gArrow(idFrom: any, idTo: any, idLine: any, color: boolean) {
+    if (idFrom !== 0) {
+      const from: HTMLElement | null = document.getElementById(idFrom);
+      const to: HTMLElement | null = document.getElementById(idTo);
+      const line: any | null = document.getElementById(idLine);
+
+      if (from && to && line) {
+        const fT = from.offsetTop + from.offsetHeight/2;
+        const tT = to.offsetTop + to.offsetHeight/2;
+        const fL = from.offsetLeft + from.offsetWidth/2;
+        const tL = to.offsetLeft + to.offsetWidth/2;
+
+        const CA = Math.abs(tT - fT);
+        const CO = Math.abs(tL - fL);
+        const H = Math.sqrt(CA*CA + CO*CO);
+        let ANG = 180 / Math.PI * Math.acos( CA/H );
+
+        let top; let left;
+        if (tT > fT) {
+          top = (tT-fT)/2 + fT;
+        } else {
+          top = (fT-tT)/2 + tT;
+        }
+        if (tL > fL) {
+          left = (tL-fL)/2 + fL;
+        } else {
+          left = (fL-tL)/2 + tL;
+        }
+
+        if (( fT < tT && fL < tL) || ( tT < fT && tL < fL) || (fT > tT && fL > tL) || (tT > fT && tL > fL)) {
+          ANG *= -1;
+        }
+        top-= H/2;
+
+        line.classList.add(color ? 'bg-green' : 'bg-red');
+        line.style['-webkit-transform'] = 'rotate('+ ANG +'deg)';
+        line.style['-moz-transform'] = 'rotate('+ ANG +'deg)';
+        line.style['-ms-transform'] = 'rotate('+ ANG +'deg)';
+        line.style['-o-transform'] = 'rotate('+ ANG +'deg)';
+        line.style['-transform'] = 'rotate('+ ANG +'deg)';
+        line.style.top = top+'px';
+        line.style.left = left+'px';
+        line.style.height = H + 'px';
+      }
+    }
+  }
+
+  // the loading deps allow to rerender the component with the
+  // data and generate the arrow
   useEffect(() => {
     checkApiKey();
     sortData().then((res: any) => {
       setDataMap(res);
       setLoading(false);
+      const elems = document.querySelectorAll('.tooltipped');
+      const options = {};
+      M.Tooltip.init(elems, options);
     });
-  }, []);
+    // FIXME
+    setTimeout(() => {
+      setGen(false);
+    }, 2500);
+  }, [loading]);
+
+  /**
+   * map the arrow
+   * @Param {string} name the current character name without space (for css class)
+   * @Param {string} key the current character name
+   * @Param {{id: number, pid: number}} subLine the data for generate arrow
+   * @Param {string} seasonKey the season key for mapping tooltips title
+   * @Param {string} storyKey the story key for mapping tooltips title
+   * @Return {dom} the arrow
+   */
+  function dataMapArrow(name: string, key: string, subLine: {id: number, pid: number}, seasonKey: string, storyKey: any) {
+    return (
+      <span key={key+subLine.id} className='lb-one'>
+        <div className={'card tooltipped ' + (dataMap.charactersData.questsDone[key].includes(subLine.id) ? 'bg-green' : 'bg-red')} data-position="top"
+          data-tooltip={`${dataMap.dataMap[seasonKey]['stories'].filter((story: any) => story.id === storyKey)[0].quests.filter((quest: any) => quest.id === subLine.id)[0].name}`} id={name+subLine.id}>
+        </div>
+        {/* if precedent is array map it */}
+        {Array.isArray(subLine.pid) ?
+          subLine.pid.map((subColPid: any) => (
+            <span key={subColPid}>
+              <div className="arrow" id={'a'+name+subColPid+subLine.id}> </div>
+              {gArrow(name+subColPid, name+subLine.id, 'a'+name+subColPid+subLine.id, (dataMap.charactersData.questsDone[key].includes(subLine.id)) && dataMap.charactersData.questsDone[key].includes(subColPid))}
+            </span>
+          )) :
+          <span>
+            <div className="arrow" id={'a'+name+subLine.pid+subLine.id}> </div>
+            {gArrow(name+subLine.pid, name+subLine.id, 'a'+name+subLine.pid+subLine.id, (dataMap.charactersData.questsDone[key].includes(subLine.id)) && dataMap.charactersData.questsDone[key].includes(subLine.pid))}
+          </span>
+        }
+      </span>
+    );
+  }
+
+  /**
+   * map the html map
+   * @Param {string} seasonKey the season key for mapping the tooltips title
+   * @Param {string | number} storyKey the key of the story
+   * @Param {string} key the key of character array
+   * @Return {dom} return the map
+   */
+  function dataMapHtml(seasonKey: string, storyKey: string | number, key: string) {
+    const name: string = key.replace(/\s/g, '');
+    return (
+      questsList[storyKey] &&
+      Object.entries(questsList[storyKey]).map(([qLKey, line]: any) => (
+        <div key={storyKey+qLKey} className='map-item'>
+          {line &&
+            line.map((sub: any, subKey: any) => (
+              <div key={storyKey+qLKey+subKey} className='map-item-screen'>
+                {sub &&
+                  sub.map((subLine: any, subLineKey: any) => ( // obj ou array
+                    <div key={storyKey+qLKey+subKey+subLineKey} className='map-choice'>
+                      {Array.isArray(subLine) ?
+                        subLine.map((subCol: any) => (
+                          dataMapArrow(name, key, subCol, seasonKey, storyKey)
+                        )) :
+                        dataMapArrow(name, key, subLine, seasonKey, storyKey)
+                      }
+                    </div>
+                  ))
+                } {/* end sub */}
+              </div>
+            ))
+          }  {/* end line */}
+        </div>
+      ))
+    );
+  }
 
   return (
     <section className="map">
       <Nav active={'map'} />
+      {gen &&
+      <div id='warning-message'>
+        Le calcul des trajets peux prendre un certain temps.
+        Merci de patienter.
+      </div>
+      }
       {loading ?
         <div className="progress">
           <div className="indeterminate"> </div>
@@ -44,7 +184,10 @@ const Map: React.FunctionComponent = () => {
               <tr>
                 <th colSpan={5}>Persona</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                  <th key={seasonKey} colSpan={Object.keys(season.stories).length}>{season.name}</th>
+                  // if the season is equal to '215AAA0F-CDAC-4F93-86DA-C155A99B5784' this is a 'my story' map so colSpan = 3
+                  seasonKey === '215AAA0F-CDAC-4F93-86DA-C155A99B5784' ?
+                    <th key={seasonKey} colSpan={3}>{season.name}</th> :
+                    <th key={seasonKey} colSpan={season.stories.length}>{season.name}</th>
                 ))}
               </tr>
               <tr>
@@ -53,9 +196,10 @@ const Map: React.FunctionComponent = () => {
                 <th>Name</th>
                 <th>Level</th>
                 <th>Order</th>
+                <th>Histoire du personage</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                  Object.entries(season.stories).map(([storyKey, story]: any) => (
-                    <th key={storyKey+seasonKey}>{story.name} {story.races && '- '+story.races[0]}</th>
+                  season.stories.map((story: any) => (
+                    !story.races && <th key={story.id+seasonKey}>{story.name}</th>
                   ))
                 ))}
               </tr>
@@ -68,21 +212,25 @@ const Map: React.FunctionComponent = () => {
                   <td>{key}</td>
                   <td>{value.level}</td>
                   <td>{checkGuild(dataMap.charactersData.questsDone[key])}</td>
+                  <td className="subTable">
+                    {/* here we generate only the quests for the race of the character in court in a single column */}
+                    {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
+                      season.stories.map((story: any) => (
+                        (story.races && story.races[0] === value.race) &&
+                          <div className="table" key={story.id+seasonKey}>
+                            {dataMapHtml(seasonKey, story.id, key)}
+                          </div>
+                      ))
+                    ))}
+                  </td>
+
+                  {/* here we generate the rest of the quests */}
                   {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                    Object.entries(season.stories).map(([storyKey, story]: any) => (
-                      <td key={storyKey+seasonKey} className="subTable">
-                        <table>
-                          <tbody>
-                            <tr>
-                              {Object.entries(story.quests).map(([questKey, quest]: any) => (
-                                <td key={questKey}
-                                  className={dataMap.charactersData.questsDone[key].includes(Number(questKey)) ? 'bg-green' : 'bg-red'}
-                                >
-                                </td>
-                              ))}
-                            </tr>
-                          </tbody>
-                        </table>
+                    season.stories.map((story: any) => (
+                      !story.races && <td key={story.id+seasonKey} className="subTable">
+                        <div className="table">
+                          {dataMapHtml(seasonKey, story.id, key)}
+                        </div>
                       </td>
                     ))
                   ))}

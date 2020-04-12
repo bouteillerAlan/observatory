@@ -11,7 +11,7 @@ const Nav: React.FunctionComponent<NavProps> = (props: NavProps) => {
     <>
       <nav>
         <div className="nav-wrapper">
-          <a href="#" data-target="mobile-nav" className="sidenav-trigger">
+          <a href="#empty" data-target="mobile-nav" className="sidenav-trigger">
             <i className="material-icons">menu</i>
           </a>
           <ul className='left hide-on-med-and-down'>
