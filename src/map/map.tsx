@@ -84,7 +84,7 @@ const Map: React.FunctionComponent = () => {
     console.log('#######');
     checkApiKey();
     sortData().then((res: any) => {
-      setDataMap(res);
+      setDataMap(res); // res
       setLoading(false);
     });
   }, [loading]);
@@ -170,7 +170,7 @@ const Map: React.FunctionComponent = () => {
                   // if the season is equal to '215AAA0F-CDAC-4F93-86DA-C155A99B5784' this is a 'my story' map so colSpan = 3
                   seasonKey === '215AAA0F-CDAC-4F93-86DA-C155A99B5784' ?
                     <th key={seasonKey} colSpan={3}>{season.name}</th> :
-                    <th key={seasonKey} colSpan={Object.keys(season.stories).length}>{season.name}</th>
+                    <th key={seasonKey} colSpan={season.stories.length}>{season.name}</th>
                 ))}
               </tr>
               <tr>
@@ -181,8 +181,8 @@ const Map: React.FunctionComponent = () => {
                 <th>Order</th>
                 <th>Histoire du personage</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                  Object.entries(season.stories).map(([storyKey, story]: any) => (
-                    !story.races && <th key={storyKey+seasonKey}>{story.name}</th>
+                  season.stories.map((story: any, storyKey: any) => (
+                    !story.races && <th key={story.id+seasonKey}>{story.name}</th>
                   ))
                 ))}
               </tr>
@@ -198,10 +198,10 @@ const Map: React.FunctionComponent = () => {
                   <td className="subTable">
                     {/* here we generate only the quests for the race of the character in court in a single column */}
                     {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                      Object.entries(season.stories).map(([storyKey, story]: any) => (
+                      season.stories.map((story: any, storyKey: any) => (
                         (story.races && story.races[0] === value.race) &&
-                          <div className="table" key={storyKey+seasonKey}>
-                            {dataMapHtml(storyKey, key)}
+                          <div className="table" key={story.id+seasonKey}>
+                            {dataMapHtml(story.id, key)}
                           </div>
                       ))
                     ))}
@@ -209,10 +209,10 @@ const Map: React.FunctionComponent = () => {
 
                   {/* here we generate the rest of the quests */}
                   {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                    Object.entries(season.stories).map(([storyKey, story]: any) => (
-                      !story.races && <td key={storyKey+seasonKey} className="subTable">
+                    season.stories.map((story: any, storyKey: any) => (
+                      !story.races && <td key={story.id+seasonKey} className="subTable">
                         <div className="table">
-                          {dataMapHtml(storyKey, key)}
+                          {dataMapHtml(story.id, key)}
                         </div>
                       </td>
                     ))
