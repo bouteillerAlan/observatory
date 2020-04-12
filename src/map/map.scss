@@ -27,16 +27,15 @@
                 width: 20px;
                 margin: 5px;
               }
+              .arrow {
+                width: 1px;
+                position: absolute;
+                z-index: 1;
+              }
             }
           }
         }
       }
     }
   }
-}
-
-.arrow {
-  width: 1px;
-  position: absolute;
-  z-index: 1;
 }

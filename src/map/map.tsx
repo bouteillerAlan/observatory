@@ -9,6 +9,8 @@ const Map: React.FunctionComponent = () => {
   const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
 
+  console.log(dataMap);
+
   /**
    * Perform a check and return the value of the guild for an id
    * @param {array} ids list of id
@@ -88,26 +90,26 @@ const Map: React.FunctionComponent = () => {
 
   /**
    * map the arrow
-   * @Param {string} name the current character name
-   * @Param {string} key the current story key
+   * @Param {string} name the current character name without space (for css class)
+   * @Param {string} key the current character name
    * @Param {{id: number, pid: number}} subLine the data for generate arrow
    * @Return {dom} the arrow
    */
   function dataMapArrow(name: string, key: string, subLine: {id: number, pid: number}) {
     return (
       <span className='lb-one'>
-        <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(Number(subLine.id)) ? 'bg-green' : 'bg-red')} id={name+subLine.id}> </div>
+        <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(subLine.id) ? 'bg-green' : 'bg-red')} id={name+subLine.id}> </div>
         {/* if precedent is array map it */}
         {Array.isArray(subLine.pid) ?
           subLine.pid.map((subColPid: any) => (
             <>
               <div className="arrow" id={'a'+name+subColPid+subLine.id}> </div>
-              {gArrow(name+subColPid, name+subLine.id, 'a'+name+subColPid+subLine.id, (dataMap.charactersData.questsDone[key].includes(Number(subLine.id))) && dataMap.charactersData.questsDone[key].includes(Number(subColPid)))}
+              {gArrow(name+subColPid, name+subLine.id, 'a'+name+subColPid+subLine.id, (dataMap.charactersData.questsDone[key].includes(subLine.id)) && dataMap.charactersData.questsDone[key].includes(subColPid))}
             </>
           )) :
           <>
             <div className="arrow" id={'a'+name+subLine.pid+subLine.id}> </div>
-            {gArrow(name+subLine.pid, name+subLine.id, 'a'+name+subLine.pid+subLine.id, (dataMap.charactersData.questsDone[key].includes(Number(subLine.id))) && dataMap.charactersData.questsDone[key].includes(Number(subLine.pid)))}
+            {gArrow(name+subLine.pid, name+subLine.id, 'a'+name+subLine.pid+subLine.id, (dataMap.charactersData.questsDone[key].includes(subLine.id)) && dataMap.charactersData.questsDone[key].includes(subLine.pid))}
           </>
         }
       </span>
