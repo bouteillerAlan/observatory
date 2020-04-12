@@ -81,6 +81,7 @@ const Map: React.FunctionComponent = () => {
   // the loading deps allow to rerender the component with the
   // data and generate the arrow
   useEffect(() => {
+    console.log('#######');
     checkApiKey();
     sortData().then((res: any) => {
       setDataMap(res);
@@ -97,20 +98,20 @@ const Map: React.FunctionComponent = () => {
    */
   function dataMapArrow(name: string, key: string, subLine: {id: number, pid: number}) {
     return (
-      <span className='lb-one'>
+      <span key={key+subLine.id} className='lb-one'>
         <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(subLine.id) ? 'bg-green' : 'bg-red')} id={name+subLine.id}> </div>
         {/* if precedent is array map it */}
         {Array.isArray(subLine.pid) ?
           subLine.pid.map((subColPid: any) => (
-            <>
+            <span key={subColPid}>
               <div className="arrow" id={'a'+name+subColPid+subLine.id}> </div>
               {gArrow(name+subColPid, name+subLine.id, 'a'+name+subColPid+subLine.id, (dataMap.charactersData.questsDone[key].includes(subLine.id)) && dataMap.charactersData.questsDone[key].includes(subColPid))}
-            </>
+            </span>
           )) :
-          <>
+          <span>
             <div className="arrow" id={'a'+name+subLine.pid+subLine.id}> </div>
             {gArrow(name+subLine.pid, name+subLine.id, 'a'+name+subLine.pid+subLine.id, (dataMap.charactersData.questsDone[key].includes(subLine.id)) && dataMap.charactersData.questsDone[key].includes(subLine.pid))}
-          </>
+          </span>
         }
       </span>
     );
@@ -124,27 +125,31 @@ const Map: React.FunctionComponent = () => {
    */
   function dataMapHtml(storyKey: string | number, key: string) {
     const name: string = key.replace(/\s/g, '');
-    return (Object.entries(questsList).map(([qLKey, line]: any) => (
-      qLKey === storyKey &&
-      line.map((col: any) => (
-        <div key={name+qLKey+col.id} className='map-item'>
-          {col.map((line: any) => (
-            <div key={name+qLKey+line.id} className='map-item-screen'>
-              {line.map((subLine: any) => (
-                <div key={name+qLKey+subLine} className='map-choice'>
-                  {Array.isArray(subLine) ?
-                    subLine.map((subCol: any) => (
-                      dataMapArrow(name, key, subCol)
-                    )) :
-                    dataMapArrow(name, key, subLine)
-                  }
-                </div>
-              ))}
-            </div>
-          ))}
+    return (
+      questsList[storyKey] &&
+      Object.entries(questsList[storyKey]).map(([qLKey, line]: any) => (
+        <div key={storyKey+qLKey} className='map-item'>
+          {line &&
+            line.map((sub: any, subKey: any) => (
+              <div key={storyKey+qLKey+subKey} className='map-item-screen'>
+                {sub &&
+                  sub.map((subLine: any, subLineKey: any) => ( // obj ou array
+                    <div key={storyKey+qLKey+subKey+subLineKey} className='map-choice'>
+                      {Array.isArray(subLine) ?
+                        subLine.map((subCol: any) => (
+                          dataMapArrow(name, key, subCol)
+                        )) :
+                        dataMapArrow(name, key, subLine)
+                      }
+                    </div>
+                  ))
+                } {/* end sub */}
+              </div>
+            ))
+          }  {/* end line */}
         </div>
       ))
-    )));
+    );
   }
 
   return (
@@ -162,7 +167,7 @@ const Map: React.FunctionComponent = () => {
               <tr>
                 <th colSpan={5}>Persona</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                  // if the season is equal to '' this is a 'my story' map so colSpan = 3
+                  // if the season is equal to '215AAA0F-CDAC-4F93-86DA-C155A99B5784' this is a 'my story' map so colSpan = 3
                   seasonKey === '215AAA0F-CDAC-4F93-86DA-C155A99B5784' ?
                     <th key={seasonKey} colSpan={3}>{season.name}</th> :
                     <th key={seasonKey} colSpan={Object.keys(season.stories).length}>{season.name}</th>
