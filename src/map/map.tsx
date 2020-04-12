@@ -11,7 +11,6 @@ const Map: React.FunctionComponent = () => {
   const [loading, setLoading] = useState(true);
   const [gen, setGen] = useState(true);
 
-  console.log(dataMap);
   /**
    * Perform a check and return the value of the guild for an id
    * @param {array} ids list of id
