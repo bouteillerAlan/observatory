@@ -8,6 +8,7 @@ import './map.scss';
 const Map: React.FunctionComponent = () => {
   const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
+  const [gen, setGen] = useState(true);
 
   /**
    * Perform a check and return the value of the guild for an id
@@ -84,6 +85,10 @@ const Map: React.FunctionComponent = () => {
       setDataMap(res);
       setLoading(false);
     });
+    // fix that
+    setTimeout(function(){
+      setGen(false);
+    }, 2500);
   }, [loading]);
 
   /**
@@ -152,6 +157,12 @@ const Map: React.FunctionComponent = () => {
   return (
     <section className="map">
       <Nav active={'map'} />
+      {gen &&
+      <div id='warning-message'>
+        Le calcul des trajets peux prendre un certain temps.
+        Merci de patienter.
+      </div>
+      }
       {loading ?
         <div className="progress">
           <div className="indeterminate"> </div>
@@ -214,7 +225,6 @@ const Map: React.FunctionComponent = () => {
                       </td>
                     ))
                   ))}
-
                 </tr>
               ))}
             </tbody>
