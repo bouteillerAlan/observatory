@@ -125,14 +125,14 @@ export default async function sortData(): Promise<any> {
 
   // map data
   const dataMap: any = {};
-  seasons.map((season: any) => {
+  seasons.forEach((season: any) => {
     // create the season object
     dataMap[season.id] = {order: season.order, name: season.name, storiesId: season.stories, stories: {}};
-    stories.map((story: any) => {
+    stories.forEach((story: any) => {
       // if the story.season match the season stock the story
       if (story.season === season.id) {
         dataMap[season.id]['stories'][story.id] = {id: story.id, name: story.name, description: story.description, timeline: story.timeline, level: story.level, races: story.races, order: story.order, chapters: story.chapters, quests: {}};
-        quests.map((quest: any) => {
+        quests.forEach((quest: any) => {
           if (story.id === quest['story']) {
             dataMap[season.id]['stories'][story.id]['quests'][quest.id] = quest;
           }
