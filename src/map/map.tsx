@@ -9,8 +9,6 @@ const Map: React.FunctionComponent = () => {
   const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
 
-  console.log(dataMap);
-
   /**
    * Perform a check and return the value of the guild for an id
    * @param {array} ids list of id
@@ -81,10 +79,9 @@ const Map: React.FunctionComponent = () => {
   // the loading deps allow to rerender the component with the
   // data and generate the arrow
   useEffect(() => {
-    console.log('#######');
     checkApiKey();
     sortData().then((res: any) => {
-      setDataMap(res); // res
+      setDataMap(res);
       setLoading(false);
     });
   }, [loading]);

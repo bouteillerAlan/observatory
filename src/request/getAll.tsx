@@ -130,8 +130,6 @@ export default async function sortData(): Promise<any> {
     });
   });
 
-  console.log('###', seasonsAndStoriesSorted);
-
   // sort the quests
   // for the moment 'level' is the best way for short this thing
   const quests = loadHash.orderBy(questsNS, ['story', 'level']);
