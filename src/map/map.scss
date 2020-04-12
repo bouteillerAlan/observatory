@@ -12,6 +12,8 @@
 }
 .screen {
   overflow: auto;
+  height: calc(100vh - 64px);
+  margin-bottom: 0 !important; // reset row margin
   table {
     width: max-content;
     position: relative;
