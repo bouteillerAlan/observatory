@@ -4,12 +4,14 @@ import checkApiKey from '../request/checkApiKey';
 import Nav from '../nav/nav';
 import questsList from '../data/quests';
 import './map.scss';
+import M from 'materialize-css';
 
 const Map: React.FunctionComponent = () => {
   const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
   const [gen, setGen] = useState(true);
 
+  console.log(dataMap);
   /**
    * Perform a check and return the value of the guild for an id
    * @param {array} ids list of id
@@ -84,9 +86,12 @@ const Map: React.FunctionComponent = () => {
     sortData().then((res: any) => {
       setDataMap(res);
       setLoading(false);
+      const elems = document.querySelectorAll('.tooltipped');
+      const options = {};
+      M.Tooltip.init(elems, options);
     });
-    // fix that
-    setTimeout(function(){
+    // FIXME
+    setTimeout(() => {
       setGen(false);
     }, 2500);
   }, [loading]);
@@ -96,12 +101,16 @@ const Map: React.FunctionComponent = () => {
    * @Param {string} name the current character name without space (for css class)
    * @Param {string} key the current character name
    * @Param {{id: number, pid: number}} subLine the data for generate arrow
+   * @Param {string} seasonKey the season key for mapping tooltips title
+   * @Param {string} storyKey the story key for mapping tooltips title
    * @Return {dom} the arrow
    */
-  function dataMapArrow(name: string, key: string, subLine: {id: number, pid: number}) {
+  function dataMapArrow(name: string, key: string, subLine: {id: number, pid: number}, seasonKey: string, storyKey: any) {
     return (
       <span key={key+subLine.id} className='lb-one'>
-        <div className={'card ' + (dataMap.charactersData.questsDone[key].includes(subLine.id) ? 'bg-green' : 'bg-red')} id={name+subLine.id}> </div>
+        <div className={'card tooltipped ' + (dataMap.charactersData.questsDone[key].includes(subLine.id) ? 'bg-green' : 'bg-red')} data-position="top"
+          data-tooltip={`${dataMap.dataMap[seasonKey]['stories'].filter((story: any) => story.id === storyKey)[0].quests.filter((quest: any) => quest.id === subLine.id)[0].name}`} id={name+subLine.id}>
+        </div>
         {/* if precedent is array map it */}
         {Array.isArray(subLine.pid) ?
           subLine.pid.map((subColPid: any) => (
@@ -121,11 +130,12 @@ const Map: React.FunctionComponent = () => {
 
   /**
    * map the html map
+   * @Param {string} seasonKey the season key for mapping the tooltips title
    * @Param {string | number} storyKey the key of the story
    * @Param {string} key the key of character array
    * @Return {dom} return the map
    */
-  function dataMapHtml(storyKey: string | number, key: string) {
+  function dataMapHtml(seasonKey: string, storyKey: string | number, key: string) {
     const name: string = key.replace(/\s/g, '');
     return (
       questsList[storyKey] &&
@@ -139,9 +149,9 @@ const Map: React.FunctionComponent = () => {
                     <div key={storyKey+qLKey+subKey+subLineKey} className='map-choice'>
                       {Array.isArray(subLine) ?
                         subLine.map((subCol: any) => (
-                          dataMapArrow(name, key, subCol)
+                          dataMapArrow(name, key, subCol, seasonKey, storyKey)
                         )) :
-                        dataMapArrow(name, key, subLine)
+                        dataMapArrow(name, key, subLine, seasonKey, storyKey)
                       }
                     </div>
                   ))
@@ -189,7 +199,7 @@ const Map: React.FunctionComponent = () => {
                 <th>Order</th>
                 <th>Histoire du personage</th>
                 {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                  season.stories.map((story: any, storyKey: any) => (
+                  season.stories.map((story: any) => (
                     !story.races && <th key={story.id+seasonKey}>{story.name}</th>
                   ))
                 ))}
@@ -206,10 +216,10 @@ const Map: React.FunctionComponent = () => {
                   <td className="subTable">
                     {/* here we generate only the quests for the race of the character in court in a single column */}
                     {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                      season.stories.map((story: any, storyKey: any) => (
+                      season.stories.map((story: any) => (
                         (story.races && story.races[0] === value.race) &&
                           <div className="table" key={story.id+seasonKey}>
-                            {dataMapHtml(story.id, key)}
+                            {dataMapHtml(seasonKey, story.id, key)}
                           </div>
                       ))
                     ))}
@@ -217,10 +227,10 @@ const Map: React.FunctionComponent = () => {
 
                   {/* here we generate the rest of the quests */}
                   {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-                    season.stories.map((story: any, storyKey: any) => (
+                    season.stories.map((story: any) => (
                       !story.races && <td key={story.id+seasonKey} className="subTable">
                         <div className="table">
-                          {dataMapHtml(story.id, key)}
+                          {dataMapHtml(seasonKey, story.id, key)}
                         </div>
                       </td>
                     ))
