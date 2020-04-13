@@ -1,6 +1,7 @@
 body {
   background-color: #242423;
   color: #fff;
+  overflow-x: hidden !important;
   .bg-red {
     background-color: #DB222A;
   }
@@ -57,8 +58,8 @@ body {
 * MODAL CUSTOM
  */
 .modal {
-  background-color: var(--primary-background);
-  .modal-title {
+  background-color: var(--primary-background) !important;
+  .modal-title, h4 {
     color: var(--primary-yellow) !important;
   }
 }

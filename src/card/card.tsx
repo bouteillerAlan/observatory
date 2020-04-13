@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Nav from '../nav/nav';
 import checkApiKey from '../request/checkApiKey';
 import sortData from '../request/getAll';
+import '../server/general.scss';
 import './card.scss';
 
 import tuto from '../data/tutorials';
@@ -405,7 +406,7 @@ class Card extends Component<any, any> {
                 </p>
                 }
                 {/* Tutorial*/}
-                {tuto[id][lang]['link'] &&
+                {tuto[id] && tuto[id][lang]['link'] &&
                 <p>
                   <a href={tuto[id][lang]['link']} target="_blank" rel="noopener noreferrer" className="explore tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Vers le tutoriel' : 'Go to tutorial'}>
                     <i className="material-icons">explore</i>
@@ -413,7 +414,7 @@ class Card extends Component<any, any> {
                 </p>
                 }
                 {/* youtube*/}
-                {tuto[id][lang]['video'] &&
+                {tuto[id] && tuto[id][lang]['video'] &&
                 <p>
                   <a href={tuto[id][lang]['video']} target="_blank" rel="noopener noreferrer" className="tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Vers la vidéo' : 'Go to the vidéo'}>
                     <i className="material-icons">ondemand_video</i>
@@ -421,7 +422,7 @@ class Card extends Component<any, any> {
                 </p>
                 }
                 {/* wiki*/}
-                {tuto[id][lang]['wiki'] &&
+                {tuto[id] && tuto[id][lang]['wiki'] &&
                 <p>
                   <a href={tuto[id][lang]['wiki']} target="_blank" rel="noopener noreferrer" className="tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Vers le wiki' : 'Go to the wiki'}>
                     <i className="material-icons">event_note</i>
