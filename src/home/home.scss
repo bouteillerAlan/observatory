@@ -13,3 +13,156 @@
     padding: 0;
   }
 }
+
+.head {
+  .title {
+    margin-left: 5px;
+    width: 100%;
+    text-align: center;
+    h1, h2 {
+      margin: 0;
+      font-family: 'Lexend Zetta', sans-serif;
+    }
+  }
+  .lig_yellow {
+    height: 5px;
+    width: 100%;
+    background-color: var(--primary-yellow);
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+  }
+}
+
+.meteor {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: var(--primary-yellow);
+}
+
+.ma {
+  transform: rotate(-50deg);
+  top: -10%;
+  right: 80%;
+  animation: ma 1s linear infinite;
+  @keyframes ma {
+    0% {
+      top: -10%;
+      right: 80%;
+    }
+    50% {
+      top: 20%;
+      right: 100%;
+    }
+    100% {
+      top: 20%;
+      right: 100%;
+    }
+  }
+}
+
+.mb {
+  transform: rotate(-50deg);
+  top: -10%;
+  right: 40%;
+  animation: mb 2s linear infinite;
+  @keyframes mb {
+    0% {
+      top: -10%;
+      right: 40%;
+    }
+    20% {
+      top: -10%;
+      right: 40%;
+    }
+    100% {
+      top: 75%;
+      right: 100%;
+    }
+  }
+}
+
+.mc {
+  transform: rotate(-50deg);
+  top: -10%;
+  right: 20%;
+  animation: mc 1s linear infinite;
+  @keyframes mc {
+    0% {
+      top: -10%;
+      right: 20%;
+    }
+    30% {
+      top: -10%;
+      right: 20%;
+    }
+    100% {
+      top: 100%;
+      right: 95%;
+    }
+  }
+}
+
+.md {
+  transform: rotate(-50deg);
+  top: -10%;
+  right: 8%;
+  animation: md 2s linear infinite;
+  @keyframes md {
+    0% {
+      top: -10%;
+      right: 8%;
+    }
+    60% {
+      top: 100%;
+      right: 80%;
+    }
+    100% {
+      top: 100%;
+      right: 80%;
+    }
+  }
+}
+
+.me {
+  transform: rotate(-50deg);
+  top: 15%;
+  right: -10%;
+  animation: me 2s linear infinite;
+  @keyframes me {
+    0% {
+      top: 15%;
+      right: -10%;
+    }
+    40% {
+      top: 15%;
+      right: -10%;
+    }
+    100% {
+      top: 100%;
+      right: 55%;
+    }
+  }
+}
+
+.mf {
+  transform: rotate(-50deg);
+  top: 60%;
+  right: -10%;
+  animation: mf 1s linear infinite;
+  @keyframes mf {
+    0% {
+      top: 60%;
+      right: -10%;
+    }
+    70% {
+      top: 60%;
+      right: -10%;
+    }
+    100% {
+      top: 100%;
+      right: 20%;
+    }
+  }
+}
