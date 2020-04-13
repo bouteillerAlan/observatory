@@ -13,7 +13,7 @@ import history from '../server/history';
 /* eslint-disable react/no-unescaped-entities */
 
 const Home = () => {
-  const [apiKey, setApiKey] = useState();
+  const [apiKey, setApiKey] = useState('');
   const [apiKeyError, setApiKeyError] = useState();
   const [check, setCheck] = useState(false);
   const [checkError, setCheckError] = useState();
