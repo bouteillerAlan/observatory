@@ -45,7 +45,6 @@ class Card extends Component<any, any> {
 
   UNSAFE_componentWillMount() {
     checkApiKey();
-    // todo met getall
     sortData().then((res) => {
       this.setState({
         loading: false,
@@ -448,7 +447,7 @@ class Card extends Component<any, any> {
                     {quest.map((line: any) => (
                       <div key={JSON.stringify(line)} className="line">
                         {line.map((idObj: any) => (
-                          <div key={JSON.stringify(idObj)} className="multi_card"> // fixme bad key value
+                          <div key={JSON.stringify(idObj)} className="multi_card">
                             {Array.isArray(idObj) ?
                               // if id is array, is a choice
                               idObj.map((uId: any) => (
