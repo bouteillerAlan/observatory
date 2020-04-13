@@ -1,6 +1,7 @@
 body {
   background-color: #242423;
   color: #fff;
+  overflow-x: hidden !important;
   .bg-red {
     background-color: #DB222A;
   }
@@ -38,4 +39,32 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(243, 156, 18, 0.82);
+}
+
+/*
+* TOOLTIPS CUSTOM
+ */
+.material-tooltip {
+  max-width: 50% !important;
+  background-color: #FF9800 !important;
+  color: #242423 !important;
+}
+
+.tooltipped:hover {
+  cursor: pointer;
+}
+
+/*
+* MODAL CUSTOM
+ */
+.modal {
+  background-color: var(--primary-background) !important;
+  .modal-title, h4 {
+    color: var(--primary-yellow) !important;
+  }
+}
+
+.full {
+  height: 100vh;
+  width: 100%;
 }

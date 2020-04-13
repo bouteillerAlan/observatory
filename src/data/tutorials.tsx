@@ -7,7 +7,7 @@ const tuto: any = {
       'link': 'https://www.lebusmagique.fr/pages/guides/monde-vivant/histoire-personnelle.html',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Personal_story',
     },
@@ -18,7 +18,7 @@ const tuto: any = {
       'link': 'https://www.lebusmagique.fr/pages/guides/monde-vivant/saison-1.html',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Living_World_Season_1',
     },
@@ -29,7 +29,7 @@ const tuto: any = {
       'link': 'https://www.lebusmagique.fr/pages/succes/chroniques/s2/',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Living_World_Season_2',
     },
@@ -40,7 +40,7 @@ const tuto: any = {
       'link': 'https://www.lebusmagique.fr/pages/succes/chroniques/hot-actes-1-a-4/',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Heart_of_Thorns_story',
     },
@@ -51,7 +51,7 @@ const tuto: any = {
       'link': 'https://www.lebusmagique.fr/pages/succes/chroniques/s3/',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Living_World_Season_3',
     },
@@ -62,7 +62,7 @@ const tuto: any = {
       'link': 'https://www.lebusmagique.fr/pages/succes/chroniques/pof-actes-1-a-3/',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Path_of_Fire_story',
     },
@@ -73,7 +73,7 @@ const tuto: any = {
       'link': 'https://www.lebusmagique.fr/pages/succes/chroniques/s4/',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Living_World_Season_4',
     },
@@ -84,7 +84,7 @@ const tuto: any = {
       'link': 'https://www.lebusmagique.fr/pages/succes/chroniques/s5/',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Living_World_Season_5',
     },
@@ -98,7 +98,7 @@ const tuto: any = {
       'video': '',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Personal_story#Act_1:_The_Races',
@@ -111,7 +111,7 @@ const tuto: any = {
       'video': '',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Personal_story#Act_1:_The_Races',
@@ -124,7 +124,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=6HorAmrGobE',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Personal_story#Act_1:_The_Races',
@@ -137,7 +137,7 @@ const tuto: any = {
       'video': '',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Personal_story#Act_1:_The_Races',
@@ -150,7 +150,7 @@ const tuto: any = {
       'video': '',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Personal_story#Act_1:_The_Races',
@@ -163,7 +163,7 @@ const tuto: any = {
       'video': '',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Personal_story#Act_2:_The_Orders',
@@ -176,7 +176,7 @@ const tuto: any = {
       'video': '',
       'wiki': '',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Personal_story#Act_3:_The_Pact',
@@ -189,7 +189,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/playlist?list=PLoGYMAmaxUY42frkELYzR8WLihlKOxsY0',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Saison_1_du_Monde_vivant#R.C3.A9sum.C3.A9s_des_.C3.A9v.C3.A9nements',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Living_World_Season_1',
@@ -202,7 +202,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=blS7sSFnxq8',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/A_l%27or%C3%A9e_de_Maguuma',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Gates_of_Maguuma',
@@ -215,7 +215,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=Nprnl-1-6Ak',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Emprise_mal%C3%A9fique',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Entanglement',
@@ -228,7 +228,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=YXEQUkiqkyw',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/L%27ombre_du_dragon_:_1re_partie',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/The_Dragon%27s_Reach:_Part_1',
@@ -241,7 +241,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=YqbO0LXBMsc',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/L%27ombre_du_dragon_:_2e_partie',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/The_Dragon%27s_Reach:_Part_2',
@@ -254,7 +254,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=D1mWMqSzNBM',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Le_spectre_du_temps',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Echoes_of_the_Past',
@@ -267,7 +267,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=imZtmOudH8k',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/La_voie_des_ronces',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Tangled_Paths',
@@ -280,7 +280,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=ZCk6OD-qLRQ',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Les_graines_de_la_v%C3%A9rit%C3%A9',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Seeds_of_Truth',
@@ -293,7 +293,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=k5csWpcGzqE',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Le_point_de_non-retour',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Point_of_No_Return',
@@ -306,7 +306,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=r7FTW6XVrCU',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Prologue_:_ralliement_%C3%A0_Maguuma',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Prologue:_Rally_to_Maguuma',
@@ -319,7 +319,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=slpVOrcM_Bk',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Arrach%C3%A9s_au_ciel',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Torn_from_the_Sky',
@@ -332,7 +332,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=2CNCvT9Kz0c',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/%C3%89tablir_une_base_avanc%C3%A9e',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Establishing_a_Foothold',
@@ -345,7 +345,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=2CNCvT9Kz0c&feature=youtu.be&t=358',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Dans_la_jungle',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/The_Jungle_Provides',
@@ -358,7 +358,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=tIIisn4RXZg',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Sur_leurs_traces',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/In_Their_Footsteps',
@@ -371,7 +371,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=x1PQa8HmAsk',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Prisonniers_du_dragon',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Prisoners_of_the_Dragon',
@@ -384,7 +384,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=gxnRvX82jeY',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Pr%C3%A9cieux_effets',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Prized_Possessions',
@@ -397,7 +397,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=upfjOLCbEHo',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Cit%C3%A9_de_l%27espoir',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/City_of_Hope',
@@ -410,7 +410,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=MG-c6M9Z3po',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Le_chemin_du_pr%C3%A9dateur',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/The_Predator%27s_Path',
@@ -423,7 +423,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=R55cyGjcheY',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Curieuses_observations',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Strange_Observations',
@@ -436,7 +436,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=U5-QPzqFfdU',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Racines_de_la_terreur',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Roots_of_Terror',
@@ -449,7 +449,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=LYWK9ScqSfY',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/En_avant',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/The_Way_In',
@@ -462,7 +462,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=u0Ot7OO2aP8',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Connaissances_cach%C3%A9es',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Buried_Insight',
@@ -475,7 +475,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=-3kg0t93FAU',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/D%C3%A9coupe_de_signe',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Sign_Cutting',
@@ -488,7 +488,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=qfLnAbvjnJw',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/R%C3%A9colte_am%C3%A8re',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Bitter_Harvest',
@@ -501,7 +501,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=mqlI9niwBhk',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Corps_et_%C3%A2mes',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Hearts_and_Minds',
@@ -514,7 +514,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=_dXYKSrVn4o',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Hors_des_ombres',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Out_of_the_Shadows',
@@ -527,7 +527,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=upchdrWG3Eg',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/L%27Embrasement',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Rising_Flames',
@@ -540,7 +540,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=2AmKKl9SLm0',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Une_fissure_dans_la_glace',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/A_Crack_in_the_Ice',
@@ -553,7 +553,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=4dWuifMbNvY',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/La_T%C3%AAte_du_serpent',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/The_Head_of_the_Snake',
@@ -566,7 +566,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=fVzCAhhpkQM',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Point_d%27ignition',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Flashpoint',
@@ -579,7 +579,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=VbHAdfiLXrk',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/%C3%80_la_fin_du_chemin',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/One_Path_Ends',
@@ -592,7 +592,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=h90N4fsa_e0',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Allumer_la_flamme_(Prologue)',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Sparking_the_Flame_(Prologue)',
@@ -605,7 +605,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=MOp8sTVal6s',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Ouvrir_la_voie',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Blazing_a_Trail',
@@ -618,7 +618,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=bBdzrEkdtQ4',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Nuit_des_incendies',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Night_of_Fires',
@@ -631,7 +631,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=1-aVM1dkL04',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Le_sacrifice',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/The_Sacrifice',
@@ -644,7 +644,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=xrRgjrWGbWI',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Souvenirs_cristallins',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Crystalline_Memories',
@@ -657,7 +657,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=qGKapTKKDlM',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Sol_consacr%C3%A9_(mission_d%27histoire_personnelle)',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Hallowed_Ground_(story)',
@@ -670,7 +670,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=qbVquYXK2Fg',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Affronter_la_v%C3%A9rit%C3%A9',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Facing_the_Truth',
@@ -683,7 +683,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=0CWcJIP5u4E',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/La_marche_%C3%A0_suivre',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/The_Way_Forward',
@@ -696,7 +696,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=KT8mERQrM-Q',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/En_partance',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/The_Departing',
@@ -709,7 +709,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=EO44W2G9fk0',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Faire_sortir_l%27archonte',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Enemy_of_My_Enemy',
@@ -722,7 +722,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=GdaJsjCtgRk',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/B%C3%AAte_de_guerre',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Beast_of_War',
@@ -735,7 +735,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=-SfhD3-n1LU',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/La_mort_d%27un_dieu',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/To_Kill_a_God',
@@ -748,7 +748,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=Y0mokJafF0A',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Petite_victoire_(%C3%89pilogue)',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Small_Victory_(Epilogue)',
@@ -761,7 +761,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=tAAlhj6-4Xo',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Aube',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Daybreak',
@@ -774,7 +774,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=gi50bzbkM10',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Un_bug_dans_le_syst%C3%A8me',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/A_Bug_in_the_System',
@@ -787,7 +787,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=BSQMv-hYUW8',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Longue_vie_%C3%A0_la_liche',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Long_Live_the_Lich',
@@ -800,7 +800,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=23aoeh7F6Ck',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Guid%C3%A9s_par_une_%C3%A9toile',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/A_Star_to_Guide_Us',
@@ -813,7 +813,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=O4THZReGReQ',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Quitte_ou_double',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/All_or_Nothing',
@@ -826,7 +826,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=VwaUzubCE8g',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Guerre_%C3%A9ternelle',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/War_Eternal',
@@ -839,7 +839,7 @@ const tuto: any = {
       'video': 'https://www.youtube.com/watch?v=TjW4tDm2m4I',
       'wiki': 'https://wiki-fr.guildwars2.com/wiki/Prologue_:_Li%C3%A9s_par_le_sang',
     },
-    'en': {
+    'eng': {
       'link': '',
       'video': '',
       'wiki': 'https://wiki.guildwars2.com/wiki/Prologue:_Bound_by_Blood',

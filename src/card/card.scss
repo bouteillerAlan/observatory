@@ -1,0 +1,392 @@
+:root {
+  //--primary-background : #24262d;
+  --primary-background: #1f1f1f;
+  --primary-color : white;
+  --primary-yellow : #fbd54a;
+}
+
+// adaptive background
+.i215AAA0F-CDAC-4F93-86DA-C155A99B5784 {
+  background-image: url("../img/guildwars2-121.jpg");
+}
+.i002C2D90-69B5-41A2-A422-8DB6F2EFC53E {
+  background-image: url("../img/Clockwork_Chaos_wallpaper_2.jpg");
+}
+.iA515A1D3-4BD7-4594-AE30-2C5D05FF5960 {
+  background-image: url("../img/Brisban_release_concept_art.jpg");
+}
+.iB8901E58-DC9D-4525-ADB2-79C93593291E {
+  background-image: url("../img/Mastery_Mood_Piece_concept_art_(compressed).jpg");
+}
+.i09766A86-D88D-4DF2-9385-259E9A8CA583 {
+  background-image: url("../img/One_Path_Ends_Wallpaper.jpg");
+}
+.iEAB597C0-C484-4FD3-9430-31433BAC81B6 {
+  background-image: url("../img/Path_of_Fire_concept_art_5.jpg");
+}
+.iC22AFD21-667A-4AA8-8210-AC74EAEE58BB {
+  background-image: url("../img/A_Star_to_Guide_Us_Wallpaper.jpg");
+}
+
+.iEDCAE800-302A-4D9B-8331-3CC769ADA0B3 {
+  background-image: url("../img/the-alpine-blizzard-compressed.jpg");
+}
+
+#season_grid {
+  transition: 0.3s ease-out;
+}
+
+.card_overflow {
+  overflow-x: auto;
+  height: 250px;
+  position: relative;
+  overflow-y: hidden;
+}
+
+.cards_stack {
+  position: absolute;
+  top: 15px;
+  display : flex;
+  width: fit-content;
+
+  .card:not(:first-child) {
+    margin-left: -5rem;
+  }
+
+  .card {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    width: 150px;
+    height: 200px;
+    border-radius: 10px !important;
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+
+    .card_bck {
+      height: 100%;
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px !important;
+      background-color: #0000009c;
+
+      h6 {
+        color: rgba(255, 255, 255, 0.69) !important;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .card:hover {
+    cursor: pointer;
+    transform: translateY(-20px);
+
+    .card_bck {
+      background-color: rgba(0, 0, 0, 0.15);
+
+      h6 {
+        color: white !important;
+      }
+    }
+  }
+
+  // card focus for tab navigation
+  // ~ = previous elems
+  .card:hover ~ .card,
+  .card:focus ~ .card {
+    transform: translateX(65px);
+  }
+}
+
+.card_content {
+  --top-target : 0;
+  --left-target : 0;
+  overflow-y: hidden;
+  position: fixed;
+  display: none;
+  // materialize menu = z-index : 997
+  z-index: 998;
+  background-color: var(--primary-background);
+
+  .header {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-size: cover;
+    background-position: center 60%;
+    min-height: 150px;
+    height: fit-content;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+
+    .header-title {
+      text-shadow: 2px 2px 2px var(--primary-background);
+      .icons {
+        p {
+          margin-right: 15px;
+          float: left;
+        }
+        i {
+          color: var(--primary-color) !important;
+        }
+      }
+    }
+
+    .header-close {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      span {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        border-radius: 50%;
+        border: solid 2px white;
+        color: white;
+        width: 35px;
+        height: 35px;
+      }
+      span:hover {
+        cursor: pointer;
+        background-color: rgba(41, 41, 41, 0.27);
+        border-color: rgba(255, 255, 255, 0.84);
+        color: rgba(255, 255, 255, 0.84);
+      }
+    }
+  }
+
+  .description {
+    color: white;
+    div {
+      padding: 10px;
+      h5, p {
+        margin: 0;
+      }
+    }
+  }
+
+  .schema {
+    border-bottom: 0 !important;
+
+    .ecran_overflow {
+      // windows - header
+      height: calc(100vh - 192px);
+      padding: 1px;
+    }
+
+    .ecran {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: fit-content;
+    }
+
+    .grid_col {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .grid {
+      display: flex;
+      flex-direction: row;
+
+      .line {
+        display: flex;
+        flex-direction: column;
+
+        .multi_card {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+        }
+
+        .card_tree {
+          width: 250px;
+          min-height: 250px;
+          max-height: fit-content;
+          margin: 15px;
+          padding: 10px;
+          border: solid var(--primary-background) 2px;
+          background-color: rgba(255, 255, 255, 0.09);
+          color: var(--primary-color) !important;
+
+          // content position
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+
+          .info {
+            margin-top: 0;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            // orders icon
+            .durmand {
+              background-image: url('../img/Durmand_Priory_banner.png');
+              background-size: contain;
+              height: 50px;
+              width: 50px;
+            }
+            .whisper {
+              background-image: url('../img/Order_of_Whispers_banner.png');
+              background-size: contain;
+              height: 50px;
+              width: 50px;
+            }
+            .vigil {
+              background-image: url('../img/Vigil_banner.png');
+              background-size: contain;
+              height: 50px;
+              width: 50px;
+            }
+          }
+
+          .title {
+            text-align: center;
+            margin: 0 !important;
+          }
+
+          .card_persona {
+            text-align: center;
+            color: var(--primary-background);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+
+            .green {
+              background-color: #27ae60;
+            }
+            .red {
+              background-color: #c0392b;
+            }
+
+            .status {
+              display: flex;
+              flex-direction: column;
+              //margin: 5px;
+              span {
+                padding-right: 5px;
+                padding-left: 5px;
+              }
+            }
+          }
+
+        }
+      }
+
+    }
+  }
+
+}
+
+.card_content.call {
+  animation: open 0.4s;
+  animation-fill-mode: forwards;
+  transition-timing-function: ease-out;
+  overflow-y: hidden;
+  overflow-x: hidden;
+
+  @keyframes open {
+    0% {
+      border-radius: 10px;
+      width: 150px;
+      height: 200px;
+      // hauteur écrans - (hauteur carte / 2)
+      top: calc(var(--top-target));
+      // largeur écran - (largeur carte / 2)
+      left: calc(var(--left-target));
+    }
+    100% {
+      border-radius: 0;
+      height: 100vh;
+      width: 100vw;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+.card_content.exit {
+  animation: exit 0.4s;
+  animation-fill-mode: forwards;
+  transition-timing-function: ease-out;
+  overflow-y: hidden;
+  overflow-x: hidden;
+
+  @keyframes exit {
+    0% {
+      border-radius: 0;
+      height: 100vh;
+      width: 100vw;
+      top: 0;
+      left: 0;
+    }
+    100% {
+      border-radius: 10px;
+      width: 150px;
+      height: 200px;
+      // hauteur écrans - (hauteur carte / 2)
+      top: calc(var(--top-target));
+      // largeur écran - (largeur carte / 2)
+      left: calc(var(--left-target));
+    }
+  }
+}
+
+.noOver {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.content {
+  min-height: 100vh;
+}
+
+.img_content {
+  text-align: center;
+  img {
+    max-height: 20vh;
+    width: auto;
+    max-width: 100%;
+  }
+}
+
+.flag {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  .flag_img {
+    animation: pulse 1.5s infinite;
+    @keyframes pulse {
+      from {
+        transform: scale3d(1, 1, 1);
+      }
+
+      50% {
+        transform: scale3d(1.05, 1.05, 1.05);
+      }
+
+      to {
+        transform: scale3d(1, 1, 1);
+      }
+    }
+  }
+  span:first-child {
+    margin-right: 10px;
+  }
+  .flag_img {
+    height: 40px;
+    width: auto;
+  }
+}
+
+.marging {
+  margin-right: 10px;
+}
+
+.icon_class {
+  height: 22px;
+  width: auto;
+}
