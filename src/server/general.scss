@@ -52,3 +52,18 @@ body {
 .tooltipped:hover {
   cursor: pointer;
 }
+
+/*
+* MODAL CUSTOM
+ */
+.modal {
+  background-color: var(--primary-background);
+  .modal-title {
+    color: var(--primary-yellow) !important;
+  }
+}
+
+.full {
+  height: 100vh;
+  width: 100%;
+}

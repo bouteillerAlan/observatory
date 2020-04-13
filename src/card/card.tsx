@@ -391,7 +391,7 @@ class Card extends Component<any, any> {
       <div className="card_content" id={id}>
         <div className="content">
 
-          <div className={'header animated ' + season.replace(/[\s]|[']/g, '')}>
+          <div className={'header animated i' + map[season].id}>
             <div className="header-title animated">
               <h4>{season}</h4>
               <p>{story}</p>
