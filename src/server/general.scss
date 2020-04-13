@@ -39,3 +39,16 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(243, 156, 18, 0.82);
 }
+
+/*
+* TOOLTIPS CUSTOM
+ */
+.material-tooltip {
+  max-width: 50% !important;
+  background-color: #FF9800 !important;
+  color: #242423 !important;
+}
+
+.tooltipped:hover {
+  cursor: pointer;
+}
