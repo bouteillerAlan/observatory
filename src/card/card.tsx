@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Component} from 'react';
 import Nav from '../nav/nav';
 import checkApiKey from '../request/checkApiKey';
 import sortData from '../request/getAll';
@@ -16,36 +16,177 @@ import Engineer from '../img/Engineer_icon.png';
 import Ranger from '../img/Ranger_icon.png';
 import Revenant from '../img/Revenant_icon.png';
 import Mesmer from '../img/Mesmer_icon.png';
+import backStories from '../data/backStories';
 
-const Card: React.FunctionComponent = () => {
-  const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
-  const [loading, setLoading] = useState(true);
-  const [lang] = useState(localStorage.getItem('obsLang') || 'eng');
-  // modal is open ?
-  const [isOpen, setIsOpen] = useState(false);
-  const [onClose, setOnClose] = useState(false);
-  // stock the DOM coordinates of parent and grid for animation
-  const [parent, setParent] = useState();
-  const [grid, setGrid] = useState();
-  const [elemShow, setElemShow] = useState();
+const API_URL = process.env.REACT_APP_API_URL;
 
-  console.log(dataMap);
+/* eslint-disable require-jsdoc */
+/* eslint-disable camelcase */
+class Card extends Component<any, any> {
 
-  /**
-   * lorem ipsum
-   */
-  function setProperty() {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      key: API_URL,
+      lang: localStorage.getItem('obsLang'),
+      loading: true,
+      data: false,
+      // modal is open ?
+      isOpen: false,
+      onClose: false,
+      // stock the DOM coordinates of parent and grid for animation
+      parent: {},
+      grid: {},
+      elemShow: {},
+      CarouselInit: false,
+      apiKeyError: null,
+    };
+  }
+
+  UNSAFE_componentWillMount() {
+    checkApiKey();
+    // todo met getall
+    sortData().then((res) => {
+      this.setState({
+        loading: false,
+        data: res.oldDataMap,
+      });
+    });
+  }
+
+  // init js
+  // DidUpdate because the elem is not render if fetch is null
+  componentDidUpdate() {
+    const elems_collapsible = document.querySelectorAll('.collapsible');
+    const elems_tooltipped = document.querySelectorAll('.tooltipped');
+    const elems_modal = document.querySelectorAll('.modal');
+    const options_collapsible = {};
+    const options_tooltipped = {};
+    const options_modal = {};
+    M.Collapsible.init(elems_collapsible, options_collapsible);
+    M.Tooltip.init(elems_tooltipped, options_tooltipped);
+    M.Modal.init(elems_modal, options_modal);
+  }
+
+  // map the data in a single iterative object
+  map() {
+    const {data} = this.state;
+    const obj: any = {};
+
+    // seasons -> stories -> quests -> characters -> questsDone
+    data['seasons'].map((season: any) => {
+
+      // create object key
+      obj[season['name']] = {id: season['id'], story: {}};
+
+      data['stories'].map((story: any) => {
+
+        // check if story is in seasons and store it
+        if (story['season'] === season['id']) {
+
+          // if a race is set
+          const storyName = story['races'] ? story['name']+' - '+story['races'] : story['name'];
+
+          obj[season['name']]['story'][storyName] = {id: story['id'], quests: {}, description: story['description']};
+
+          // and continue loop
+          data['quests'].map((quest: any) => {
+
+            // check if quest is in story and store it
+            if (quest['story'] === story['id']) {
+              obj[season['name']]['story'][storyName]['quests'][quest['id']] = {Qname: '', Qid: '', Qlevel: '', status: {}, authorization: {}};
+
+              data['characters'].map((character: any) => {
+
+                // stock name, id and level
+                obj[season['name']]['story'][storyName]['quests'][quest['id']]['Qname'] = quest['name'];
+                obj[season['name']]['story'][storyName]['quests'][quest['id']]['Qid'] = quest['id'];
+                obj[season['name']]['story'][storyName]['quests'][quest['id']]['Qlevel'] = quest['level'];
+
+                // check the race for specific id
+                const raceQuest = [8, 1, 3, 2, 7];
+                if (raceQuest.includes(obj[season['name']]['story'][storyName]['id'])) {
+                  switch (obj[season['name']]['story'][storyName]['id']) {
+                    // asura
+                    case 8:
+                      if (data['characterId'][character]['race'] === 'Asura') {
+                        // check if it's done, if it's the case tag it
+                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
+                      }
+                      break;
+                    // charr
+                    case 1:
+                      if (data['characterId'][character]['race'] === 'Charr') {
+                        // check if it's done, if it's the case tag it
+                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
+                      }
+                      break;
+                    // human
+                    case 3:
+                      if (data['characterId'][character]['race'] === 'Human') {
+                        // check if it's done, if it's the case tag it
+                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
+                      }
+                      break;
+                    // norn
+                    case 2:
+                      if (data['characterId'][character]['race'] === 'Norn') {
+                        // check if it's done, if it's the case tag it
+                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
+                      }
+                      break;
+                    // sylvari
+                    case 7:
+                      if (data['characterId'][character]['race'] === 'Sylvari') {
+                        // check if it's done, if it's the case tag it
+                        obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
+                      }
+                  }
+                } else {
+                  // check if it's done, if it's the case tag it
+                  obj[season['name']]['story'][storyName]['quests'][quest['id']]['status'][character] = data['questsDone'][character].includes(quest['id']) ? 1 : 0;
+                }
+
+                // check if is authorized
+                // and stock it in obj[season['name']]['story'][storyName]['quests'][quest['id']]['authorization'][character]
+                // by default all quests is authorized
+                let a = true;
+                data['backstories'][character]['backstory'].map((bkId: any) => {
+                  // if backstory exist in bk file
+                  if (backStories[bkId]) {
+                    // if quest id exist in backstory bk file
+                    if (backStories[bkId].includes(quest['id'])) {
+                      a = false;
+                    }
+                  }
+
+                });
+                obj[season['name']]['story'][storyName]['quests'][quest['id']]['authorization'][character] = a;
+
+              });
+            }
+          });
+        }
+      });
+    });
+
+    // return the map
+    return obj;
+  }
+
+  setProperty() {
+    const {parent, grid, onClose, elemShow} = this.state;
     // just the body
-    const body = document.getElementsByTagName('body')[0];
+    const body: any = document.getElementsByTagName('body')[0];
     // get the target content
-    const target = document.getElementById(elemShow['id']);
+    const target: any = document.getElementById(elemShow['id']);
 
     if (target) {
       const header: any = target.getElementsByClassName('header')[0];
       const title: any = target.getElementsByClassName('header-title')[0];
       const btnClose: any = target.getElementsByClassName('header-close')[0];
       const schema: any = target.getElementsByClassName('schema')[0];
-      const overflowScreen: any = target.getElementsByClassName('ecran_overflow')[0];
+      const ecran_overflow: any = target.getElementsByClassName('ecran_overflow')[0];
       // set target value
       target.style.setProperty('--top-target', parent['top']+'px');
       target.style.setProperty('--left-target', parent['left']+'px');
@@ -54,9 +195,11 @@ const Card: React.FunctionComponent = () => {
 
       if (onClose) {
         // switch close status
-        setOnClose(false);
+        this.setState({
+          onClose: false,
+        });
         // remove overflow
-        overflowScreen.style.overflow = 'hidden';
+        ecran_overflow.style.overflow = 'hidden';
         target.style.overflow = 'hidden';
         // remove older animation
         title.classList.remove('fadeInLeft');
@@ -79,14 +222,16 @@ const Card: React.FunctionComponent = () => {
         // time exit animation - 5ms 250
         setTimeout(() => {
           // switch status card
-          setIsOpen(false);
+          this.setState({
+            isOpen: false,
+          });
           target.style.display = 'none';
         }, 500); // delete card content to the view
       } else {
         // call target
         // show the overflow only at end
         target.style.overflow = 'hidden';
-        overflowScreen.style.overflow = 'hidden';
+        ecran_overflow.style.overflow = 'hidden';
         // remove old class
         title.classList.remove('fadeOutRight');
         btnClose.classList.remove('fadeOutLeft');
@@ -101,7 +246,7 @@ const Card: React.FunctionComponent = () => {
         target.classList.add('call'); // add class for opening
         // add animated and make elem visible
         setTimeout(() => {
-          overflowScreen.style.overflow = 'auto';
+          ecran_overflow.style.overflow = 'auto';
           header.classList.add('fadeInDown');
           header.style.opacity = '1';
         }, 350);
@@ -118,18 +263,51 @@ const Card: React.FunctionComponent = () => {
     body.classList.toggle('noOver');
   }
 
-  /**
-   * return a block for each quests in a card
-   * @Param {any} map the data
-   * @Param {string} id the current card id
-   * @Param {any} season season
-   * @Param {any} story story
-   * @Param {string} lang the lang fr || eng
-   * @Return {reactNode} the card
-   */
-  function block(map: any, id: string, season: any, story: any, lang: string) {
-    console.log('block');
-    const data = dataMap.dataMap;
+  handleCard(id: any, season: any, story: any, e: any) {
+    const {isOpen} = this.state;
+    // if is not open stock the value of grid, target and data
+    // the value is delete and replace each time of card is open
+    if (!isOpen) {
+      // card is open
+      this.setState({
+        isOpen: true,
+      });
+      this.setState({
+        grid: {
+          elem: document.getElementById('season_grid'),
+          top: document.getElementById('season_grid')?.getBoundingClientRect().top,
+          left: document.getElementById('season_grid')?.getBoundingClientRect().left,
+        },
+        parent: {
+          elem: e.currentTarget,
+          top: e.currentTarget.getBoundingClientRect().top,
+          left: e.currentTarget.getBoundingClientRect().left,
+        },
+        elemShow: {
+          season: season,
+          story: story,
+          id: id,
+        },
+      }, () => {
+        // function work but just code no...
+        this.showCard();
+        this.setProperty();
+      });
+    } else {
+      // if is a close action value is already defined
+      // onClose demand
+      this.setState({
+        onClose: true,
+      }, () => {
+        this.showCard();
+        this.setProperty();
+      });
+    }
+  }
+
+  // return a block for each quests
+  block(map: any, id: any, season: any, story: any, lang: any) {
+    const {data} = this.state;
 
     return (
       <div className={'card_tree'} key={id}>
@@ -155,9 +333,10 @@ const Card: React.FunctionComponent = () => {
             <span key={character} className={'tooltipped status ' + (!map[season]['story'][story]['quests'][id]['authorization'][character] ? 'grey' : map[season]['story'][story]['quests'][id]['status'][character] ? 'green' : 'red')} data-position="top" data-tooltip={character}>
               <span>
                 {!map[season]['story'][story]['quests'][id]['authorization'][character] ?
-                  <del>{character.substring(0, 3)}</del> :
-                  character.substring(0, 3)
+                                  <del>{character.substring(0, 3)}</del> :
+                                  character.substring(0, 3)
                 }
+                {/* {data['characterId'][character]['profession']}*/}
               </span>
               <span>
                 <img src={
@@ -169,8 +348,7 @@ const Card: React.FunctionComponent = () => {
                   data['characterId'][character]['profession'] === 'Engineer' ? Engineer :
                   data['characterId'][character]['profession'] === 'Ranger' ? Ranger :
                   data['characterId'][character]['profession'] === 'Revenant' ? Revenant :
-                  data['characterId'][character]['profession'] === 'Mesmer' ? Mesmer :
-                  undefined
+                  data['characterId'][character]['profession'] === 'Mesmer' ? Mesmer : undefined
                 } alt="class icon" className="icon_class"/>
               </span>
             </span>
@@ -188,7 +366,7 @@ const Card: React.FunctionComponent = () => {
               <i className="material-icons a">looks_3</i>
               <hr/>
             </div> :
-              questsList['5choice'].includes(id) ?
+            questsList['5choice'].includes(id) ?
               <div className="choice-5">
                 <i className="material-icons a">looks_5</i>
                 <hr/>
@@ -199,19 +377,14 @@ const Card: React.FunctionComponent = () => {
     );
   }
 
-  /**
-   * return the html content for each card
-   * @Return {reactNode} the card
-   */
-  function showCard() {
-    console.log('sgowcard');
-    console.log(elemShow);
+  showCard() {
     // get data
-    const map = dataMap.dataMap;
+    const {data, elemShow, lang} = this.state;
+    const map = data ? this.map() : null;
 
     // stock
-    const season = elemShow['season'].name;
-    const story = elemShow['story'].name;
+    const season = elemShow['season'];
+    const story = elemShow['story'];
     const id = elemShow['id'];
 
     // return card with good data
@@ -225,7 +398,7 @@ const Card: React.FunctionComponent = () => {
               <p>{story}</p>
               <div className="icons">
                 {/* History desc*/}
-                {story.description &&
+                {map[season]['story'][story]['description'] &&
                 <p>
                   <a className="modal-trigger" href={'#m'+id}>
                     <i className="material-icons tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Description' : 'Description'}>announcement</i>
@@ -260,7 +433,7 @@ const Card: React.FunctionComponent = () => {
             </div>
             <div className="header-close animated">
               <span onClick={() => {
-                handleCard(story.id);
+                this.handleCard(map[season]['story'][story]['id'], undefined, undefined, undefined);
               }}>
                 <i className="material-icons">close</i>
               </span>
@@ -270,19 +443,19 @@ const Card: React.FunctionComponent = () => {
           <div className="schema animated">
             <div className="ecran_overflow">
               <div className="ecran">
-                {questsList[story.id] && questsList[story.id].map((quest: any) => (
-                  <div key={quest} className="grid">
+                {questsList[map[season]['story'][story]['id']] && questsList[map[season]['story'][story]['id']].map((quest: any) => (
+                  <div key={JSON.stringify(quest)} className="grid">
                     {quest.map((line: any) => (
-                      <div key={line} className="line">
-                        {line.map((id: any) => (
-                          <div key={id} className="multi_card">
-                            {Array.isArray(id) ?
+                      <div key={JSON.stringify(line)} className="line">
+                        {line.map((idObj: any) => (
+                          <div key={JSON.stringify(idObj)} className="multi_card"> // fixme bad key value
+                            {Array.isArray(idObj) ?
                               // if id is array, is a choice
-                              id.map((uId) => (
-                                block(map, uId.id, season, story, lang)
+                              idObj.map((uId: any) => (
+                                this.block(map, uId.id, season, story, lang)
                               )) :
                               // else is a single quest
-                              block(map, id.id, season, story, lang)
+                              this.block(map, idObj.id, season, story, lang)
                             }
                           </div>
                         ))}
@@ -298,89 +471,58 @@ const Card: React.FunctionComponent = () => {
     );
   }
 
-  /**
-   * Handle the card open action
-   * rec the data in each state for the css animation
-   * @Param {string} id the id for the current card
-   * @Param {string} season the season id
-   * @Param {string} story the story id
-   * @Param {DOMevent} event the event
-   * @Return {void} exec showCard()
-   */
-  function handleCard(id: string, season?: string, story?: string, event?: any) {
-    console.log('handle card');
-    // if is not open stock the value of grid, target and data
-    // the value is delete and replace each time of card is open
-    if (!isOpen) {
-      // card is open
-      setIsOpen(true);
-      setGrid({
-        elem: document.getElementById('season_grid'),
-        top: document.getElementById('season_grid')?.getBoundingClientRect().top,
-        left: document.getElementById('season_grid')?.getBoundingClientRect().left,
-      });
-      setParent({
-        elem: event.currentTarget,
-        top: event.currentTarget.getBoundingClientRect().top,
-        left: event.currentTarget.getBoundingClientRect().left,
-      });
-      setElemShow({
-        season: season,
-        story: story,
-        id: id,
-      });
-      console.log('tttttt');
-      console.log(season);
-      // showCard(); // PING maybe in useEffect
-    } else {
-      // if is a close action value is already defined
-      // onClose demand
-      console.log('#####');
-      setOnClose(true);
-      showCard(); // PING maybe in useEffect
-      setProperty();
-    }
-  }
+  render() {
+    const {loading, data, lang, apiKeyError} = this.state;
+    const map = data ? this.map() : null;
 
-  useEffect(() => {
-    console.log('effect');
-    checkApiKey();
-    sortData().then((res: any) => {
-      setDataMap(res);
-      setLoading(false);
-      if (elemShow && grid && parent) {
-        console.log('ping');
-        showCard();
-        setProperty();
-      }
-    });
-  }, [elemShow]);
+    return (
+      <div className="screen-card">
+        <Nav active={'card'}/>
 
-  return (
-    <section>
-      <Nav active={'card'} />
-      {loading ?
-        <div className="progress">
-          <div className="indeterminate"> </div>
-        </div> :
-        ''}
+        <div className="row container">
+          {(!loading && apiKeyError) &&
+          <div>
+            <div className="red-text">{lang==='fr' ? 'Une erreur c\'est produite, vérifiez votre clé api. \n Cliquez sur le bouton reset pour revenir a la page d\'avant.' : 'An error occurred, check your API key. \n Click on the reset button to return to the previous page.'}</div>
+          </div>
+          }
 
-      <div className="container screen-card">
-        {dataMap &&
+          {loading &&
+          <div className="progress">
+            <div className="indeterminate"> </div>
+          </div>
+          }
+
+          {/* Modal generation*/}
+          {map && Object.keys(map).map((season) => (
+            Object.keys(map[season]['story']).map((story) => (
+              <div key={map[season]['story'][story]['id']} id={'m'+map[season]['story'][story]['id']} className="modal">
+                <div className="modal-content">
+                  <h4>Description</h4>
+                  <p>{map[season]['story'][story]['description']}</p>
+                </div>
+              </div>
+            ))
+          ))}
+
+          {/* card stack generation*/}
+          {map &&
           <div id="season_grid">
 
-            {Object.entries(dataMap.dataMap).map(([seasonKey, season]: any) => (
-              <div key={seasonKey}>
-                <div>
+            {Object.entries(map).map(([season, seasonData]: any) => (
+              <div key={season}>
+
+                <div className="carousel-item">
                   <h4>
-                    {season.name + ' '}
-                    {tuto[seasonKey][lang]['link'] &&
-                      <a href={tuto[seasonKey][lang]['link']} target="_blank" rel="noopener noreferrer" className="explore tooltipped marging" data-position="right" data-tooltip={lang==='fr' ? 'Vers le tutoriel' : 'Go to tutorial'}>
-                        <i className="material-icons white-text">explore</i>
-                      </a>
+                    {season + ' '}
+                    {tuto[map[season]['id']][lang]['link'] &&
+                    <a href={tuto[map[season]['id']][lang]['link']} target="_blank" rel="noopener noreferrer" className="explore tooltipped marging" data-position="right"
+                      data-tooltip={lang==='fr' ? 'Vers le tutoriel' : 'Go to tutorial'}>
+                      <i className="material-icons white-text">explore</i>
+                    </a>
                     }
-                    {tuto[seasonKey][lang]['wiki'] &&
-                    <a href={tuto[seasonKey][lang]['wiki']} target="_blank" rel="noopener noreferrer" className="tooltipped" data-position="right" data-tooltip={lang==='fr' ? 'Vers le wiki' : 'Go to the wiki'}>
+                    {tuto[map[season]['id']][lang]['wiki'] &&
+                    <a href={tuto[map[season]['id']][lang]['wiki']} target="_blank" rel="noopener noreferrer" className="tooltipped" data-position="right"
+                      data-tooltip={lang==='fr' ? 'Vers le wiki' : 'Go to the wiki'}>
                       <i className="material-icons white-text">event_note</i>
                     </a>
                     }
@@ -388,12 +530,12 @@ const Card: React.FunctionComponent = () => {
                   <div>
                     <div className="card_overflow">
                       <div className="cards_stack">
-                        {Object.entries(dataMap.dataMap[seasonKey]['stories']).map(([storyKey, story]: any) => (
-                          <div key={story.id} className={'card i' + seasonKey} onClick={(e) => {
-                            handleCard(story.id, season, story, e);
+                        {Object.keys(map[season]['story']).map((story) => (
+                          <div key={story} className={'card i' + seasonData.id} onClick={(e) => {
+                            this.handleCard(map[season]['story'][story]['id'], season, story, e);
                           }}>
                             <div className="card_bck">
-                              <h6>{story.name}</h6>
+                              <h6>{story}</h6>
                             </div>
                           </div>
                         ))}
@@ -403,12 +545,18 @@ const Card: React.FunctionComponent = () => {
                 </div>
               </div>
             ))}
-          </div>
-        }
-      </div>
 
-    </section>
-  );
-};
+          </div>
+          }
+
+          {this.state.isOpen &&
+          this.showCard()
+          }
+        </div>
+      </div>
+    );
+  }
+
+}
 
 export default Card;

@@ -169,5 +169,17 @@ export default async function sortData(): Promise<any> {
 
   });
 
-  return {dataMap, charactersData};
+  return {
+    dataMap,
+    charactersData,
+    oldDataMap: {
+      seasons,
+      stories,
+      quests,
+      characters: charactersList,
+      questsDone: charactersData.questsDone,
+      backstories: charactersData.backStories,
+      characterId: charactersData.characterId,
+    },
+  };
 }
