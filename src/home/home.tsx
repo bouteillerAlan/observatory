@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import M from 'materialize-css';
+import '../server/general.scss';
+import './home.scss';
 import logoBus from '../img/logo.png';
 import card from '../img/card.png';
 // eslint-disable-next-line camelcase
@@ -44,10 +46,9 @@ const Home = () => {
 
   /**
    * handle the checkbox
-   * @Param {React.ChangeEvent<HTMLInputElement>} event dom event in checkbox
    * @Return {void} set state
    */
-  function handleCheck(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleCheck() {
     const target = document.getElementById('check') as HTMLInputElement;
     const value = target?.checked;
     if (value) {
@@ -252,8 +253,8 @@ const Home = () => {
                   </button>
                   <p>
                     <label>
-                      <input type="checkbox" id="check" onChange={(e) => {
-                        handleCheck(e);
+                      <input type="checkbox" id="check" onChange={() => {
+                        handleCheck();
                       }}/>
                       <span className={checkError && 'error'}>{lang === 'eng' ?
                         'I accept the registration of my API key and the choice of my display language in the "localStorage" cookie.' :

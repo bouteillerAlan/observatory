@@ -64,6 +64,32 @@ body {
   }
 }
 
+/*
+* CHECKBOX
+ */
+/*checkbox is not checked*/
+[type="checkbox"]+span:not(.lever):before {
+  border-color: var(--primary-yellow) !important;
+}
+
+/*checkbox is checked*/
+[type="checkbox"]:checked+span:not(.lever):before {
+  border-top: transparent !important;
+  border-left: transparent !important;
+  border-right: 2px solid var(--primary-yellow);
+  border-bottom: 2px solid var(--primary-yellow);
+}
+
+/*
+* BTN
+ */
+.btn {
+  background-color: var(--primary-yellow) !important;
+}
+
+/*
+* CUSTOM CLASS
+ */
 .full {
   height: 100vh;
   width: 100%;
