@@ -5,6 +5,15 @@
   --primary-yellow : #fbd54a;
 }
 
+#colA {
+  li {
+    &:hover {
+      color: #fbd54a;
+      cursor: pointer;
+    }
+  }
+}
+
 // adaptive background
 .i215AAA0F-CDAC-4F93-86DA-C155A99B5784 {
   background-image: url("../img/guildwars2-121.jpg");
@@ -346,6 +355,9 @@
 
 .img_content {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   img {
     max-height: 20vh;
     width: auto;

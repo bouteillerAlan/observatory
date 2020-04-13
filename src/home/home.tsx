@@ -4,6 +4,7 @@ import '../server/general.scss';
 import './home.scss';
 import logoBus from '../img/logo.png';
 import card from '../img/card.png';
+import tree from '../img/tree.png';
 // eslint-disable-next-line camelcase
 import flag_fr from '../img/france.png';
 // eslint-disable-next-line camelcase
@@ -18,8 +19,10 @@ const Home = () => {
   const [check, setCheck] = useState(false);
   const [checkError, setCheckError] = useState();
   const [lang, setLang] = useState('eng');
+  const [howImg, setHowImg] = useState(card);
 
   useEffect(() => {
+    // check key
     const localKey = localStorage.getItem('obsKey');
     if (localKey) {
       checkApiKeyRight(localKey).then((valid: boolean) => {
@@ -28,9 +31,14 @@ const Home = () => {
         }
       });
     }
+    // init select
     const elems = document.querySelectorAll('select');
     const options = {};
     M.FormSelect.init(elems, options);
+    // mep height in special div
+    const aH = document.getElementById('colA')?.offsetHeight;
+    const colB = document.getElementById('colB');
+    if (colB) colB.style.height = `${aH}px`;
   }, [lang]);
 
   /**
@@ -183,22 +191,30 @@ const Home = () => {
 
           <div className="row container valign-wrapper content">
             <div className="row">
-              <div className="col s12 m6">
+              <div className="col s12 m6" id='colA'>
                 {lang === 'eng' ?
                   <div>
                     <h3>How it works</h3>
-                    <p>Thanks to the <a href={'https://api.guildwars2.com/v2'} target="_blank" rel="noopener noreferrer">API provided by ArenaNet</a> we have sorted Seasons, Stories and Quests in a chronological order as a card deck.</p>
-                    <p>In each card the quest tree follows the chronological order and provides multiple information about the possible choices of each character.</p>
+                    <p>Thanks to the <a href={'https://api.guildwars2.com/v2'} target="_blank" rel="noopener noreferrer">API provided by ArenaNet</a> we have sorted the Seasons, Stories and Quests in chronological order in two forms :</p>
+                    <ul>
+                      <li onMouseEnter={() => setHowImg(card)}>that of a card deck, where each card takes up the tree of quests by following the chronological order and by providing multiple information on the possible choices or not of each character.</li>
+                      <br/>
+                      <li onMouseEnter={() => setHowImg(tree)}>that of an arborescense without flourishes which allows at a glance to know where we are on the whole adventure.</li>
+                    </ul>
                   </div> :
                   <div>
                     <h3>Comment ça fonctionne</h3>
-                    <p>Grâce à <a href={'https://api.guildwars2.com/v2'} target="_blank" rel="noopener noreferrer">l'api fournie par ArenaNet</a> nous avons trié par ordre chronologique les Saisons, Histoires et Quêtes sous forme de deck de carte.</p>
-                    <p>Dans chaque carte l'arborescence des quêtes suit l'ordre chronologique et fourni de multiples informations sur les choix possibles ou non de chaque personnage.</p>
+                    <p>Grâce à <a href={'https://api.guildwars2.com/v2'} target="_blank" rel="noopener noreferrer">l'api fourni par ArenaNet</a> nous avons trié par ordre chronologique les Saisons, Histoires et Quêtes sous deux forme :</p>
+                    <ul>
+                      <li onMouseEnter={() => setHowImg(card)}>celle d'un deck de carte, ou chaque carte reprend l'arborescence des quêtes en suivant l'ordre chronologique et en fournissant de multiples informations sur les choix possibles ou non de chaque personnage.</li>
+                      <br/>
+                      <li onMouseEnter={() => setHowImg(tree)}>celle d'une arborescense sans fioriture qui permet d'un simple coup d'oeil de savoir où l'on en est sur l'ensemble de l'aventure.</li>
+                    </ul>
                   </div>
                 }
               </div>
-              <div className="col s12 m6 img_content">
-                <img src={card} alt="card"/>
+              <div className="col s12 m6 img_content" id='colB'>
+                <img src={howImg} alt="card"/>
               </div>
             </div>
           </div>
