@@ -1,4 +1,5 @@
 import loadHash from 'lodash';
+import backStories from '../data/backStories';
 
 const _API_URL = process.env.REACT_APP_API_URL;
 const _apiKey = localStorage.getItem('obsKey');
@@ -107,6 +108,24 @@ export default async function sortData(): Promise<any> {
   const seasonsNS = await getSeasons();
   const storiesNS = await getStories();
 
+  // set data for each characters
+  let charactersData: any = {};
+  await dataByCharacter(charactersList).then((res: any) => {
+    charactersData = res;
+  });
+
+  // get the blocked quest
+  charactersData['questsBlocked'] = [];
+  Object.entries(charactersData.backStories).forEach(([name, value]: any) => {
+    charactersData['questsBlocked'][name] = [];
+    Object.values(value.backstory).forEach((key: any) => {
+      // key = 21-017 for example
+      if (backStories[key]) {
+        charactersData['questsBlocked'][name].push(...backStories[key]);
+      }
+    });
+  });
+
   // sort the seasons
   const seasons = seasonsNS.sort((a: any, b: any) => {
     return a['order']-b['order'];
@@ -148,12 +167,6 @@ export default async function sortData(): Promise<any> {
       });
     });
 
-  });
-
-  // set data for each characters
-  let charactersData: {} = {};
-  await dataByCharacter(charactersList).then((res: {}) => {
-    charactersData = res;
   });
 
   return {dataMap, charactersData};
