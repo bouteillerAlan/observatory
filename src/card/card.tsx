@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Nav from '../nav/nav';
-import checkApiKey from '../request/checkApiKey';
+import {checkApiKey} from '../request/checkApiKey';
 import sortData from '../request/getAll';
 import '../server/general.scss';
 import './card.scss';

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import sortData from '../request/getAll';
-import checkApiKey from '../request/checkApiKey';
+import {checkApiKey} from '../request/checkApiKey';
 import Nav from '../nav/nav';
 import questsList from '../data/quests';
 import './map.scss';
