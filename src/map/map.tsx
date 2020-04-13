@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import sortData from '../request/getAll';
-import checkApiKey from '../request/checkApiKey';
+import {checkApiKey} from '../request/checkApiKey';
 import Nav from '../nav/nav';
 import questsList from '../data/quests';
 import './map.scss';
@@ -187,9 +187,16 @@ const Map: React.FunctionComponent = () => {
       <Nav active={'map'} />
       {gen &&
       <div id='warning-message'>
-        {lang === 'fr' ?
-          'Le calcul des trajets peux prendre un certain temps. Merci de patienter.' :
-          'It may take a while to calculate the routes. Please be patient.'}
+        <div className="container">
+          <div>
+            {lang === 'fr' ?
+              'Le calcul des trajets peux prendre un certain temps. Merci de patienter.' :
+              'It may take a while to calculate the routes. Please be patient.'}
+          </div>
+          <div className="progress">
+            <div className="indeterminate"> </div>
+          </div>
+        </div>
       </div>
       }
       {loading ?

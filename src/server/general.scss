@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #242423;
   color: #fff;
@@ -13,6 +17,11 @@ body {
   }
   .progress .indeterminate {
     background-color: rgb(251, 213, 74);
+  }
+  a {
+    font-family: 'Roboto', sans-serif;
+    color: var(--primary-yellow) !important;
+    text-decoration: underline;
   }
 }
 
@@ -64,7 +73,84 @@ body {
   }
 }
 
+/*
+* CHECKBOX
+ */
+/*checkbox is not checked*/
+[type="checkbox"]+span:not(.lever):before {
+  border-color: var(--primary-yellow) !important;
+}
+
+/*checkbox is checked*/
+[type="checkbox"]:checked+span:not(.lever):before {
+  border-top: transparent !important;
+  border-left: transparent !important;
+  border-right: 2px solid var(--primary-yellow);
+  border-bottom: 2px solid var(--primary-yellow);
+}
+
+/*
+* BTN
+ */
+.btn {
+  background-color: var(--primary-yellow) !important;
+}
+
+/*
+* INPUT
+ */
+input {
+  color: var(--primary-color) !important;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  border-bottom-color: var(--primary-color);
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]) {
+  border-bottom: 1px solid var(--primary-yellow) !important;
+  box-shadow: 0 1px 0 0 var(--primary-yellow) !important;
+}
+
+.select-wrapper {
+  input.select-dropdown:focus {
+    border-bottom: 1px solid var(--primary-yellow) !important;
+  }
+  svg {
+    fill : var(--primary-yellow) !important;
+  }
+}
+
+.select-dropdown {
+  li {
+    span {
+      color: var(--primary-background) !important;
+    }
+  }
+  li:hover{
+    background-color: var(--primary-yellow) !important;
+  }
+}
+
+.api-input {
+  margin-top: 25px !important;
+  label {
+    color: var(--primary-color) !important;
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+.helper-text {
+  color: red !important;
+}
+
+/*
+* CUSTOM CLASS
+ */
 .full {
   height: 100vh;
   width: 100%;
+}
+
+.error {
+  color: red !important;
 }
