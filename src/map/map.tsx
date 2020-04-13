@@ -12,8 +12,6 @@ const Map: React.FunctionComponent = () => {
   const [gen, setGen] = useState(true);
   const [lang] = useState(localStorage.getItem('obsLang'));
 
-  console.log(dataMap);
-
   /**
    * Perform a check and return the value of the guild for an id
    * @param {array} ids list of id
