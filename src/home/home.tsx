@@ -20,6 +20,14 @@ const Home = () => {
   const [lang, setLang] = useState('eng');
 
   useEffect(() => {
+    const localKey = localStorage.getItem('obsKey');
+    if (localKey) {
+      checkApiKeyRight(localKey).then((valid: boolean) => {
+        if (valid) {
+          history.push('/card');
+        }
+      });
+    }
     const elems = document.querySelectorAll('select');
     const options = {};
     M.FormSelect.init(elems, options);
