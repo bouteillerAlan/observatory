@@ -229,6 +229,8 @@ class Card extends Component<any, any> {
           target.style.display = 'none';
         }, 500); // delete card content to the view
       } else {
+        // toggle overflow for the body
+        body.classList.toggle('noOver');
         // call target
         // show the overflow only at end
         target.style.overflow = 'hidden';
@@ -259,9 +261,6 @@ class Card extends Component<any, any> {
         }, 360);
       }
     }
-
-    // toggle overflow for the body
-    body.classList.toggle('noOver');
   }
 
   handleCard(id: any, season: any, story: any, e: any) {
@@ -352,15 +351,16 @@ class Card extends Component<any, any> {
             </span>
           ))}
         </div>
-        {/* todo arrow */}
         {Array.isArray(questId.pid) ?
           questId.pid.map((pidU: number) => (
             <span key={pidU}>
+              {this.setProperty()}
               <div className="arrow" id={'a'+pidU+questId.id}> </div>
               {gArrow(pidU, questId.id, 'a'+pidU+questId.id, false, true)}
             </span>
           )) :
           <span>
+            {this.setProperty()}
             <div className="arrow" id={'a'+questId.pid+questId.id}> </div>
             {gArrow(questId.pid, questId.id, 'a'+questId.pid+questId.id, false, true)}
           </span>
@@ -449,7 +449,6 @@ class Card extends Component<any, any> {
                               // else is a single quest
                               this.block(map, idObj, season, story, lang)
                             }
-                            {this.setProperty()}
                           </div>
                         ))}
                       </div>
