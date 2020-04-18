@@ -219,7 +219,7 @@
           margin: 15px;
           padding: 10px;
           border: solid var(--primary-background) 2px;
-          background-color: rgba(255, 255, 255, 0.09);
+          background-color: rgb(51, 51, 51);
           color: var(--primary-color) !important;
 
           // content position
@@ -286,8 +286,8 @@
           .arrow {
             width: 10px;
             position: absolute;
-            z-index: 1;
-            background-color: rgba(255, 255, 255, 0.09);
+            z-index: -1;
+            background-color: rgb(51, 51, 51);
           }
 
         }
