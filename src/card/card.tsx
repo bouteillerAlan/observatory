@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import Nav from '../nav/nav';
 import {checkApiKey} from '../request/checkApiKey';
 import sortData from '../request/getAll';
+import {gArrow} from '../functions/sharedFunction';
 import '../server/general.scss';
 import './card.scss';
 
 import tuto from '../data/tutorials';
+import backStories from '../data/backStories';
 import questsList from '../data/quests';
 
 import Guardian from '../img/Guardian_icon.png';
@@ -17,7 +19,6 @@ import Engineer from '../img/Engineer_icon.png';
 import Ranger from '../img/Ranger_icon.png';
 import Revenant from '../img/Revenant_icon.png';
 import Mesmer from '../img/Mesmer_icon.png';
-import backStories from '../data/backStories';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -306,37 +307,36 @@ class Card extends Component<any, any> {
   }
 
   // return a block for each quests
-  block(map: any, id: any, season: any, story: any, lang: any) {
+  block(map: any, questId: {id: number, pid: number | number[]}, season: any, story: any, lang: any) {
     const {data} = this.state;
 
     return (
-      <div className={'card_tree'} key={id}>
+      <div className={'card_tree'} id={`${questId.id}`} key={questId.id}>
         <p className={'info'}>
-          <small>Lvl : {map[season]['story'][story]['quests'][id]['Qlevel']}</small>
-          {questsList['durmand'].includes(id) ?
+          <small>Lvl : {map[season]['story'][story]['quests'][questId.id]['Qlevel']}</small>
+          {questsList['durmand'].includes(questId.id) ?
             <span className="durmand tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Prieuré de Durmand' : 'Durmand Priory'}> </span> :
             null
           }
-          {questsList['whisper'].includes(id) ?
+          {questsList['whisper'].includes(questId.id) ?
             <span className="whisper tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Ordre des Soupirs' : 'Order of Whispers'}> </span> :
             null
           }
-          {questsList['vigil'].includes(id) ?
+          {questsList['vigil'].includes(questId.id) ?
             <span className="vigil tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Veilleurs' : 'Vigil'}> </span> :
             null
           }
-          <small>Qid : {map[season]['story'][story]['quests'][id]['Qid']}</small>
+          <small>Qid : {map[season]['story'][story]['quests'][questId.id]['Qid']}</small>
         </p>
-        <h5 className={'title'}>{map[season]['story'][story]['quests'][id]['Qname']}</h5>
+        <h5 className={'title'}>{map[season]['story'][story]['quests'][questId.id]['Qname']}</h5>
         <div className={'card_persona'}>
-          {Object.keys(map[season]['story'][story]['quests'][id]['status']).map((character) => (
-            <span key={character} className={'tooltipped status ' + (!map[season]['story'][story]['quests'][id]['authorization'][character] ? 'grey' : map[season]['story'][story]['quests'][id]['status'][character] ? 'green' : 'red')} data-position="top" data-tooltip={character}>
+          {Object.keys(map[season]['story'][story]['quests'][questId.id]['status']).map((character) => (
+            <span key={character} className={'tooltipped status ' + (!map[season]['story'][story]['quests'][questId.id]['authorization'][character] ? 'grey' : map[season]['story'][story]['quests'][questId.id]['status'][character] ? 'green' : 'red')} data-position="top" data-tooltip={character}>
               <span>
-                {!map[season]['story'][story]['quests'][id]['authorization'][character] ?
+                {!map[season]['story'][story]['quests'][questId.id]['authorization'][character] ?
                                   <del>{character.substring(0, 3)}</del> :
                                   character.substring(0, 3)
                 }
-                {/* {data['characterId'][character]['profession']}*/}
               </span>
               <span>
                 <img src={
@@ -354,24 +354,18 @@ class Card extends Component<any, any> {
             </span>
           ))}
         </div>
-
-        {
-          questsList['2choice'].includes(id) ?
-            <div className="choice-2">
-              <i className="material-icons a">looks_two</i>
-              <hr/>
-            </div> :
-            questsList['3choice'].includes(id) ?
-            <div className="choice-3">
-              <i className="material-icons a">looks_3</i>
-              <hr/>
-            </div> :
-            questsList['5choice'].includes(id) ?
-              <div className="choice-5">
-                <i className="material-icons a">looks_5</i>
-                <hr/>
-              </div> :
-              null
+        {/* todo arrow */}
+        {Array.isArray(questId.pid) ?
+          questId.pid.map((pidU: number) => (
+            <span key={pidU}>
+              <div className="arrow" id={'a'+pidU+questId.id}> </div>
+              {gArrow(pidU, questId.id, 'a'+pidU+questId.id, false, true)}
+            </span>
+          )) :
+          <span>
+            <div className="arrow" id={'a'+questId.pid+questId.id}> </div>
+            {gArrow(questId.pid, questId.id, 'a'+questId.pid+questId.id, false, true)}
+          </span>
         }
       </div>
     );
@@ -452,10 +446,10 @@ class Card extends Component<any, any> {
                             {Array.isArray(idObj) ?
                               // if id is array, is a choice
                               idObj.map((uId: any) => (
-                                this.block(map, uId.id, season, story, lang)
+                                this.block(map, uId, season, story, lang)
                               )) :
                               // else is a single quest
-                              this.block(map, idObj.id, season, story, lang)
+                              this.block(map, idObj, season, story, lang)
                             }
                           </div>
                         ))}
