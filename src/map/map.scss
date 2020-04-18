@@ -14,8 +14,8 @@
   table {
     width: max-content;
     position: relative;
-    th, td {
-      border-left: solid rgba(0, 0, 0, 0.20) 1px;
+    tr, th, td {
+      border: solid rgba(251, 213, 74, 0.07) 1px;
       text-align: center;
     }
     .subTable {
@@ -49,5 +49,14 @@
         }
       }
     }
+  }
+}
+
+.tooltips-data {
+  width: 150px;
+  text-align: left;
+  .tooltips-data-name {}
+  .tooltips-data-status {
+    width: 100%;
   }
 }

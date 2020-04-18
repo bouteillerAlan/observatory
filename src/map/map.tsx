@@ -50,6 +50,21 @@ const Map: React.FunctionComponent = () => {
   }, [loading]);
 
   /**
+   * generate html element for tooltips
+   * @Param {string} name quest name
+   * @Param {string} statusCss quest status
+   * @Return {string} parsed html
+   */
+  function dataTooltip(name: string, statusCss: string): string {
+    const status = statusCss === 'bg-green' ? 'réalisée' : statusCss === 'bg-grey' ? 'verrouillée' : 'non réalisée';
+    return `<div class="tooltips-data">
+                <p class="tooltips-data-name">${name}</p>
+                <hr/>
+                <p class="tooltips-data-status">status : ${status}</p>
+            </div>`;
+  }
+
+  /**
    * map the arrow
    * @Param {string} name the current character name without space (for css class)
    * @Param {string} key the current character name
@@ -62,7 +77,10 @@ const Map: React.FunctionComponent = () => {
     return (
       <span key={key+subLine.id} className='lb-one'>
         <div className={'card tooltipped ' + (dataMap.charactersData.questsDone[key].includes(subLine.id) ? 'bg-green' : dataMap.charactersData.questsBlocked[key].includes(subLine.id) ? 'bg-grey' : 'bg-red')} data-position="top"
-          data-tooltip={`${dataMap.dataMap[seasonKey]['stories'].filter((story: any) => story.id === storyKey)[0].quests.filter((quest: any) => quest.id === subLine.id)[0].name}`} id={name+subLine.id}>
+          data-tooltip={dataTooltip(
+              dataMap.dataMap[seasonKey]['stories'].filter((story: any) => story.id === storyKey)[0].quests.filter((quest: any) => quest.id === subLine.id)[0].name,
+            dataMap.charactersData.questsDone[key].includes(subLine.id) ? 'bg-green' : dataMap.charactersData.questsBlocked[key].includes(subLine.id) ? 'bg-grey' : 'bg-red',
+          )} data-html="true" id={name+subLine.id}>
         </div>
         {/* if precedent is array map it */}
         {Array.isArray(subLine.pid) ?
@@ -151,6 +169,16 @@ const Map: React.FunctionComponent = () => {
       ''}
       {dataMap && !loading &&
         <div className="row screen">
+          <div className='container'>
+            <div className="alert-warning">
+              {lang === 'fr' ?
+                'Le système de fonctionnement de l\'API détermine qu\'un épisode d\'histoire relancé est, par définition, non terminé. \n' +
+                'Ce qui explique que certains épisodes soient considérés par cette dernière comme non réalisé alors qu\'ils ont certainement été relancés, mais terminés par le passé.' :
+                'The API operating system determines that a relaunched story episode is, by definition, not finished.\n' +
+                'This explains why certain episodes are considered by the latter to be unrealized when they have certainly been relaunched, but ended in the past.'
+              }
+            </div>
+          </div>
           <table>
             <thead>
               <tr>

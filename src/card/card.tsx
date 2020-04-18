@@ -502,6 +502,17 @@ class Card extends Component<any, any> {
           {map &&
           <div id="season_grid">
 
+            <div className='container'>
+              <div className="alert-warning">
+                {lang === 'fr' ?
+                  'Le système de fonctionnement de l\'API détermine qu\'un épisode d\'histoire relancé est, par définition, non terminé. \n' +
+                  'Ce qui explique que certains épisodes soient considérés par cette dernière comme non réalisé alors qu\'ils ont certainement été relancés, mais terminés par le passé.' :
+                  'The API operating system determines that a relaunched story episode is, by definition, not finished.\n' +
+                  'This explains why certain episodes are considered by the latter to be unrealized when they have certainly been relaunched, but ended in the past.'
+                }
+              </div>
+            </div>
+
             {Object.entries(map).map(([season, seasonData]: any) => (
               <div key={season}>
 

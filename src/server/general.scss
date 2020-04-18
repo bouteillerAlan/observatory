@@ -55,8 +55,8 @@ body {
  */
 .material-tooltip {
   max-width: 50% !important;
-  background-color: #FF9800 !important;
-  color: #242423 !important;
+  background-color: #313336 !important;
+  color: #fff !important;
 }
 
 .tooltipped:hover {
@@ -140,7 +140,7 @@ input[type=text]:not(.browser-default):focus:not([readonly]) {
 }
 
 .helper-text {
-  color: red !important;
+  color: #DB222A !important;
 }
 
 /*
@@ -152,5 +152,10 @@ input[type=text]:not(.browser-default):focus:not([readonly]) {
 }
 
 .error {
-  color: red !important;
+  color: #DB222A !important;
+}
+
+.alert-warning {
+  padding: 15px;
+  background-color: rgba(219, 34, 42, 0.55);
 }
