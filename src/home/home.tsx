@@ -126,18 +126,20 @@ const Home = () => {
   return (
     <section>
 
-      <div className="demo-3">
+      <div>
         <div>
 
           {/* head*/}
           <div className="head full row col s12 valign-wrapper center-align">
 
-            <div className="meteor ma"> </div>
-            <div className="meteor mb"> </div>
-            <div className="meteor mc"> </div>
-            <div className="meteor md"> </div>
-            <div className="meteor me"> </div>
-            <div className="meteor mf"> </div>
+            <div className="meteor-grid">
+              <div className="meteor ma"> </div>
+              <div className="meteor mb"> </div>
+              <div className="meteor mc"> </div>
+              <div className="meteor md"> </div>
+              <div className="meteor me"> </div>
+              <div className="meteor mf"> </div>
+            </div>
 
             <div className="row title">
               <h1><span className="yellow-text">O</span>bservatory</h1>
