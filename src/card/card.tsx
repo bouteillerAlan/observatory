@@ -292,7 +292,6 @@ class Card extends Component<any, any> {
       }, () => {
         // function work but just code no...
         this.showCard();
-        this.setProperty();
       });
     } else {
       // if is a close action value is already defined
@@ -301,7 +300,6 @@ class Card extends Component<any, any> {
         onClose: true,
       }, () => {
         this.showCard();
-        this.setProperty();
       });
     }
   }
@@ -451,6 +449,7 @@ class Card extends Component<any, any> {
                               // else is a single quest
                               this.block(map, idObj, season, story, lang)
                             }
+                            {this.setProperty()}
                           </div>
                         ))}
                       </div>
