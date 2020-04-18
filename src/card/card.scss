@@ -216,7 +216,7 @@
           width: 250px;
           min-height: 250px;
           max-height: fit-content;
-          margin: 15px;
+          margin: 60px;
           padding: 10px;
           border: solid var(--primary-background) 2px;
           background-color: rgb(51, 51, 51);
@@ -288,6 +288,7 @@
             position: absolute;
             z-index: -1;
             background-color: rgb(51, 51, 51);
+            border: #1f1f1f 1px solid;
           }
 
         }

@@ -308,7 +308,8 @@ class Card extends Component<any, any> {
     const {data} = this.state;
 
     return (
-      <div className={'card_tree'} id={`${questId.id}`} key={questId.id}>
+      <div className={'card_tree'} key={questId.id}>
+        <span id={`arrival${questId.id}`}></span>
         <p className={'info'}>
           <small>Lvl : {map[season]['story'][story]['quests'][questId.id]['Qlevel']}</small>
           {questsList['durmand'].includes(questId.id) ?
@@ -356,15 +357,16 @@ class Card extends Component<any, any> {
             <span key={pidU}>
               {this.setProperty()}
               <div className="arrow" id={'a'+pidU+questId.id}> </div>
-              {gArrow(pidU, questId.id, 'a'+pidU+questId.id, false, true)}
+              {gArrow(`start${pidU}`, `arrival${questId.id}`, 'a'+pidU+questId.id, false, true)}
             </span>
           )) :
           <span>
             {this.setProperty()}
             <div className="arrow" id={'a'+questId.pid+questId.id}> </div>
-            {gArrow(questId.pid, questId.id, 'a'+questId.pid+questId.id, false, true)}
+            {gArrow(`start${questId.pid}`, `arrival${questId.id}`, 'a'+questId.pid+questId.id, false, true)}
           </span>
         }
+        <span id={`start${questId.id}`}></span>
       </div>
     );
   }
