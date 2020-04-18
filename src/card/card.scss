@@ -36,9 +36,18 @@
 .iC22AFD21-667A-4AA8-8210-AC74EAEE58BB {
   background-image: url("../img/A_Star_to_Guide_Us_Wallpaper.jpg");
 }
-
 .iEDCAE800-302A-4D9B-8331-3CC769ADA0B3 {
   background-image: url("../img/the-alpine-blizzard-compressed.jpg");
+}
+
+.legend-durmand {
+  background-image: url('../img/Durmand_Priory_banner.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  float: left;
+  height: 50px;
+  width: 100%;
 }
 
 #season_grid {
@@ -181,7 +190,7 @@
 
     .ecran_overflow {
       // windows - header
-      height: calc(100vh - 192px);
+      height: calc(100vh - 228px);
       padding: 1px;
     }
 

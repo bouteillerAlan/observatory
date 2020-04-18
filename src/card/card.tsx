@@ -58,13 +58,10 @@ class Card extends Component<any, any> {
   // init js
   // DidUpdate because the elem is not render if fetch is null
   componentDidUpdate() {
-    const elems_collapsible = document.querySelectorAll('.collapsible');
     const elems_tooltipped = document.querySelectorAll('.tooltipped');
     const elems_modal = document.querySelectorAll('.modal');
-    const options_collapsible = {};
     const options_tooltipped = {};
     const options_modal = {};
-    M.Collapsible.init(elems_collapsible, options_collapsible);
     M.Tooltip.init(elems_tooltipped, options_tooltipped);
     M.Modal.init(elems_modal, options_modal);
   }
@@ -390,6 +387,8 @@ class Card extends Component<any, any> {
             <div className="header-title animated">
               <h4>{season}</h4>
               <p>{story}</p>
+              {/* legend */}
+              <button data-target="legendModal" className="btn modal-trigger">{lang === 'en' ? 'Legend' : 'Légende' }</button>
               <div className="icons">
                 {/* History desc*/}
                 {map[season]['story'][story]['description'] &&
@@ -486,21 +485,50 @@ class Card extends Component<any, any> {
           </div>
           }
 
-          {/* Modal generation*/}
-          {map && Object.keys(map).map((season) => (
-            Object.keys(map[season]['story']).map((story) => (
-              <div key={map[season]['story'][story]['id']} id={'m'+map[season]['story'][story]['id']} className="modal">
-                <div className="modal-content">
-                  <h4>Description</h4>
-                  <p>{map[season]['story'][story]['description']}</p>
-                </div>
+          <div className={'row col s12'}>
+            {/* legend modal */}
+            <div id="legendModal" className="modal">
+              <div className="modal-content">
+                <h4 className="modal-title">{lang === 'en' ? 'Legend' : 'Légende' }</h4>
+                <table className="legend">
+                  <tbody>
+                    <tr>
+                      <td className="center-align"><span className="grey"><del>Name</del></span></td>
+                      <td>{lang === 'en' ? ' Quest locked after a choice when creating the character' : ' Quête verrouillée suite à un choix lors de la création du personnage' }</td>
+                    </tr>
+                    <tr>
+                      <td className="center-align"><span className="red">Name</span></td>
+                      <td>{lang === 'en' ? ' Quest not realized' : ' Quête non réalisée' }</td>
+                    </tr>
+                    <tr>
+                      <td className="center-align"><span className="green">Name</span></td>
+                      <td>{lang === 'en' ? ' Quest realized' : ' Quête réalisée' }</td>
+                    </tr>
+                    <tr>
+                      <td className="center-align"><div className="legend-durmand"> </div></td>
+                      <td><p>{lang === 'en' ? ' Quests only available for this faction' : ' Quêtes accessibles uniquement pour cette faction' }</p></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            ))
-          ))}
+            </div>
+
+            {/* Modal generation*/}
+            {map && Object.keys(map).map((season) => (
+              Object.keys(map[season]['story']).map((story) => (
+                <div key={map[season]['story'][story]['id']} id={'m'+map[season]['story'][story]['id']} className="modal">
+                  <div className="modal-content">
+                    <h4>Description</h4>
+                    <p>{map[season]['story'][story]['description']}</p>
+                  </div>
+                </div>
+              ))
+            ))}
+          </div>
 
           {/* card stack generation*/}
           {map &&
-          <div id="season_grid">
+          <div id="season_grid" style={{overflow: this.state.isOpen && 'hidden'}}>
 
             <div className='container'>
               <div className="alert-warning">
@@ -516,7 +544,7 @@ class Card extends Component<any, any> {
             {Object.entries(map).map(([season, seasonData]: any) => (
               <div key={season}>
 
-                <div className="carousel-item">
+                <div>
                   <h4>
                     {season + ' '}
                     {tuto[map[season]['id']][lang]['link'] &&
