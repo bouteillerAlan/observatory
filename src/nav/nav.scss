@@ -3,5 +3,17 @@ nav {
   a {
     color: #333 !important;
     text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+
+    &:hover {
+      .rotate {
+        animation: rotate 1s infinite linear;
+        @keyframes rotate {
+          0%{transform: rotate(360deg);}
+          100%{transform: rotate(0deg);}
+        }
+      }
+    }
   }
 }
