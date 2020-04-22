@@ -3,24 +3,24 @@ html {
 }
 
 body {
-  background-color: #242423;
-  color: #fff;
+  background-color: var(--primary-background);
+  color: var(--primary-white);
   overflow-x: hidden !important;
   .bg-red {
-    background-color: #DB222A;
+    background-color: var(--primary-red);
   }
   .bg-green {
-    background-color: #16DB65;
+    background-color: var(--primary-green);
   }
   .bg-grey {
     background-color: #2A2D34;
   }
   .progress .indeterminate {
-    background-color: rgb(251, 213, 74);
+    background-color: var(--progress-background);
   }
   a {
     font-family: 'Roboto', sans-serif;
-    color: var(--primary-yellow) !important;
+    color: var(--progress-color) !important;
     text-decoration: underline;
   }
 }
@@ -41,13 +41,13 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(251, 213, 74);
+  background: var(--scrollbar-background);
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(243, 156, 18, 0.82);
+  background: var(--scrollbar-background-hover);
 }
 
 /*
@@ -55,8 +55,8 @@ body {
  */
 .material-tooltip {
   max-width: 50% !important;
-  background-color: #313336 !important;
-  color: #fff !important;
+  background-color: var(--secondary-background) !important;
+  color: var(--primary-white) !important;
 }
 
 .tooltipped:hover {
@@ -141,7 +141,7 @@ input[type=text]:not(.browser-default):focus:not([readonly]) {
 }
 
 .helper-text {
-  color: #DB222A !important;
+  color: var(--primary-red) !important;
 }
 
 /*
@@ -153,10 +153,10 @@ input[type=text]:not(.browser-default):focus:not([readonly]) {
 }
 
 .error {
-  color: #DB222A !important;
+  color: var(--primary-red) !important;
 }
 
 .alert-warning {
   padding: 15px;
-  background-color: rgba(219, 34, 42, 0.55);
+  background-color: var(--secondary-red);
 }
