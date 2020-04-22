@@ -5,6 +5,7 @@ import Home from '../home/home';
 import Card from '../card/card';
 import Map from '../map/map';
 import M from 'materialize-css';
+import './reset.scss';
 import './general.scss';
 import './font.scss';
 
