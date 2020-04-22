@@ -91,7 +91,7 @@ class Card extends Component<any, any> {
           data['quests'].map((quest: any) => {
 
             // check if quest is in story and store it
-            if (quest['story'] === story['id']) {
+            if (quest['story'] === story['id'] && data['characters']) {
               obj[season['name']]['story'][storyName]['quests'][quest['id']] = {Qname: '', Qid: '', Qlevel: '', status: {}, authorization: {}};
 
               data['characters'].map((character: any) => {
