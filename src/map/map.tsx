@@ -60,7 +60,7 @@ const Map: React.FunctionComponent = () => {
     return `<div class="tooltips-data">
                 <p class="tooltips-data-name">${name}</p>
                 <hr/>
-                <p class="tooltips-data-status">status : ${status}</p>
+                <p class="tooltips-data-status">statut : ${status}</p>
             </div>`;
   }
 

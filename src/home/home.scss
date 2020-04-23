@@ -4,8 +4,8 @@
   padding: 2px;
   margin: 2px;
   border-radius: 3px;
-  background-color: red;
-  color: white;
+  background-color: var(--primary-red);
+  color: var(--primary-white);
   p {
     text-align: center;
     word-break: break-word;
@@ -35,7 +35,7 @@
   .lig_yellow {
     height: 5px;
     width: 100%;
-    background-color: var(--primary-yellow);
+    background-color: var(--primary-color);
     margin-left: 15px !important;
     margin-right: 15px !important;
   }
@@ -53,7 +53,7 @@
   height: 10px;
   width: 10px;
   border-radius: 50%;
-  background-color: var(--primary-yellow);
+  background-color: var(--primary-color);
 }
 
 .ma {
