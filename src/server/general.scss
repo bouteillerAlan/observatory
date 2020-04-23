@@ -13,7 +13,7 @@ body {
     background-color: var(--primary-green);
   }
   .bg-grey {
-    background-color: #2A2D34;
+    background-color: var(--primary-grey);
   }
   .progress .indeterminate {
     background-color: var(--progress-background);
@@ -55,8 +55,11 @@ body {
  */
 .material-tooltip {
   max-width: 50% !important;
-  background-color: var(--secondary-background) !important;
-  color: var(--primary-white) !important;
+  background-color: var(--tooltips-background) !important;
+  color: var(--tooltips-color) !important;
+  hr {
+    border-color: var(--tooltips-background) !important;
+  }
 }
 
 .tooltipped:hover {
