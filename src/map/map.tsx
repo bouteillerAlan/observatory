@@ -6,6 +6,7 @@ import questsList from '../data/quests';
 import './map.scss';
 import M from 'materialize-css';
 import {gArrow} from '../functions/sharedFunction';
+import Footer from "../footer/footer";
 
 const Map: React.FunctionComponent = () => {
   const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
@@ -238,6 +239,7 @@ const Map: React.FunctionComponent = () => {
               ))}
             </tbody>
           </table>
+          <Footer/>
         </div>
       }
     </section>

@@ -20,8 +20,14 @@ body {
   }
   a {
     font-family: 'Roboto', sans-serif;
-    color: var(--progress-color) !important;
-    text-decoration: underline;
+    color: var(--yellow-a) !important;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  nav {
+    a {text-decoration: none !important;}
   }
 }
 

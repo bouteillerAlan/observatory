@@ -11,6 +11,7 @@ import flag_fr from '../img/france.png';
 import flag_uk from '../img/united-kingdom.png';
 import {checkApiKeyRight} from '../request/checkApiKey';
 import history from '../server/history';
+import Footer from "../footer/footer";
 /* eslint-disable react/no-unescaped-entities */
 
 const Home = () => {
@@ -290,27 +291,7 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-
-              <div className="col s12">
-                {lang === 'eng' ?
-                  <div className="col s12">
-                    <p>
-                      This app is made by <a href="https://alanbouteiller.dev" target="_blank" rel="noopener noreferrer">Alan Bouteiller</a> for <a href="https://www.lebusmagique.fr/" target="_blank" rel="noopener noreferrer">Le Bus Magique</a>.
-                      Do not hesitate to create an <a href="https://github.com/bouteillerAlan/SpyHistory/issues" target="_blank" rel="noopener noreferrer">Issue</a> if you find a bug.
-                      All game images are © 2019 ArenaNet, Inc..<br/>
-                      <small>CC BY-NC-SA Alan Bouteiller</small>
-                    </p>
-                  </div> :
-                  <div className="col s12">
-                    <p>
-                      Cette application a été codée par <a href="https://alanbouteiller.dev" target="_blank" rel="noopener noreferrer">Alan Bouteiller</a> pour <a href="https://www.lebusmagique.fr/" target="_blank" rel="noopener noreferrer">Le Bus Magique</a>.
-                      N'hésiter pas à créer une <a href="https://github.com/bouteillerAlan/SpyHistory/issues" target="_blank" rel="noopener noreferrer">Issue</a> si vous trouvez un bug.
-                      Toutes les images du jeu sont © 2019 ArenaNet, Inc..<br/>
-                      <small>CC BY-NC-SA Alan Bouteiller</small>
-                    </p>
-                  </div>
-                }
-              </div>
+              <Footer/>
             </div>
           </div>
         </div>
