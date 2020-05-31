@@ -19,6 +19,10 @@ A [first project](https://github.com/bouteillerAlan/SpyHistory) was born after a
   - [bulk expansion](#bulk-expansion)
   - [authentication](#authentication)
 - [Path generation function](#path-generation-function)
+- [Data map](#data-map)
+  - [back stories](#back-stories)
+  - [quests list](#quests-list) 🚨 this file is extremely important
+  - [link for external content](#link-for-external-content)
 
 ### Know bug
   - `infinite redirect #24` [🔗](https://github.com/bouteillerAlan/observatory/issues/24)
