@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="col s12">
           <p>
                 Cette application a été codée par <a href="https://alanbouteiller.dev" target="_blank" rel="noopener noreferrer">Alan Bouteiller</a> pour <a href="https://www.lebusmagique.fr/" target="_blank" rel="noopener noreferrer">Le Bus Magique</a>.
-                N'hésiter pas à créer une <a href="https://github.com/bouteillerAlan/SpyHistory/issues" target="_blank" rel="noopener noreferrer">Issue</a> si vous trouvez un bug.
+                N{`'`}hésiter pas à créer une <a href="https://github.com/bouteillerAlan/observatory/issues/new" target="_blank" rel="noopener noreferrer">Issue</a> si vous trouvez un bug.
                 Toutes les images du jeu sont © 2019 ArenaNet, Inc..<br/>
             <small>CC BY-NC-SA Alan Bouteiller</small>
           </p>
