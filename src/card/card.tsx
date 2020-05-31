@@ -311,16 +311,16 @@ class Card extends Component<any, any> {
         <p className={'info'}>
           <small>Lvl : {map[season]['story'][story]['quests'][questId.id]['Qlevel']}</small>
           {questsList['durmand'].includes(questId.id) ?
-            <span className="durmand tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Prieuré de Durmand' : 'Durmand Priory'}> </span> :
-            null
+              <span className="durmand tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Prieuré de Durmand' : 'Durmand Priory'}> </span> :
+              null
           }
           {questsList['whisper'].includes(questId.id) ?
-            <span className="whisper tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Ordre des Soupirs' : 'Order of Whispers'}> </span> :
-            null
+              <span className="whisper tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Ordre des Soupirs' : 'Order of Whispers'}> </span> :
+              null
           }
           {questsList['vigil'].includes(questId.id) ?
-            <span className="vigil tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Veilleurs' : 'Vigil'}> </span> :
-            null
+              <span className="vigil tooltipped" data-position="top" data-tooltip={lang==='fr' ? 'Veilleurs' : 'Vigil'}> </span> :
+              null
           }
           <small>Qid : {map[season]['story'][story]['quests'][questId.id]['Qid']}</small>
         </p>
@@ -330,39 +330,39 @@ class Card extends Component<any, any> {
             <span key={character} className={'tooltipped status ' + (!map[season]['story'][story]['quests'][questId.id]['authorization'][character] ? 'grey' : map[season]['story'][story]['quests'][questId.id]['status'][character] ? 'green' : 'red')} data-position="top" data-tooltip={character}>
               <span>
                 {!map[season]['story'][story]['quests'][questId.id]['authorization'][character] ?
-                                  <del>{character.substring(0, 3)}</del> :
-                                  character.substring(0, 3)
+                  <del>{character.substring(0, 3)}</del> :
+                  character.substring(0, 3)
                 }
               </span>
               <span>
                 <img src={
                   data['characterId'][character]['profession'] === 'Guardian' ? Guardian :
-                  data['characterId'][character]['profession'] === 'Warrior' ? Warrior :
-                  data['characterId'][character]['profession'] === 'Necromancer' ? Necromancer :
-                  data['characterId'][character]['profession'] === 'Elementalist' ? Elementalist :
-                  data['characterId'][character]['profession'] === 'Thief' ? Thief :
-                  data['characterId'][character]['profession'] === 'Engineer' ? Engineer :
-                  data['characterId'][character]['profession'] === 'Ranger' ? Ranger :
-                  data['characterId'][character]['profession'] === 'Revenant' ? Revenant :
-                  data['characterId'][character]['profession'] === 'Mesmer' ? Mesmer : undefined
+                    data['characterId'][character]['profession'] === 'Warrior' ? Warrior :
+                      data['characterId'][character]['profession'] === 'Necromancer' ? Necromancer :
+                        data['characterId'][character]['profession'] === 'Elementalist' ? Elementalist :
+                          data['characterId'][character]['profession'] === 'Thief' ? Thief :
+                            data['characterId'][character]['profession'] === 'Engineer' ? Engineer :
+                              data['characterId'][character]['profession'] === 'Ranger' ? Ranger :
+                                data['characterId'][character]['profession'] === 'Revenant' ? Revenant :
+                                  data['characterId'][character]['profession'] === 'Mesmer' ? Mesmer : undefined
                 } alt="class icon" className="icon_class"/>
               </span>
             </span>
           ))}
         </div>
         {Array.isArray(questId.pid) ?
-          questId.pid.map((pidU: number) => (
-            <span key={pidU}>
+            questId.pid.map((pidU: number) => (
+              <span key={pidU}>
+                {this.setProperty()}
+                <div className="arrow" id={'a'+pidU+questId.id}> </div>
+                {gArrow(`start${pidU}`, `arrival${questId.id}`, 'a'+pidU+questId.id, false, true)}
+              </span>
+            )) :
+            <span>
               {this.setProperty()}
-              <div className="arrow" id={'a'+pidU+questId.id}> </div>
-              {gArrow(`start${pidU}`, `arrival${questId.id}`, 'a'+pidU+questId.id, false, true)}
+              <div className="arrow" id={'a'+questId.pid+questId.id}> </div>
+              {gArrow(`start${questId.pid}`, `arrival${questId.id}`, 'a'+questId.pid+questId.id, false, true)}
             </span>
-          )) :
-          <span>
-            {this.setProperty()}
-            <div className="arrow" id={'a'+questId.pid+questId.id}> </div>
-            {gArrow(`start${questId.pid}`, `arrival${questId.id}`, 'a'+questId.pid+questId.id, false, true)}
-          </span>
         }
         <span id={`start${questId.id}`}></span>
       </div>

@@ -41,7 +41,14 @@ function getStories() {
  */
 function getQuests() {
   return fetch(`${_API_URL}/quests?ids=all&lang=${_lang}`).then(async (res: any) => {
-    return res.json();
+    // array for non-maj quests by gw2 API
+    const noMajQuest = [
+      {goals: [], id: 9995, level: 0, name: "En attente d'une mise a jour de l'api par Guild Wars 2", story: 95},
+      {goals: [], id: 9996, level: 0, name: "En attente d'une mise a jour de l'api par Guild Wars 2", story: 96},
+    ];
+    const response = await res.json();
+    const reponseMaj = [...response, ...noMajQuest];
+    return reponseMaj;
   });
 }
 
