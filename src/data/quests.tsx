@@ -571,6 +571,32 @@ const questsList: any = {
       [{pid: 547, id: 553}, {pid: 553, id: 554}, {pid: 554, id: 557}, {pid: 557, id: 556}, {pid: 556, id: 555}],
     ],
   ],
+  // 1. Whisper in the Dark
+  '93': [
+    [
+      [{pid: 555, id: 562}, {pid: 562, id: 559}, {pid: 559, id: 563}, {pid: 563, id: 561}],
+    ],
+  ],
+  // 2. Shadow in the Ice
+  '94': [
+    [
+      [{pid: 561, id: 564}, {pid: 564, id: 568}, {pid: 568, id: 567}, {pid: 567, id: 566}, {pid: 566, id: 565}],
+    ],
+  ],
+  // Visions of the Past: Steel and Fire
+  // Forging Steel // Darkrime Delves // https://wiki.guildwars2.com/wiki/Visions_of_the_Past:_Steel_and_Fire
+  // '95': [
+  //   [
+  //     [],
+  //   ],
+  // ],
+  // 3. No Quarter
+  // https://wiki.guildwars2.com/wiki/No_Quarter
+  // '96': [
+  //   [
+  //     [],
+  //   ],
+  // ],
 };
 
 export default questsList;
