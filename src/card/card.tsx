@@ -19,7 +19,7 @@ import Engineer from '../img/Engineer_icon.png';
 import Ranger from '../img/Ranger_icon.png';
 import Revenant from '../img/Revenant_icon.png';
 import Mesmer from '../img/Mesmer_icon.png';
-import Footer from "../footer/footer";
+import Footer from '../footer/footer';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
