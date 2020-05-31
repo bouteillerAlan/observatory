@@ -585,18 +585,18 @@ const questsList: any = {
   ],
   // Visions of the Past: Steel and Fire
   // Forging Steel // Darkrime Delves // https://wiki.guildwars2.com/wiki/Visions_of_the_Past:_Steel_and_Fire
-  // '95': [
-  //   [
-  //     [],
-  //   ],
-  // ],
+  '95': [
+    [
+      [{pid: 0, id: 999}],
+    ],
+  ],
   // 3. No Quarter
   // https://wiki.guildwars2.com/wiki/No_Quarter
-  // '96': [
-  //   [
-  //     [],
-  //   ],
-  // ],
+  '96': [
+    [
+      [{pid: 0, id: 999}],
+    ],
+  ],
 };
 
 export default questsList;
