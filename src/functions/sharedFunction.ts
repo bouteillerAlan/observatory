@@ -7,7 +7,7 @@
  * @Param {boolean} grey if the quest is blocked or not
  * @Return {void} return nothing update the DOM
  */
-export function gArrow(idFrom: any, idTo: any, idLine: any, gORr: boolean, grey: boolean) {
+export function gArrow(idFrom: any, idTo: any, idLine: any, gORr: boolean, grey: boolean): void {
   if (idFrom !== 0) {
     const from: HTMLElement | null = document.getElementById(idFrom);
     const to: HTMLElement | null = document.getElementById(idTo);

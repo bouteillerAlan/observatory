@@ -25,3 +25,11 @@ nav {
   fill: var(--primary-fill);
   stroke: var(--primary-stroke);
 }
+
+.sidenav {
+  background-color: var(--primary-background) !important;
+
+  i {
+    color: var(--primary-color) !important;
+  }
+}
