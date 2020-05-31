@@ -587,14 +587,14 @@ const questsList: any = {
   // Forging Steel // Darkrime Delves // https://wiki.guildwars2.com/wiki/Visions_of_the_Past:_Steel_and_Fire
   '95': [
     [
-      [{pid: 0, id: 999}],
+      [{pid: 0, id: 9995}],
     ],
   ],
   // 3. No Quarter
   // https://wiki.guildwars2.com/wiki/No_Quarter
   '96': [
     [
-      [{pid: 0, id: 999}],
+      [{pid: 0, id: 9996}],
     ],
   ],
 };
