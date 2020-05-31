@@ -6,10 +6,10 @@ import questsList from '../data/quests';
 import './map.scss';
 import M from 'materialize-css';
 import {gArrow} from '../functions/sharedFunction';
-import Footer from "../footer/footer";
+import Footer from '../footer/footer';
 
 const Map: React.FunctionComponent = () => {
-  const [dataMap, setDataMap] = useState(); // no type because the {} type bugs the [index]
+  const [dataMap, setDataMap] = useState<any>(); // no type because the {} type bugs the [index]
   const [loading, setLoading] = useState(true);
   const [gen, setGen] = useState(true);
   const [lang] = useState(localStorage.getItem('obsLang'));

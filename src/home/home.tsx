@@ -11,15 +11,15 @@ import flag_fr from '../img/france.png';
 import flag_uk from '../img/united-kingdom.png';
 import {checkApiKeyRight} from '../request/checkApiKey';
 import history from '../server/history';
-import Footer from "../footer/footer";
+import Footer from '../footer/footer';
 /* eslint-disable react/no-unescaped-entities */
 
 const Home = () => {
-  const [apiKey, setApiKey] = useState('');
-  const [apiKeyError, setApiKeyError] = useState();
-  const [check, setCheck] = useState(false);
-  const [checkError, setCheckError] = useState();
-  const [lang, setLang] = useState('eng');
+  const [apiKey, setApiKey] = useState<string>('');
+  const [apiKeyError, setApiKeyError] = useState<string | undefined>();
+  const [check, setCheck] = useState<boolean>(false);
+  const [checkError, setCheckError] = useState<string | undefined>();
+  const [lang, setLang] = useState<string>('eng');
   const [howImg, setHowImg] = useState(card);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Home = () => {
     } else if (!value.match(/[A-Z0-9]{8}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{20}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{4}[-]{1}[A-Z0-9]{12}/gm)) {
       setApiKeyError('Value is not a api key format');
     } else {
-      setApiKeyError(false);
+      setApiKeyError(undefined);
     }
   }
 
@@ -69,7 +69,7 @@ const Home = () => {
     const target = document.getElementById('check') as HTMLInputElement;
     const value = target?.checked;
     if (value) {
-      setCheckError(null);
+      setCheckError(undefined);
       setCheck(value);
     } else {
       setCheckError('Accept conditions');
@@ -107,7 +107,7 @@ const Home = () => {
         } else {
           localStorage.setItem('obsKey', apiKey);
           localStorage.setItem('obsLang', lang);
-          setApiKeyError(false);
+          setApiKeyError(undefined);
           history.push('/card');
         }
       });
