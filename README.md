@@ -359,12 +359,12 @@ function gArrow(idFrom: any, idTo: any, idLine: any, gORr: boolean, grey: boolea
 - list of all quests for durmand
 - list of all quests for whisper
 - list of all quests for vigil
-- list of all quests in the game in the form `{pid: 0, id: 77}`
+- list of all quests in the game in the form `{pid: 0, id: 77}` where `pid` is a string or an array with the previous quest and `id` the current quest
 
 #### link for external content
 🚀 Allows to : 
 - put a link to the site of the "Le Bus Magique" and a wiki, in English and / or French for the seasons
-  ```json
+  ```ts
   'A515A1D3-4BD7-4594-AE30-2C5D05FF5960': {
     'fr': {
       'link': 'https://www.lebusmagique.fr/pages/succes/chroniques/s2/',
@@ -377,7 +377,7 @@ function gArrow(idFrom: any, idTo: any, idLine: any, gORr: boolean, grey: boolea
   },
   ```
 - put a link to the "magic bus" site, a video and a wiki, in English and / or French for episodes and quests
-  ```json
+  ```ts
   '87': {
     'fr': {
       'link': 'https://www.lebusmagique.fr/pages/gw2-pof/domaine-de-kourna/',
